@@ -1,0 +1,6 @@
+<illustration_activity> a prov:Activity;
+  prov:used <aggregated_by_regions> {| a prov:Usage ;
+      prov:atTime "2011-07-14T03:03:03Z"^^xsd:dateTime |} ;
+  prov:wasAssociatedWith <derek> {| a prov:Association ;
+      prov:hadRole <illustrationist>;
+      prov:hadPlan <tutorial_blog> |} .

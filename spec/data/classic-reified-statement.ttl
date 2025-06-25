@@ -1,0 +1,8 @@
+PREFIX dct: <http://purl.org/dc/terms/>
+
+<< <Alice> dct:creator <SomeComputer> >> a rdf:Statement ;
+    rdf:subject <Alice> ;
+    rdf:predicate dct:creator ;
+    rdf:object <SomeComputer> .
+    dct:date "2014-12-15"^^xsd:date ;
+    dct:source <SomeDatabase> .

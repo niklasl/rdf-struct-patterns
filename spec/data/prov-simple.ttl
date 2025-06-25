@@ -1,0 +1,3 @@
+<illustration_activity> a prov:Activity;
+  prov:used <aggregated_by_regions> ;
+  prov:wasAssociatedWith <derek> .

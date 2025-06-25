@@ -1,0 +1,15 @@
+prov:qualifiedAssociation
+    owl:propertyChainAxiom
+        ([owl:inverseOf rdf:tripleSubject] [owl:inverseOf _:reified_assocWith_ppn]) .
+
+prov:agent owl:propertyChainAxiom (_:reified_assocWith_ppn rdf:tripleObject) .
+
+_:reified_assocWith_ppn
+    owl:propertyChainAxiom (_:a_Association rdf:reifies _:associated_ppn) .
+
+[ owl:onProperty _:a_Association ; owl:hasSelf true ]
+    owl:equivalentClass prov:Association .
+
+[ owl:onProperty _:associated_ppn ; owl:hasSelf true ]
+    owl:equivalentClass
+        [ owl:onProperty rdf:triplePredicate ; owl:hasValue prov:wasAssociatedWith ] .

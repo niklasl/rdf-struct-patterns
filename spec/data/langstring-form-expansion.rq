@@ -1,0 +1,11 @@
+CONSTRUCT {
+  ?s ?p [ a rdf:langString ;
+          owl:sameAs ?strlang ;
+          rdf:value ?lexical ;
+          rdf:language ?lang ] .
+} WHERE {
+  ?s ?p ?strlang .
+  FILTER hasLANG(?strlang)
+  BIND(STR(?strlang) as ?lexical)
+  BIND(LANG(?strlang) as ?lang)
+}

@@ -1,0 +1,9 @@
+<illustration_activity> a prov:Activity;
+  prov:qualifiedUsage [ a prov:Usage;
+      prov:entity <aggregated_by_regions>;
+      prov:atTime "2011-07-14T03:03:03Z"^^xsd:dateTime ] ;
+  prov:qualifiedAssociation [ a prov:Association;
+      prov:agent   <derek>;
+      prov:hadRole <illustrationist>;
+      prov:hadPlan <tutorial_blog>
+    ] .

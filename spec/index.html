@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>RDF 1.2 Properties of Formal Structures</title>
+  <script src="https://www.w3.org/Tools/respec/respec-w3c" class="remove"></script>
+  <script src="../../rdf-common/local-biblio.js" class="remove"></script>
+  <script src="../../rdf-common/fixup.js" class="remove"></script>
+  <script class='remove'>
+    var respecConfig = {
+      specStatus:  "DNOTE",
+      group: "wg/rdf-star",
+      noRecTrack: true,
+      localBiblio: localBibliography,
+      shortName: "rdf12-struct-patterns",
+      copyrightStart: "2025",
+      editors:  [
+        { name: "Niklas Lindström", w3cid: "44656" }
+      ]
+    };
+  </script>
+  <style>
+    /* from ../../rdf-semantics/spec */
+    table { border-collapse:collapse; }
+    table, td, th { border:1px solid light-dark(black, grey); }
+    caption { font-weight: bold; text-align: left ; }
+    .semantictable {background-color: light-dark(#ffa, #122); padding:0.5em;}
+    .ruletable {background-color: light-dark(#ddf, #112); padding:0.5em;}
+  </style>
+</head>
+
+<body>
+
+<section id="abstract">
+  <p>The purpose of this document is to define semantic extensions for interpreting the formal structures of propositions and literal values, as defined in [[[RDF12-CONCEPTS]]]. In addition, examples of semantic interoperability patterns using OWL in conjunction with these extensions are provided. This assumes knowledge of the basic concepts of RDF, and familiarity with <a data-cite="RDF12-CONCEPTS#dfn-reifier">reifiers</a>, as exemplified in the [[[RDF12-PRIMER]]]. It furthermore relies on the semantic conditions defined in [[[RDF12-SEMANTICS]]]. The section about OWL-based Interoperability patterns assumes an understanding of [[[OWL2-RDF-BASED-SEMANTICS]]].
+  </p>
+</section>
+
+<section id="sotd">
+</section>
+
+<section id="section-intro">
+  <h2>Introduction</h2>
+  <p>
+    This document defines semantic conditions for entailing the properties inherent in the formal structures of:
+  </p>
+  <ol>
+    <li>RDF 1.2 propositions, encoded as triple terms;
+    <li>RDF 1.2 directional language strings, encoded as dirLangString literals.
+  </ol>
+  <p>
+    The structure and meaning of these abstractions enables further processing, by using OWL or other semantic extensions.
+    Based on this, a set of interoperability pattern examples are examined, including a definition of classic reification as RDF 1.2 reifiers.
+  </p>
+  <section id="ns">
+    <h3>Namespaces</h3>
+    <p>The following prefixes of namespace IRIs are used throughout this document.
+    <table class="thinborder" style="margin-left: auto; margin-right: auto;">
+      <caption id="namespace-table"><a href="#namespace-table">Table 1</a>: Prefix and Namespaces used in this specification</caption>
+      <tbody>
+        <tr>
+          <th>prefix</th>
+          <th>namespace IRI</th>
+          <th>definition</th>
+        </tr>
+        <tr>
+          <td>rdf</td>
+          <td>http://www.w3.org/1999/02/22-rdf-syntax-ns#</td>
+          <td>The RDF namespace [[RDF12-CONCEPTS]]</td>
+        </tr>
+        <tr>
+          <td>rdfs</td>
+          <td>http://www.w3.org/2000/01/rdf-schema#</td>
+          <td>The RDF Schema namespace [[RDF-SCHEMA]]</td>
+        </tr>
+        <tr>
+          <td>xsd</td>
+          <td>http://www.w3.org/2000/10/XMLSchema#</td>
+          <td>XML Schema Namespace [[XMLSCHEMA11-2]]</td>
+        </tr>
+        <tr>
+          <td>owl</td>
+          <td>http://www.w3.org/2002/07/owl#</td>
+          <td>The OWL namespace [[OWL2-OVERVIEW]]</td>
+        </tr>
+        <tr>
+          <td>(others)</td>
+          <td>(various)</td>
+          <td>
+            <p>All other namespace prefixes are used in examples only.
+            <p>In particular, IRIs starting with "http://example.org"
+              <br>represent some application-dependent IRI [[IRI]]</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>In Turtle and SPARQL examples throughout this document, the following prefix declarations are assumed:
+    <pre class="turtle">
+PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: &lt;http://www.w3.org/2001/XMLSchema#>
+PREFIX owl: &lt;http://www.w3.org/2002/07/owl#>
+    </pre>
+    <p>Where relative IRIs are used, an example base IRI is assumed:
+    <pre class="turtle">
+BASE &lt;http://example.org/>
+    </pre>
+  </section>
+</section>
+
+<section id="notation">
+  <h2>Notation and Terminology</h2>
+
+  <p>This document uses the following terminology for describing RDF graph syntax, all as defined in the companion RDF Concepts specification [[RDF12-CONCEPTS]]:
+    <dfn data-cite="RDF12-CONCEPTS#dfn-asserted-triple">asserted triple</dfn>,
+    <dfn data-cite="RDF12-CONCEPTS#dfn-basic">basic</dfn>,
+    <dfn data-cite="RDF12-CONCEPTS#dfn-blank-node">blank node</dfn>,
+    <dfn data-cite="RDF12-SEMANTICS#dfn-entailment">entailment</dfn>,
+    <dfn data-cite="RDF12-CONCEPTS#dfn-full">full</dfn>,
+    <dfn data-cite="RDF12-CONCEPTS#dfn-iri">IRI</dfn>,
+    <dfn data-cite="RDF12-CONCEPTS#dfn-literal">literal</dfn>,
+    <dfn data-cite="RDF12-CONCEPTS#dfn-literal-value">literal value</dfn>,
+    <dfn data-cite="RDF12-CONCEPTS#dfn-object">object</dfn>,
+    <dfn data-cite="RDF12-CONCEPTS#dfn-predicate">predicate</dfn>,
+    <dfn data-cite="RDF12-CONCEPTS#dfn-proposition">proposition</dfn>,
+    <dfn data-cite="RDF12-CONCEPTS#dfn-rdf-graph">RDF graph</dfn>,
+    <dfn data-cite="RDF12-CONCEPTS#dfn-reifier">reifier</dfn>,
+    <dfn data-cite="RDF12-CONCEPTS#dfn-subject">subject</dfn>,
+    <dfn data-cite="RDF12-CONCEPTS#dfn-triple">triple</dfn>,
+    <dfn data-cite="RDF12-CONCEPTS#dfn-triple term">triple term</dfn>.
+  <p>It furthermore uses the following terminology as defined in the companion RDF Semantics specification [[RDF12-SEMANTICS]]:
+    <dfn data-cite="RDF12-SEMANTICS#dfn-semantic-extension">semantic extension</dfn>.
+</section>
+<section>
+  <h2>Properties of Formal Structures</h2>
+  <p>In RDF, resources are regularly <em>denoted</em> by IRIs, or existentially quantified by blank nodes, and further <em>described</em> through statements about them, rendering their definitions more precise.
+  This is not necessary for propositions and literal values, since their meaning is completely <em>encoded</em> by their corresponding terms, triple terms and literals, in the abstract syntax.
+  <p>Propositions are fixed, formal and invariant abstractions, having intrinsic constituent components. These are denoted by corresponding triple terms, which are three-tuples of RDF terms acting as keys identifying the abstractions. These form a precise conceptual identity within the value space of their <code>rdfs:Proposition</code> type, corresponding exactly to the tuple structure of their denoting triple terms.
+  <p>Literal values, while fundamentally different concepts (some defined outside of RDF), share this fixed, invariant characteristic within an interpretation.
+  <p>Therefore, while these kinds of resources are conceptually just resources in the domain of discourse, they have a particular standing due to their formally fixed definitions.
+  The RDF abstract syntax reflects this by only allowing literals and triple terms as objects of other triples.
+  <p>But these invariant resources still, logically, <em>have</em> properties. They are simply intrinsically defined, as an interpretation of the structural constituents of the resource within the space of their type.
+    <p>In the following sections we will see how these facts can be formally entailed. The semantic extensions defined are based on the semantic conditions of <a data-cite="RDF12-SEMANTICS#rdfs_interpretations">RDFS interpretations</a>, defined in [[[RDF12-SEMANTICS]]].
+
+  <p class="note">The [[[SPARQL12-QUERY]]] defines a number of <a href="https://www.w3.org/TR/sparql12-query/#func-rdfTerms">functions on RDF terms</a>. In principle, and except for IRIs and blank nodes, these could correspond to predicates of the formal structures these terms denote (in the logical sense, and expressed in RDF as statements). This would mean that, for a given subject, the predicate is true if, for a term denoting the subject, the function returns a term denoting the object of the corresponding predicate.
+
+<section id="section-struct-propos">
+  <h2>Formal Structure of Propositions</h2>
+  <p>An <code>rdfs:Proposition</code> instance is precisely defined as a resource with the form of a triple, having exactly one subject resource, one predicate property and one object resource.
+  <p>The proposition pattern:
+  <pre class="turtle">
+XXX YYY &lt;&lt;( AAA BBB CCC )>> .
+  </pre>
+  <p>can thus be described as:
+  <pre class="turtle">
+XXX YYY _:pp .
+_:pp a rdf:TripleForm .
+_:pp rdf:tripleSubject AAA .
+_:pp rdf:triplePredicate BBB .
+_:pp rdf:tripleObject CCC .
+  </pre>
+  <p>Note that the following is already entailed through RDFS semantics:
+  <pre class="turtle">
+_:pp a rdfs:Proposition .
+  </pre>
+  <section id="section-interp-proposition">
+    <h3>Extended Proposition Interpretation</h3>
+    <p>An extended proposition interpretation is an RDFS interpretation I which also satisfies the following semantic condition, and all the triples in the subsequent table of axiomatic triples.
+    <table id="proposition_semantic_condition">
+    <caption>Proposition semantic condition.</caption>
+      <tr>
+        <td class="semantictable">
+          <p>
+            If I(E) is in ICEXT(I(<code>rdfs:Proposition</code>)), and I(E) = RE(I(s) ,I(p), I(o)) where<br>
+            s is the subject, p is the predicate and o is the object component of E,<br>
+            then:
+          </p>
+          <ul>
+            <li>&lt;I(E), I(s)> is in IEXT(I(<code>rdf:tripleSubject</code>)),</li>
+            <li>&lt;I(E), I(p)> is in IEXT(I(<code>rdf:triplePredicate</code>)), and</li>
+            <li>&lt;I(E), I(o)> is in IEXT(I(<code>rdf:tripleObject</code>)).</li>
+          </ul>
+        </td>
+      </tr>
+    </table>
+    <table id="proposition_axioms">
+      <caption>Axiomatic triples of proposition forms.</caption>
+      <tr>
+        <td class="ruletable">
+          <pre>
+rdf:TripleForm rdf:type rdfs:Class .
+
+rdf:tripleSubject rdf:type rdf:Property .
+rdf:tripleSubject rdfs:domain rdf:TripleForm .
+rdf:tripleSubject rdfs:range rdfs:Resource .
+
+rdf:triplePredicate rdf:type rdf:Property .
+rdf:triplePredicate rdfs:domain rdf:TripleForm .
+rdf:triplePredicate rdfs:range rdf:Property .
+
+rdf:tripleObject rdf:type rdf:Property .
+rdf:tripleObject rdfs:domain rdf:TripleForm .
+rdf:tripleObject rdfs:range rdfs:Resource .
+          </pre>
+        </td>
+      </tr>
+    </table>
+  </section>
+</section>
+
+<section id="section-structliterals">
+  <h2>Formal Structures of Literal Values</h2>
+  <p>Literals are also denoted by tuple structures, specifically of an IRI denoting their datatype, and a string representing a lexical form. They are fundamentally different in that their lexical form may encode values of any kind of complexity, depending on its datatype. The value so encoded is defined by the formal meaning of this datatype, which defines its value space. The result of decoding the lexical form according to this datatype is the <em>literal value</em>, having the datatype as its <code>rdf:type</code>, and other properties according to the formal meaning of its lexical encoding.
+
+  <section id="section-dirlangstrings">
+    <h3>Directional Language Strings</h3>
+    <p>A directional language string is a typed resource combining one string value with one <code>rdf:language</code> and one <code>rdf:direction</code>. This form acts as a key, uniquely identifying the literal value.
+    <p>The directional language string pattern:
+    <pre class="turtle">
+SSS PPP "..."@und--rtl .
+    </pre>
+    <p>can thus be described as:
+    <pre class="turtle">
+SSS PPP _:dls .
+_:dls a rdf:dirLangString .
+_:dls rdf:value "..." .  # implies a structured value specialization? Use rdf:lexicalForm?
+_:dls rdf:language "und"^^rdf:langTag .  # cf. dct:ISO639-1 | dct:ISO639-2
+_:dls rdf:direction "rtl"^^rdf:langDir .  # or rather rdf:RTL ?
+    </pre>
+    <section id="section-interp-dirlangstring">
+      <h3>Extended Directional Language String Interpretation</h3>
+      <p>An extended directional language string interpretation is an RDFS interpretation I which also satisfies the following semantic condition, and all the triples in the subsequent table of axiomatic triples.
+      <table id="dirlangstring_semantic_condition">
+        <caption>Directional language string semantic condition.</caption>
+        <tr>
+          <td class="semantictable">
+            <p>
+              If IL(E) is in ICEXT(I(<code>rdf:dirLangString</code>)) and IL(E) = &lt;v, l, d> where<br>
+              v is the lexical form, l is the language tag in lower-case, and d is the direction of E,<br>
+              then:
+            </p>
+            <ul>
+              <li>&lt;IL(E), IL(v)> is in IEXT(I(<code>rdf:value</code>)),</li>
+              <li>&lt;IL(E), IL(l)> is in IEXT(I(<code>rdf:language</code>)), and</li>
+              <li>&lt;IL(E), IL(d)> is in IEXT(I(<code>rdf:direction</code>)).</li>
+            </ul>
+            <p>and:</p>
+            <ul>
+              <li>IL(v) is in ICEXT(I(<code>xsd:string</code>)),</li>
+              <li>IL(l) is in ICEXT(I(<code>rdf:langTag</code>)), and</li>
+              <li>IL(d) is in ICEXT(I(<code>rdf:langDir</code>)).</li>
+            </ul>
+          </td>
+        </tr>
+      </table>
+      <table id="dirlangstring_axioms">
+        <caption>Axiomatic triples of directional language string forms.</caption>
+        <tr>
+          <td class="ruletable">
+            <pre>
+  rdf:langString rdf:type rdfs:Datatype .
+  rdf:dirLangString rdf:type rdfs:Datatype .
+  rdf:langTag rdf:type rdfs:Datatype .
+  rdf:langDir rdf:type rdfs:Datatype .
+
+  rdf:language rdf:type rdf:Property .
+  rdf:language rdfs:domain [owl:unionOf (rdf:langString rdf:dirLangString)] .
+  rdf:language rdfs:range rdf:langTag .
+
+  rdf:direction rdf:type rdf:Property .
+  rdf:direction rdfs:domain rdf:dirLangString .
+  rdf:direction rdfs:range rdf:langDir .
+            </pre>
+          </td>
+        </tr>
+      </table>
+    </section>
+  </section>
+
+  <section id="section-langstrings">
+    <h3>Language Strings</h3>
+    <p>The language string pattern:
+    <pre class="turtle">
+SSS PPP "..."@und .
+    </pre>
+    <p>can be described as:
+    <pre class="turtle">
+SSS PPP _:dls .
+_:dls a rdf:langString .
+_:dls rdf:value "..." .  # Use rdf:lexicalForm?
+_:dls rdf:language "und"^^rdf:langTag .
+    </pre>
+    <section id="section-interp-dirlangstring">
+      <h3>Extended Language String Interpretation</h3>
+      <p>Note that a definition of a semantic condition for <code>rdf:langString</code> mainly consists of removing the <code>rdf:direction</code> part from the semantic condition of <code>rdf:dirLangString</code>:
+      <table id="langstring_semantic_condition">
+        <caption>Language string semantic condition.</caption>
+        <tr>
+          <td class="semantictable">
+            <p>
+              If IL(E) is in ICEXT(I(<code>rdf:langString</code>)) and IL(E) = &lt;v, l> where<br>
+              v is the lexical form, and l is the language tag in lower-case of E,<br>
+              then:
+            </p>
+            <ul>
+              <li>&lt;IL(E), IL(v)> is in IEXT(I(<code>rdf:value</code>)), and</li>
+              <li>&lt;IL(E), IL(l)> is in IEXT(I(<code>rdf:language</code>)).</li>
+            </ul>
+            <p>and:</p>
+            <ul>
+              <li>IL(v) is in ICEXT(I(<code>xsd:string</code>)), and</li>
+              <li>IL(l) is in ICEXT(I(<code>rdf:langTag</code>)).</li>
+            </ul>
+          </td>
+        </tr>
+      </table>
+    </section>
+  </section>
+
+  <section id="section-otherliterals">
+    <h3>Other Datatypes</h3>
+    <p>It is noteworthy that any datatyped literals encode resources with intrinsic meaning, and that this meaning can be formally specified.
+    <p>Just as with language string values, it is generally possible to define semantic extensions for values of any formally defined datatype, entailing relationships between literal values and their constituent parts.
+    <p>For example, a literal <code>xsd:date</code> value:
+    <pre class="turtle">
+SSS PPP "YYYY-MM-DD"^^xsd:date .
+    </pre>
+    <p>implies a resource with one year, one month and one day (here expressed using the [[[OWL-TIME]]]):
+    <pre class="turtle">
+SSS PPP _:dt a xsd:date .
+_:dt time:year "YYYY"^^xsd:gYear .
+_:dt time:month "--MM"^^xsd:gMonth .
+_:dt time:day "---DD"^^xsd:gDay .
+    </pre>
+    <p>Defining semantic conditions for such structures, and the formal properties thereof, is beyond the scope of this document (and outside the purview of RDF for any datatype defined by other specifications). A possible SPARQL-based expansion form is proposed in Appendix [[[#sparql-expansion-datetime]]].
+  </section>
+
+</section>
+
+</section>
+
+<section id="section-interop-owl">
+  <h2>OWL-based Interoperability Patterns</h2>
+  <p>Using the extended interpretations defined above results in a graph which can be further reasoned over through the semantic extension of OWL. Axioms can be defined to describe restriction subclasses of <code>rdfs:Proposition</code> based on e.g. a particular predicate, and/or to describe sub-property chain axioms of simpler relationships, implying more abstract relationships from more complex, e.g. N-ary relationship entities.
+
+  <p class="note">The patterns below utilize <code>owl:hasSelf</code> to define a <em>rolification</em> of a class, meaning a restriction pattern for the relationship from an individual to itself, which is equivalent to a specified class. This restriction implies that an instance of such a class has this rolified relationship to itself (and vice versa). That enables the use of the rolification property in sub-property chain axioms, functioning as a self-relation chain component matching the type of the resource.
+
+<section id="section-patterns">
+  <h2>Interoperability Patterns Using Reified Propositions</h2>
+  <p>The following patterns rely on OWL 2 and <a href="#section-interp-proposition">extended interpretation of propositions</a> to ensure that simplified descriptions leveraging <a data-cite="RDF12-CONCEPTS#dfn-reifying-triple">reifying triples</a> and/or <a data-cite="RDF12-TURTLE#dfn-annotation-syntax">triple annotations</a> can be interoperably interpreted as classical, more complex forms of descriptions.
+
+  <section id="section-interop-reif">
+    <h3>Classic RDF Reification as Reifiers</h3>
+    <p>Given these axioms:
+    <pre class="example turtle" title="classic statement model based on the triple form"
+         data-include="data/classic-statement-owl.ttl" data-include-format="text"></pre>
+    <p>this graph:
+    <pre class="example turtle" title="a reified statement"
+         data-include="data/reified-statement.ttl" data-include-format="text"></pre>
+    <p>entails this graph:
+    <pre class="example turtle" title="a classic reified statement"
+         data-include="data/classic-reified-statement.ttl" data-include-format="text"></pre>
+  </section>
+
+  <section id="section-interop-prov-o">
+    <h3>PROV-O Qualifications as Reifiers</h3>
+    <p>In the PROV Ontology ([[PROV-O]]) several association classes have been defined as qualified counterparts for a number of simple relationships. In this section, two examples are examined (borrowed from examples 8 and 9 of [[PROV-O]]). The following prefix is assumed in the subsequent examples:
+    <pre class="turtle">
+PREFIX prov: &lt;http://www.w3.org/ns/prov#>
+    </pre>
+    <p>These two simple relationships:
+    <pre class="example turtle" title="simple PROV-O relationships"
+         data-include="data/prov-simple.ttl" data-include-format="text"></pre>
+    <p>have the following companion qualified forms:
+    <pre class="example turtle" title="qualified PROV-O relationships"
+         data-include="data/prov-qualified.ttl" data-include-format="text"></pre>
+    <p>Using OWL, there is a way to entail the simple relationships from the qualified forms:
+    <pre class="example turtle" title="OWL axioms for entailing simple relationships"
+         data-include="data/prov-simple-owl.ttl" data-include-format="text"></pre>
+    <p>With the extended interpretation of propositions, it is possible to conversely entail the qualified forms from <em>annotated</em> versions of the simple relationships:
+    <pre class="example turtle" title="annotated simple PROV-O relationships"
+         data-include="data/prov-simple-annot.ttl" data-include-format="text"></pre>
+    <p>This can be done by extending the ontology itself, by defining property chains between reifiers of type <code>prov:Usage</code> and the corresponding subject and object of a proposition with the <code>prov:used</code> predicate:
+    <pre class="example turtle" title="OWL axioms for entailing qualified usage relationship"
+         data-include="data/prov-owl-1.ttl" data-include-format="text"></pre>
+    <p>and similarly for reifiers of type <code>prov:Association</code> of triples with the <code>prov:wasAssociatedWith</code> predicate:
+    <pre class="example turtle" title="OWL axioms for entailing qualified association relationship"
+         data-include="data/prov-owl-2.ttl" data-include-format="text"></pre>
+  </section>
+
+</section>
+
+</section>
+
+<h2 id="appendices">Appendices</h2>
+
+<section id="section-form-expansion-sparql" class="appendix">
+  <h2>Structural Expansions using SPARQL</h2>
+  <p>The following subsections define SPARQL queries for constructing descriptions of the expanded formal structures. They have to be repeatedly run against the union of the source graph and each result graph, until the triple count is equal to the triple count of the previous iteration.
+  <p class="note">The construct patterns below use <code>owl:sameAs</code> to encode equivalence of the denoting terms with the blank nodes used as subjects for the encoded descriptions. Other semantic extensions that do not recognize OWL 2 semantics may require other forms for encoding the entailments; e.g. <a data-cite="RDF12-CONCEPTS#section-symmetric-rdf">symmetric RDF</a>.
+  <section id="sparql-expansion-triple-term">
+    <h3>Triple Form Expansion</h3>
+    <div>
+      <pre class="example sparql" title="SPARQL-based triple form expansion"
+          data-include="data/triple-form-expansion.rq" data-include-format="text"></pre>
+    </div>
+  </section>
+  <section id="sparql-expansion-dirlangstring">
+    <h3>Directional Language String Form Expansion</h3>
+    <div>
+      <pre class="example sparql" title="SPARQL-based directional language string expansion"
+          data-include="data/dirlangstring-form-expansion.rq" data-include-format="text"></pre>
+    </div>
+  </section>
+  <section id="sparql-expansion-rlangstring">
+    <h3>Language String Form Expansion</h3>
+    <div>
+      <pre class="example sparql" title="SPARQL-based language string expansion"
+          data-include="data/langstring-form-expansion.rq" data-include-format="text"></pre>
+    </div>
+  </section>
+  <section id="sparql-expansion-datetime">
+    <h3>Date Time Form Expansion</h3>
+    <p>This is only a suggested expansion form; based on properties defined by [[OWL-TIME]], beyond the purview of RDF.
+    <div>
+      <pre class="example sparql" title="SPARQL-based datetime expansion"
+          data-include="data/datetime-form-expansion.rq" data-include-format="text"></pre>
+    </div>
+  </section>
+</section>
+
+<section id="section-relation-basic-encoding" class="appendix">
+  <h2>Relationship to Basic-encoding</h2>
+  <p>
+    The semantic conditions specified here entail structures that are structurally based on, but formally different from&mdash;or complementary to&mdash;the interoperability patterns between RDF 1.2 Full, RDF 1.2 Basic, and RDF 1.1 defined by the algorithms of <em>basic encoding</em> and <em>decoding</em>.
+  </p>
+  <p>
+    The inherent structures of propositions and datatype properties are possible to <em>query over</em>, either using SPARQL 1.2, or using SPARQL 1.1 along with basic encoding under simple entailment. But it is not possible to <em>reason over</em> them using RDF semantics alone. This prevents the definition of OWL-based axioms relating to this inherent structure.
+    By defining a set of semantic extensions, this document bridges that gap.
+  </p>
+  <p>
+    These two methods are <em>complementary</em> ways of working with RDF 1.2 data. Basic-encoding is for RDF 1.1 or 1.2 Basic systems that lack support for triple terms. Extended interpretations of formal structures is for systems leveraging semantic extensions based on RDF 1.2, such as OWL 2, in order to be able to reason over the intrinsic properties of propositions and literal values.
+  </p>
+  <p class="issue">
+    <!-- TODO: specified in [[[RDF12-INTEROP]]]-->
+    Refer to the specification of basic-encoding. In this document, Appendix [[[#section-basicenc-sparql]]] defines SPARQL-based versions of basic encoding and decoding for propositions and directional language strings.
+  </p>
+
+  <section>
+    <h3>Conditions for Basic-encoding</h3>
+    <p>Basic-encoding and subsequent decoding is only <em>safe</em> under <em>simple entailment</em>.
+    <p>Since literal values and propositions are resources, RDF entailment implies they have an <code>rdf:type</code> (of <code>rdfs:Literal</code> and <code>rdfs:Proposition</code>, respectively). Any encoding and decoding must take place on a graph where no entailments have been manifested.
+    <p>While the RDF abstract syntax prevents this by disallowing the special encoding terms denoting these kinds of resources as subjects, the same is not possible if facts about them are encoded as triples with IRIs or blank nodes as subject identifiers. To avoid the direct logical description of these resources, basic encoding uses underlying base types for describing propositions and directional language strings, simply encoding their <em>forms</em>.
+
+    <p class="note">Note that due to the rules of basic-encoding, it is impossible to basic-decode a graph representing the formal entailments about propositions (since their type is <em>rdfs:Proposition</em>). This is by design, to avoid basic-encoding data using anything beyond simple entailment. Entailed facts should not be put back into an RDF Source. They are simply true, following from the known axioms and conditions of a given entailment regime.
+  </section>
+
+  <section>
+    <h3>Upgrading to Structural Interpretations</h3>
+    <p>Since applications may start with a dependency on deployed structures, and rely on <em>basic-encoding</em>, having a formal way of instead entailing these facts ensures a seamless upgrade path, without requiring redefined domain logic or queries rewritten for new structures.
+    <p class="note">Similarly, a basic-encoded graph will work <em>mostly</em> the same when reasoned over using OWL. One crucial difference is that there will be no triple terms in a basic-encoded graph, meaning that there is no <code>owl:sameAs</code> relationship to such terms from the encoded propositions. This is not significant for the <em>meaning</em>, but for implementations also relying on the graph structure itself.
+  </section>
+
+<section id="section-basicenc-sparql" class="appendix">
+  <h2>Basic-encoding using SPARQL</h2>
+  <p>The following subsections define SPARQL updates for basic-encoding and -decoding. They have to be repeated until the triple count is stable (i.e. iterate while the triple count increases (for encoding) or decreases (for decoding); and halting when the triple count is equal to the one of the previous iteration).
+  <p class="note">Since datatyped literals and language-tagged strings have been part of RDF since version 1.0, there is no need for basic encoding such structures.
+  <section id="basicenc-propositions">
+    <h3>Basic-encoding of Propositions</h3>
+    <div>
+      <pre class="example sparql" title="SPARQL-based basic-encoding of propositions"
+           data-include="data/triple-basic-encoding.ru" data-include-format="text"></pre>
+    </div>
+    <div>
+      <pre class="example sparql" title="SPARQL-based basic-decoding of propositions"
+           data-include="data/triple-basic-decoding.ru" data-include-format="text"></pre>
+    </div>
+  </section>
+  <section id="basicenc-propositions">
+    <h3>Basic-encoding of Directional Language Strings</h3>
+    <div>
+      <pre class="example sparql" title="SPARQL-based basic-encoding of dir-lang-strings"
+           data-include="data/dirlangstring-basic-encoding.ru" data-include-format="text"></pre>
+    </div>
+    <div>
+      <pre class="example sparql" title="SPARQL-based basic-decoding of dir-lang-strings"
+           data-include="data/dirlangstring-basic-decoding.ru" data-include-format="text"></pre>
+    </div>
+  </section>
+</section>
+
+</section>
+
+<!--
+<section id="index"></section>
+-->
+
+</body>
+</html>

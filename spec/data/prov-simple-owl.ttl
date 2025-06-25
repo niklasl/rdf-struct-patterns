@@ -1,0 +1,2 @@
+prov:used owl:propertyChainAxiom (prov:qualifiedUsage prov:entity) .
+prov:wasAssociatedWith owl:propertyChainAxiom (prov:qualifiedAssociation prov:agent) .

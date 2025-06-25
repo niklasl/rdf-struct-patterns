@@ -1,0 +1,6 @@
+rdf:subject owl:propertyChainAxiom (_:a_Statement rdf:reifies rdf:tripleSubject) .
+rdf:predicate owl:propertyChainAxiom (_:a_Statement rdf:reifies rdf:triplePredicate) .
+rdf:object owl:propertyChainAxiom (_:a_Statement rdf:reifies rdf:tripleObject) .
+
+[ owl:onProperty _:a_Statement ; owl:hasSelf true ]
+    owl:equivalentClass rdf:Statement .

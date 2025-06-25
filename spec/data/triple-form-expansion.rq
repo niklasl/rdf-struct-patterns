@@ -1,0 +1,10 @@
+# Standard RDF, relying on owl:sameAs. For symmetric RDF: <<( ?ts ?tp ?to )>> a ...
+CONSTRUCT {
+  ?s ?rel [ a rdf:TripleForm ;
+            owl:sameAs <<( ?ts ?tp ?to )>> ;
+            rdf:tripleSubject ?ts ;
+            rdf:triplePredicate ?tp ;
+            rdf:tripleObject ?to ] .
+} WHERE {
+  ?s ?rel <<( ?ts ?tp ?to )>> .
+}

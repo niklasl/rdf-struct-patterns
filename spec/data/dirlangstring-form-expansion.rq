@@ -1,0 +1,14 @@
+# Standard RDF, relying on owl:sameAs. For Symmetric RDF: ?strlangdir a ...
+CONSTRUCT {
+  ?s ?p [ a rdf:dirLangString ;
+          owl:sameAs ?strlangdir ;
+          rdf:value ?lexical ;
+          rdf:language ?lang ;
+          rdf:direction ?langdir ] .
+} WHERE {
+  ?s ?p ?strlangdir .
+  FILTER(hasLANG(?strlangdir) && hasLANGDIR(?strlangdir))
+  BIND(STR(?strlangdir) as ?lexical)
+  BIND(LANG(?strlangdir) as ?lang)
+  BIND(LANGDIR(?strlangdir) as ?langdir)
+}
