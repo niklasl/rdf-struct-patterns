@@ -46,7 +46,10 @@
   </p>
   <ol>
     <li>RDF 1.2 propositions, encoded as triple terms;
-    <li>RDF 1.2 directional language strings, encoded as dirLangString literals.
+    <li>RDF 1.2 directional language strings and regular language strings, encoded as <code>rdf:dirLangString</code> and <code>rdf:langString</code> literals, respectively.
+    <!-- TODO: ?
+    <li>The lexical form of any literal value.
+    -->
   </ol>
   <p>
     The structure and meaning of these abstractions enables further processing, by using OWL or other semantic extensions.
@@ -133,15 +136,15 @@ BASE &lt;http://example.org/>
 <section>
   <h2>Properties of Formal Structures</h2>
   <p>In RDF, resources are regularly <em>denoted</em> by IRIs, or existentially quantified by blank nodes, and further <em>described</em> through statements about them, rendering their definitions more precise.
-  This is not necessary for propositions and literal values, since their meaning is completely <em>encoded</em> by their corresponding terms, triple terms and literals, in the abstract syntax.
-  <p>Propositions are fixed, formal and invariant abstractions, having intrinsic constituent components. These are denoted by corresponding triple terms, which are three-tuples of RDF terms acting as keys identifying the abstractions. These form a precise conceptual identity within the value space of their <code>rdfs:Proposition</code> type, corresponding exactly to the tuple structure of their denoting triple terms.
+  This is not necessary for propositions and literal values, since their meaning is completely <em>encoded</em> by their corresponding terms&mdash;triple terms and literals&mdash;in the abstract syntax.
+  <p>Propositions are fixed, invariant formal abstractions within the value space denoted by <code>rdfs:Proposition</code>, having three intrinsic constituent components: the subject, predicate and object of the proposition. This structure forms a precise conceptual identity, corresponding to the triple terms, which are three-tuples of RDF terms, acting as keys denoting the proposition through its structure within the value space.
   <p>Literal values, while fundamentally different concepts (some defined outside of RDF), share this fixed, invariant characteristic within an interpretation.
   <p>Therefore, while these kinds of resources are conceptually just resources in the domain of discourse, they have a particular standing due to their formally fixed definitions.
   The RDF abstract syntax reflects this by only allowing literals and triple terms as objects of other triples.
-  <p>But these invariant resources still, logically, <em>have</em> properties. They are simply intrinsically defined, as an interpretation of the structural constituents of the resource within the space of their type.
-    <p>In the following sections we will see how these facts can be formally entailed. The semantic extensions defined are based on the semantic conditions of <a data-cite="RDF12-SEMANTICS#rdfs_interpretations">RDFS interpretations</a>, defined in [[[RDF12-SEMANTICS]]].
+  <p>Still, these invariant resources logically have properties. They are simply intrinsically defined, as an interpretation of the structural constituents of the resource within the space of their type.
+  <p>In the following sections we will see how these facts can be formally entailed, and encoded using basic statements. The semantic extensions defined are based on the semantic conditions of <a data-cite="RDF12-SEMANTICS#rdfs_interpretations">RDFS interpretations</a>, defined in [[[RDF12-SEMANTICS]]].
 
-  <p class="note">The [[[SPARQL12-QUERY]]] defines a number of <a href="https://www.w3.org/TR/sparql12-query/#func-rdfTerms">functions on RDF terms</a>. In principle, and except for IRIs and blank nodes, these could correspond to predicates of the formal structures these terms denote (in the logical sense, and expressed in RDF as statements). This would mean that, for a given subject, the predicate is true if, for a term denoting the subject, the function returns a term denoting the object of the corresponding predicate.
+  <p class="note">The [[[SPARQL12-QUERY]]] defines a number of <a href="https://www.w3.org/TR/sparql12-query/#func-rdfTerms">functions on RDF terms</a>. In principle, and except for IRIs and blank nodes, the unary functions defined there can correspond to predicates of the formal structures which these terms denote (in the logical sense, and expressed in RDF as statements). This would mean that, for a given subject, the predicate is true if, for a term denoting the subject, the function returns a term denoting the object of the corresponding predicate.
 
 <section id="section-struct-propos">
   <h2>Formal Structure of Propositions</h2>
@@ -210,6 +213,7 @@ rdf:tripleObject rdfs:range rdfs:Resource .
 <section id="section-structliterals">
   <h2>Formal Structures of Literal Values</h2>
   <p>Literals are also denoted by tuple structures, specifically of an IRI denoting their datatype, and a string representing a lexical form. They are fundamentally different in that their lexical form may encode values of any kind of complexity, depending on its datatype. The value so encoded is defined by the formal meaning of this datatype, which defines its value space. The result of decoding the lexical form according to this datatype is the <em>literal value</em>, having the datatype as its <code>rdf:type</code>, and other properties according to the formal meaning of its lexical encoding.
+  <p>Some value spaces are formally specified in <a data-cite="RDF-SEMANTICS#D_interpretations">D-interpretations</a> of [[RDF-SEMANTICS]], and in [[[RDF-PLAIN-LITERAL]]]. The following subsections extend these definitions by entailing statements about the literal values.
 
   <section id="section-dirlangstrings">
     <h3>Directional Language Strings</h3>
@@ -226,6 +230,7 @@ _:dls rdf:value "..." .  # implies a structured value specialization? Use rdf:le
 _:dls rdf:language "und"^^rdf:langTag .  # cf. dct:ISO639-1 | dct:ISO639-2
 _:dls rdf:direction "rtl"^^rdf:langDir .  # or rather rdf:RTL ?
     </pre>
+    <p class="issue">Harmonize this pattern with <code>rdf:CompoundLiteral</code> possibly used for basic-encoding.
     <section id="section-interp-dirlangstring">
       <h3>Extended Directional Language String Interpretation</h3>
       <p>An extended directional language string interpretation is an RDFS interpretation I which also satisfies the following semantic condition, and all the triples in the subsequent table of axiomatic triples.
@@ -291,7 +296,7 @@ _:dls rdf:language "und"^^rdf:langTag .
     </pre>
     <section id="section-interp-dirlangstring">
       <h3>Extended Language String Interpretation</h3>
-      <p>Note that a definition of a semantic condition for <code>rdf:langString</code> mainly consists of removing the <code>rdf:direction</code> part from the semantic condition of <code>rdf:dirLangString</code>:
+      <p>The definition of a semantic condition for <code>rdf:langString</code> is similar to the semantic condition of <code>rdf:dirLangString</code>, but without the <code>rdf:direction</code> part:
       <table id="langstring_semantic_condition">
         <caption>Language string semantic condition.</caption>
         <tr>
@@ -318,8 +323,8 @@ _:dls rdf:language "und"^^rdf:langTag .
 
   <section id="section-otherliterals">
     <h3>Other Datatypes</h3>
-    <p>It is noteworthy that any datatyped literals encode resources with intrinsic meaning, and that this meaning can be formally specified.
-    <p>Just as with language string values, it is generally possible to define semantic extensions for values of any formally defined datatype, entailing relationships between literal values and their constituent parts.
+    <p>In principle, any datatyped literals encode resources with intrinsic meaning, and that this meaning can be formally specified.
+    <p>It is therefore generally possible to define semantic extensions for values of any formally defined datatype, entailing relationships between literal values and their constituent parts.
     <p>For example, a literal <code>xsd:date</code> value:
     <pre class="turtle">
 SSS PPP "YYYY-MM-DD"^^xsd:date .
@@ -332,6 +337,7 @@ _:dt time:month "--MM"^^xsd:gMonth .
 _:dt time:day "---DD"^^xsd:gDay .
     </pre>
     <p>Defining semantic conditions for such structures, and the formal properties thereof, is beyond the scope of this document (and outside the purview of RDF for any datatype defined by other specifications). A possible SPARQL-based expansion form is proposed in Appendix [[[#sparql-expansion-datetime]]].
+    <p class="issue">Define a general semantic condition for <code>rdfs:Literal</code>s entailing a <code>rdf:lexicalForm</code> relation to its lexical value? Cf. L2V(d)(v).</p>
   </section>
 
 </section>
