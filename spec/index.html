@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <meta name="color-scheme" content="light dark">
   <title>RDF 1.2 Properties of Formal Structures</title>
   <script src="https://www.w3.org/Tools/respec/respec-w3c" class="remove"></script>
   <script src="../../rdf-common/local-biblio.js" class="remove"></script>
@@ -16,9 +17,15 @@
       copyrightStart: "2025",
       editors:  [
         { name: "Niklas Lindström", w3cid: "44656" }
+      ],
+
+      preProcess: [
+        highlightLoader("trig", "../../rdf-common/highlightjs-rdflang/src/trig.js", "hljsDefineTrig"),
+        highlightLoader("sparql", "../../rdf-common/highlightjs-rdflang/src/sparql.js", "hljsDefineSparql")
       ]
     };
   </script>
+  <style data-include="../../rdf-common/fixup.css"></style>
   <style>
     /* from ../../rdf-semantics/spec */
     table { border-collapse:collapse; }
