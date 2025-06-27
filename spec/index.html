@@ -346,7 +346,7 @@ _:dt time:day "---DD"^^xsd:gDay .
 
 <section id="section-interop-owl">
   <h2>OWL-based Interoperability Patterns</h2>
-  <p>Using the extended interpretations defined above results in a graph which can be further reasoned over through the semantic extension of OWL. Axioms can be defined to describe restriction subclasses of <code>rdfs:Proposition</code> based on e.g. a particular predicate, and/or to describe sub-property chain axioms of simpler relationships, implying more abstract relationships from more complex, e.g. N-ary relationship entities.
+  <p>Using the extended interpretations defined above results in a graph which can be further reasoned over through the semantic extension of OWL. Axioms can be defined to describe restriction subclasses of <code>rdfs:Proposition</code> based on, for example, a particular predicate, and to define sub-property chain axioms of relationships that hold between entities in more complex relationships. This allows for annotations of direct, more abstract statements to entail underlying, more granular forms of association classes.
 
   <p class="note">The patterns below utilize <code>owl:hasSelf</code> to define a <em>rolification</em> of a class, meaning a restriction pattern for the relationship from an individual to itself, which is equivalent to a specified class. This restriction implies that an instance of such a class has this rolified relationship to itself (and vice versa). That enables the use of the rolification property in sub-property chain axioms, functioning as a self-relation chain component matching the type of the resource.
 
@@ -402,7 +402,7 @@ PREFIX prov: &lt;http://www.w3.org/ns/prov#>
 <section id="section-form-expansion-sparql" class="appendix">
   <h2>Structural Expansions using SPARQL</h2>
   <p>The following subsections define SPARQL queries for constructing descriptions of the expanded formal structures. They have to be repeatedly run against the union of the source graph and each result graph, until the triple count is equal to the triple count of the previous iteration.
-  <p class="note">The construct patterns below use <code>owl:sameAs</code> to encode equivalence of the denoting terms with the blank nodes used as subjects for the encoded descriptions. Other semantic extensions that do not recognize OWL 2 semantics may require other forms for encoding the entailments; e.g. <a data-cite="RDF12-CONCEPTS#section-symmetric-rdf">symmetric RDF</a>.
+  <p class="note">The construct patterns below use <code>owl:sameAs</code> to encode equivalence of the denoting terms with the blank nodes used as subjects for the encoded descriptions. Other semantic extensions that do not recognize OWL 2 semantics may require other forms for encoding the entailments, such as <a data-cite="RDF12-CONCEPTS#section-symmetric-rdf">symmetric RDF</a>.
   <section id="sparql-expansion-triple-term">
     <h3>Triple Form Expansion</h3>
     <div>
