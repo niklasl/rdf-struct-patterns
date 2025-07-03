@@ -136,8 +136,8 @@ BASE &lt;http://example.org/>
 <section>
   <h2>Properties of Formal Structures</h2>
   <p>In RDF, resources are regularly <em>denoted</em> by IRIs, or existentially quantified by blank nodes, and further <em>described</em> through statements about them, rendering their definitions more precise.
-  This is not necessary for propositions and literal values, since their meaning is completely <em>encoded</em> by their corresponding terms&mdash;triple terms and literals&mdash;in the abstract syntax.
-  <p>Propositions are fixed, invariant formal abstractions within the value space denoted by <code>rdfs:Proposition</code>, having three intrinsic constituent components: the subject, predicate and object of the proposition. This structure forms a precise conceptual identity, corresponding to the triple terms, which are three-tuples of RDF terms, acting as keys denoting the proposition through its structure within the value space.
+  This is not necessary for propositions and literal values, since their meaning is completely <em>encoded</em> by their corresponding terms&mdash;ground triple terms and literals&mdash;in the abstract syntax.
+  <p>Propositions are fixed, invariant formal abstractions within the class extension denoted by <code>rdfs:Proposition</code>, having three intrinsic constituent components: the subject, predicate and object of the proposition. This structure forms a precise conceptual identity, corresponding to the triple terms, which are 3-tuples of RDF terms, acting as a compound key denoting the proposition through its structure within the class extension.
   <p>Literal values, while fundamentally different concepts (some defined outside of RDF), share this fixed, invariant characteristic within an interpretation.
   <p>Therefore, while these kinds of resources are conceptually just resources in the domain of discourse, they have a particular standing due to their formally fixed definitions.
   The RDF abstract syntax reflects this by only allowing literals and triple terms as objects of other triples.
