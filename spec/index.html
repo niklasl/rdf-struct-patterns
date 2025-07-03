@@ -157,7 +157,6 @@ XXX YYY &lt;&lt;( AAA BBB CCC )>> .
   <p>can thus be described as:
   <pre class="turtle">
 XXX YYY _:pp .
-_:pp a rdf:TripleForm .
 _:pp rdf:tripleSubject AAA .
 _:pp rdf:triplePredicate BBB .
 _:pp rdf:tripleObject CCC .
@@ -165,6 +164,10 @@ _:pp rdf:tripleObject CCC .
   <p>Note that the following is already entailed through RDFS semantics:
   <pre class="turtle">
 _:pp a rdfs:Proposition .
+  </pre>
+  <p>And this, provided the axioms below:
+  <pre class="turtle">
+_:pp a rdf:TripleForm .
   </pre>
   <section id="section-interp-proposition">
     <h3>Extended Proposition Interpretation</h3>
@@ -226,11 +229,14 @@ SSS PPP "..."@und--rtl .
     <p>can thus be described as:
     <pre class="turtle">
 SSS PPP _:dls .
-_:dls a rdf:dirLangString .
 _:dls rdf:value "..." .  # implies a structured value specialization? Use rdf:lexicalForm?
 _:dls rdf:language "und"^^rdf:langTag .  # cf. dct:ISO639-1 | dct:ISO639-2
 _:dls rdf:direction "rtl"^^rdf:langDir .  # or rather rdf:RTL ?
     </pre>
+  <p>Note that the following is D-entailed:
+  <pre class="turtle">
+_:dls a rdf:dirLangString .
+  </pre>
     <p class="issue">Harmonize this pattern with <code>rdf:CompoundLiteral</code> possibly used for basic-encoding.
     <section id="section-interp-dirlangstring">
       <h3>Extended Directional Language String Interpretation</h3>
