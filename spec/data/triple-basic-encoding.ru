@@ -1,16 +1,22 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
 DELETE {
-  ?s ?rel <<( ?ts ?tp ?to )>> .
+  ?s ?rel <<( ?ppn_s ?ppn_p ?ppn_o )>> .
 }
 INSERT {
-  ?s ?rel ?t .
-  ?t a rdf:TripleForm ;
-    rdf:tripleSubject ?ts ; rdf:triplePredicate ?tp ; rdf:tripleObject ?to .
+  ?s ?rel ?ppn .
+  ?ppn a rdf:PropositionForm ;
+    rdf:propositionFormSubject ?ppn_s ;
+    rdf:propositionFormPredicate ?ppn_p ;
+    rdf:propositionFormObject ?ppn_o .
 }
 WHERE {
-  ?s ?rel <<( ?ts ?tp ?to )>> .
+  ?s ?rel <<( ?ppn_s ?ppn_p ?ppn_o )>> .
   OPTIONAL {
-    ?existing_tt a rdf:TripleForm ;
-      rdf:tripleSubject ?ts ; rdf:triplePredicate ?tp ; rdf:tripleObject ?to .
+    ?existing_ppn a rdf:PropositionForm ;
+      rdf:propositionFormSubject ?ppn_s ;
+      rdf:propositionFormPredicate ?ppn_p ;
+      rdf:propositionFormObject ?ppn_o .
   }
-  BIND(COALESCE(?existing_tt, BNODE()) as ?t)
+  BIND(COALESCE(?existing_ppn, BNODE()) as ?ppn)
 }

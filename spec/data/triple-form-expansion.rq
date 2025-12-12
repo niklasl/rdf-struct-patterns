@@ -1,10 +1,20 @@
-# Standard RDF, relying on owl:sameAs. For symmetric RDF: <<( ?ts ?tp ?to )>> a ...
+# Standard RDF, relying on owl:sameAs. For symmetric RDF: <<( ?ppn_s ?ppn_p ?ppn_o )>> a ...
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
 CONSTRUCT {
-  ?s ?rel [ a rdf:TripleForm ;
-            owl:sameAs <<( ?ts ?tp ?to )>> ;
-            rdf:tripleSubject ?ts ;
-            rdf:triplePredicate ?tp ;
-            rdf:tripleObject ?to ] .
+  ?s ?rel ?ppn .
+  ?ppn a rdf:PropositionForm ;
+    owl:sameAs <<( ?ppn_s ?ppn_p ?ppn_o )>> ;
+    rdf:propositionFormSubject ?ppn_s ;
+    rdf:propositionFormPredicate ?ppn_p ;
+    rdf:propositionFormObject ?ppn_o .
 } WHERE {
-  ?s ?rel <<( ?ts ?tp ?to )>> .
+  ?s ?rel <<( ?ppn_s ?ppn_p ?ppn_o )>> .
+  OPTIONAL {
+    ?existing_ppn a rdf:PropositionForm ;
+      rdf:propositionFormSubject ?ppn_s ;
+      rdf:propositionFormPredicate ?ppn_p ;
+      rdf:propositionFormObject ?ppn_o .
+  }
+  BIND(COALESCE(?existing_ppn, BNODE()) as ?ppn)
 }

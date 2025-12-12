@@ -1,8 +1,8 @@
 prov:qualifiedAssociation
     owl:propertyChainAxiom
-        ([owl:inverseOf rdf:tripleSubject] [owl:inverseOf _:reified_assocWith_ppn]) .
+        ([owl:inverseOf rdf:propositionFormSubject] [owl:inverseOf _:reified_assocWith_ppn]) .
 
-prov:agent owl:propertyChainAxiom (_:reified_assocWith_ppn rdf:tripleObject) .
+prov:agent owl:propertyChainAxiom (_:reified_assocWith_ppn rdf:propositionFormObject) .
 
 _:reified_assocWith_ppn
     owl:propertyChainAxiom (_:a_Association rdf:reifies _:associated_ppn) .
@@ -12,4 +12,4 @@ _:reified_assocWith_ppn
 
 [ owl:onProperty _:associated_ppn ; owl:hasSelf true ]
     owl:equivalentClass
-        [ owl:onProperty rdf:triplePredicate ; owl:hasValue prov:wasAssociatedWith ] .
+        [ owl:onProperty rdf:propositionFormPredicate ; owl:hasValue prov:wasAssociatedWith ] .

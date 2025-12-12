@@ -1,8 +1,8 @@
 prov:qualifiedUsage
     owl:propertyChainAxiom
-        ([owl:inverseOf rdf:tripleSubject] [owl:inverseOf _:reified_used_ppn]) .
+        ([owl:inverseOf rdf:propositionFormSubject] [owl:inverseOf _:reified_used_ppn]) .
 
-prov:entity owl:propertyChainAxiom (_:reified_used_ppn rdf:tripleObject) .
+prov:entity owl:propertyChainAxiom (_:reified_used_ppn rdf:propositionFormObject) .
 
 _:reified_used_ppn owl:propertyChainAxiom (_:a_Usage rdf:reifies _:used_ppn) .
 
@@ -11,4 +11,4 @@ _:reified_used_ppn owl:propertyChainAxiom (_:a_Usage rdf:reifies _:used_ppn) .
 
 [ owl:onProperty _:used_ppn ; owl:hasSelf true ]
     owl:equivalentClass
-        [ owl:onProperty rdf:triplePredicate ; owl:hasValue prov:used ] .
+        [ owl:onProperty rdf:propositionFormPredicate ; owl:hasValue prov:used ] .

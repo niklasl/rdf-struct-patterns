@@ -149,7 +149,7 @@ BASE &lt;http://example.org/>
 
 <section id="section-struct-propos">
   <h2>Formal Structure of Propositions</h2>
-  <p>An <code>rdfs:Proposition</code> instance is precisely defined as a resource with the form of a triple, having exactly one subject resource, one predicate property and one object resource.
+  <p>An <code>rdfs:Proposition</code> instance is a resource having exactly one subject resource, one predicate property and one object resource.
   <p>The proposition pattern:
   <pre class="turtle">
 XXX YYY &lt;&lt;( AAA BBB CCC )>> .
@@ -157,9 +157,9 @@ XXX YYY &lt;&lt;( AAA BBB CCC )>> .
   <p>can thus be described as:
   <pre class="turtle">
 XXX YYY _:pp .
-_:pp rdf:tripleSubject AAA .
-_:pp rdf:triplePredicate BBB .
-_:pp rdf:tripleObject CCC .
+_:pp rdf:propositionFormSubject AAA .
+_:pp rdf:propositionFormPredicate BBB .
+_:pp rdf:propositionFormObject CCC .
   </pre>
   <p>Note that the following is already entailed through RDFS semantics:
   <pre class="turtle">
@@ -167,7 +167,7 @@ _:pp a rdfs:Proposition .
   </pre>
   <p>And this, provided the axioms below:
   <pre class="turtle">
-_:pp a rdf:TripleForm .
+_:pp a rdf:PropositionForm .
   </pre>
   <section id="section-interp-proposition">
     <h3>Extended Proposition Interpretation</h3>
@@ -182,9 +182,9 @@ _:pp a rdf:TripleForm .
             then:
           </p>
           <ul>
-            <li>&lt;I(E), I(s)> is in IEXT(I(<code>rdf:tripleSubject</code>)),</li>
-            <li>&lt;I(E), I(p)> is in IEXT(I(<code>rdf:triplePredicate</code>)), and</li>
-            <li>&lt;I(E), I(o)> is in IEXT(I(<code>rdf:tripleObject</code>)).</li>
+            <li>&lt;I(E), I(s)> is in IEXT(I(<code>rdf:propositionFormSubject</code>)),</li>
+            <li>&lt;I(E), I(p)> is in IEXT(I(<code>rdf:propositionFormPredicate</code>)), and</li>
+            <li>&lt;I(E), I(o)> is in IEXT(I(<code>rdf:propositionFormObject</code>)).</li>
           </ul>
         </td>
       </tr>
@@ -194,19 +194,19 @@ _:pp a rdf:TripleForm .
       <tr>
         <td class="ruletable">
           <pre>
-rdf:TripleForm rdf:type rdfs:Class .
+rdf:PropositionForm rdf:type rdfs:Class .
 
-rdf:tripleSubject rdf:type rdf:Property .
-rdf:tripleSubject rdfs:domain rdf:TripleForm .
-rdf:tripleSubject rdfs:range rdfs:Resource .
+rdf:propositionFormSubject rdf:type rdf:Property .
+rdf:propositionFormSubject rdfs:domain rdf:PropositionForm .
+rdf:propositionFormSubject rdfs:range rdfs:Resource .
 
-rdf:triplePredicate rdf:type rdf:Property .
-rdf:triplePredicate rdfs:domain rdf:TripleForm .
-rdf:triplePredicate rdfs:range rdf:Property .
+rdf:propositionFormPredicate rdf:type rdf:Property .
+rdf:propositionFormPredicate rdfs:domain rdf:PropositionForm .
+rdf:propositionFormPredicate rdfs:range rdf:Property .
 
-rdf:tripleObject rdf:type rdf:Property .
-rdf:tripleObject rdfs:domain rdf:TripleForm .
-rdf:tripleObject rdfs:range rdfs:Resource .
+rdf:propositionFormObject rdf:type rdf:Property .
+rdf:propositionFormObject rdfs:domain rdf:PropositionForm .
+rdf:propositionFormObject rdfs:range rdfs:Resource .
           </pre>
         </td>
       </tr>
@@ -357,7 +357,7 @@ _:dt time:day "---DD"^^xsd:gDay .
 
   <p class="note">The patterns below utilize <code>owl:hasSelf</code> to define a <em>rolification</em> of a class, meaning a restriction pattern for the relationship from an individual to itself, which is equivalent to a specified class. This restriction implies that an instance of such a class has this rolified relationship to itself (and vice versa). That enables the use of the rolification property in sub-property chain axioms, functioning as a self-relation chain component matching the type of the resource.
 
-<section id="section-patterns">
+<section id="section-interop-propositions">
   <h2>Interoperability Patterns Using Reified Propositions</h2>
   <p>The following patterns rely on OWL 2 and <a href="#section-interp-proposition">extended interpretation of propositions</a> to ensure that simplified descriptions leveraging <a data-cite="RDF12-CONCEPTS#dfn-reifying-triple">reifying triples</a> and/or <a data-cite="RDF12-TURTLE#dfn-annotation-syntax">triple annotations</a> can be interoperably interpreted as classical, more complex forms of descriptions.
 
@@ -469,7 +469,7 @@ PREFIX prov: &lt;http://www.w3.org/ns/prov#>
 
   <section>
     <h3>Upgrading to Structural Interpretations</h3>
-    <p>Since applications may start with a dependency on deployed structures, and rely on <em>basic-encoding</em>, having a formal way of instead entailing these facts ensures a seamless upgrade path, without requiring redefined domain logic or queries rewritten for new structures.
+    <p>Since applications may start with a dependency on deployed structures, and rely on <em>basic-encoding</em>, having a formal way of instead entailing these facts ensures a seamless upgrade path to RDF 1.2 Full, without requiring redefined domain logic or queries rewritten for new structures.
     <p class="note">Similarly, a basic-encoded graph will work <em>mostly</em> the same when reasoned over using OWL. One crucial difference is that there will be no triple terms in a basic-encoded graph, meaning that there is no <code>owl:sameAs</code> relationship to such terms from the encoded propositions. This is not significant for the <em>meaning</em>, but for implementations also relying on the graph structure itself.
   </section>
 

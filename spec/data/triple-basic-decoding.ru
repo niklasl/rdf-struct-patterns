@@ -1,28 +1,38 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
 DELETE {
-  ?s ?rel ?t .
-  ?t a rdf:TripleForm ;
-    rdf:tripleSubject ?ts ; rdf:triplePredicate ?tp ; rdf:tripleObject ?to .
+  ?s ?rel ?ppn .
+  ?ppn a rdf:PropositionForm ;
+    rdf:propositionFormSubject ?ppn_s ;
+    rdf:propositionFormPredicate ?ppn_p ;
+    rdf:propositionFormObject ?ppn_o .
 }
 INSERT {
-  ?s ?rel <<( ?ts ?tp ?to )>> .
+  ?s ?rel <<( ?ppn_s ?ppn_p ?ppn_o )>> .
 }
 WHERE {
-  ?s ?rel ?t .
-  ?t a rdf:TripleForm ;
-    rdf:tripleSubject ?ts ; rdf:triplePredicate ?tp ; rdf:tripleObject ?to .
+  ?s ?rel ?ppn .
+  ?ppn a rdf:PropositionForm ;
+    rdf:propositionFormSubject ?ppn_s ;
+    rdf:propositionFormPredicate ?ppn_p ;
+    rdf:propositionFormObject ?ppn_o .
 };
-# The above nests triple in triple but doesn't remove its basic-encoded form:
+# The above nests triple in triple but doesn't remove its basic-encoded form; this does:
 DELETE {
-  ?s ?p <<( ?ts ?tp ?t_t )>> .
-  ?t_t a rdf:TripleForm ;
-    rdf:tripleSubject ?t_ts ; rdf:triplePredicate ?t_tp ; rdf:tripleObject ?t_to .
+  ?s ?p <<( ?ppn_s ?ppn_p ?ppn_ppn )>> .
+  ?ppn_ppn a rdf:PropositionForm ;
+    rdf:propositionFormSubject ?ppn_ppn_s ;
+    rdf:propositionFormPredicate ?ppn_ppn_p ;
+    rdf:propositionFormObject ?ppn_ppn_o .
 }
 # Not needed (taken care of above):
 #INSERT {
-#  ?s ?p <<( ?ts ?tp <<( ?t_ts ?t_tp ?t_to )>> )>> .
+#  ?s ?p <<( ?ppn_s ?ppn_p <<( ?ppn_ppn_s ?ppn_ppn_p ?ppn_ppn_o )>> )>> .
 #}
 WHERE {
-  ?s ?p <<( ?ts ?tp ?t_t )>> .
-  ?t_t a rdf:TripleForm ;
-    rdf:tripleSubject ?t_ts ; rdf:triplePredicate ?t_tp ; rdf:tripleObject ?t_to .
+  ?s ?p <<( ?ppn_s ?ppn_p ?ppn_ppn )>> .
+  ?ppn_ppn a rdf:PropositionForm ;
+    rdf:propositionFormSubject ?ppn_ppn_s ;
+    rdf:propositionFormPredicate ?ppn_ppn_p ;
+    rdf:propositionFormObject ?ppn_ppn_o .
 }
