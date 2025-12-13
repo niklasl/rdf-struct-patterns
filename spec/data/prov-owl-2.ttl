@@ -1,6 +1,8 @@
 prov:qualifiedAssociation
-    owl:propertyChainAxiom
-        ([owl:inverseOf rdf:propositionFormSubject] [owl:inverseOf _:reified_assocWith_ppn]) .
+    owl:propertyChainAxiom (
+            [owl:inverseOf rdf:propositionFormSubject]
+            [owl:inverseOf _:reified_assocWith_ppn]
+        ) .
 
 prov:agent owl:propertyChainAxiom (_:reified_assocWith_ppn rdf:propositionFormObject) .
 
@@ -12,4 +14,5 @@ _:reified_assocWith_ppn
 
 [ owl:onProperty _:associated_ppn ; owl:hasSelf true ]
     owl:equivalentClass
-        [ owl:onProperty rdf:propositionFormPredicate ; owl:hasValue prov:wasAssociatedWith ] .
+        [ owl:onProperty rdf:propositionFormPredicate ;
+        owl:hasValue prov:wasAssociatedWith ] .

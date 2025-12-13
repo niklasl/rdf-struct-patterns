@@ -1,6 +1,9 @@
-rdf:subject owl:propertyChainAxiom (_:a_Statement rdf:reifies rdf:propositionFormSubject) .
-rdf:predicate owl:propertyChainAxiom (_:a_Statement rdf:reifies rdf:propositionFormPredicate) .
-rdf:object owl:propertyChainAxiom (_:a_Statement rdf:reifies rdf:propositionFormObject) .
+rdf:subject
+    owl:propertyChainAxiom (_:a_Statement rdf:reifies rdf:propositionFormSubject) .
+rdf:predicate
+    owl:propertyChainAxiom (_:a_Statement rdf:reifies rdf:propositionFormPredicate) .
+rdf:object
+    owl:propertyChainAxiom (_:a_Statement rdf:reifies rdf:propositionFormObject) .
 
 [ owl:onProperty _:a_Statement ; owl:hasSelf true ]
     owl:equivalentClass rdf:Statement .
