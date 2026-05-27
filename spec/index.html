@@ -229,15 +229,22 @@ SSS PPP "..."@und--rtl .
     <p>can thus be described as:
     <pre class="turtle">
 SSS PPP _:dls .
-_:dls rdf:value "..." .  # implies a structured value specialization? Use rdf:lexicalForm?
-_:dls rdf:language "und"^^rdf:langTag .  # cf. dct:ISO639-1 | dct:ISO639-2
-_:dls rdf:direction "rtl"^^rdf:langDir .  # or rather rdf:RTL ?
+_:dls rdf:value "..." .
+_:dls rdf:language "und"^^xsd:language .
+_:dls rdf:direction "rtl"^^rdf:langDir .
     </pre>
-  <p>Note that the following is D-entailed:
+    <!--
+        NOTE: replaced rdf:langTag with xsd:language ;
+        cf. dct:ISO639-1 | dct:ISO639-2 and
+        <https://www.w3.org/TR/2012/REC-xmlschema11-2-20120405/datatypes.html#language>
+    -->
+    <p>Note that the following is entailed by <a href="https://www.w3.org/TR/rdf12-semantics/#dfn-rdfd1">rdfD1</a>:
   <pre class="turtle">
 _:dls a rdf:dirLangString .
   </pre>
-    <p class="issue">Harmonize this pattern with <code>rdf:CompoundLiteral</code> possibly used for basic-encoding.
+    <p class="issue">Harmonize this pattern with <code>rdf:CompoundLiteral</code> (possibly used for extended basic-encoding)?
+    <p class="issue">Is <code>rdf:value</code> enough (or too associated with idiomatic structured value tokens)? Define <code>rdf:lexicalForm</code>?
+    <p class="issue">Define <code>rdf:langDir</code>, based on <code>xsd:token</code>; or rather define <code>rdf:rtl</code> and <code>rdf:ltr</code>?
     <section id="section-interp-dirlangstring">
       <h3>Extended Directional Language String Interpretation</h3>
       <p>An extended directional language string interpretation is an RDFS interpretation I which also satisfies the following semantic condition, and all the triples in the subsequent table of axiomatic triples.
@@ -258,7 +265,7 @@ _:dls a rdf:dirLangString .
             <p>and:</p>
             <ul>
               <li>IL(v) is in ICEXT(I(<code>xsd:string</code>)),</li>
-              <li>IL(l) is in ICEXT(I(<code>rdf:langTag</code>)), and</li>
+              <li>IL(l) is in ICEXT(I(<code>xsd:language</code>)), and</li>
               <li>IL(d) is in ICEXT(I(<code>rdf:langDir</code>)).</li>
             </ul>
           </td>
@@ -269,14 +276,11 @@ _:dls a rdf:dirLangString .
         <tr>
           <td class="ruletable">
             <pre>
-  rdf:langString rdf:type rdfs:Datatype .
-  rdf:dirLangString rdf:type rdfs:Datatype .
-  rdf:langTag rdf:type rdfs:Datatype .
   rdf:langDir rdf:type rdfs:Datatype .
 
   rdf:language rdf:type rdf:Property .
   rdf:language rdfs:domain [owl:unionOf (rdf:langString rdf:dirLangString)] .
-  rdf:language rdfs:range rdf:langTag .
+  rdf:language rdfs:range xsd:language .
 
   rdf:direction rdf:type rdf:Property .
   rdf:direction rdfs:domain rdf:dirLangString .
@@ -299,7 +303,7 @@ SSS PPP "..."@und .
 SSS PPP _:dls .
 _:dls a rdf:langString .
 _:dls rdf:value "..." .  # Use rdf:lexicalForm?
-_:dls rdf:language "und"^^rdf:langTag .
+_:dls rdf:language "und"^^xsd:language .
     </pre>
     <section id="section-interp-dirlangstring">
       <h3>Extended Language String Interpretation</h3>
@@ -320,7 +324,7 @@ _:dls rdf:language "und"^^rdf:langTag .
             <p>and:</p>
             <ul>
               <li>IL(v) is in ICEXT(I(<code>xsd:string</code>)), and</li>
-              <li>IL(l) is in ICEXT(I(<code>rdf:langTag</code>)).</li>
+              <li>IL(l) is in ICEXT(I(<code>xsd:language</code>)).</li>
             </ul>
           </td>
         </tr>
