@@ -1,0 +1,4 @@
+PREFIX ex: <https://example.net/ns/>
+BASE <http://example.net/>
+
+<Theseus> ex:used <Ship1> {| a ex:Event ; ex:atTime -101861280000000 |} .

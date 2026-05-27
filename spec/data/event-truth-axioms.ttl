@@ -1,0 +1,37 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX ex: <https://example.net/ns/>
+
+##
+# Anything with an at time property is an Event:
+ex:atTime rdfs:domain ex:Event .
+
+##
+# A rolification of the class of propositions which are reified by events:
+[ owl:onProperty _:a_ppn_reifiedby_a_Event ; owl:hasSelf true ]
+  owl:equivalentClass
+    [ owl:onProperty [owl:inverseOf rdf:reifies] ; owl:someValuesFrom ex:Event ] .
+
+##
+# The restriction class of propositions that reify events.
+
+# The subject of an event-reified proposition has the proposition as its type.
+[ owl:inverseOf rdf:type ]
+  owl:propertyChainAxiom
+    ( _:a_ppn_reifiedby_a_Event rdf:propositionFormSubject ) .
+
+# The predicate of an event-reified proposition is the property of the
+# restriction class:
+owl:onProperty
+  owl:propertyChainAxiom
+    ( _:a_ppn_reifiedby_a_Event rdf:propositionFormPredicate ) .
+
+# The object of an event-reified proposition is the value of the restriction
+# class:
+owl:hasValue
+  owl:propertyChainAxiom
+    ( _:a_ppn_reifiedby_a_Event rdf:propositionFormObject ) .
+
+
