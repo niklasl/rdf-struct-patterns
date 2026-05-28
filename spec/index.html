@@ -406,9 +406,9 @@ PREFIX prov: &lt;http://www.w3.org/ns/prov#>
 
   <section id="section-interop-event-truth">
     <h3>Events as Proposition-reifying Truthmakers</h3>
-    <p>The ability to define OWL axioms involving the constituents of a proposition also makes it possible to define axioms trough which a proposition is entailed to hold (such that, if the entailments are materialized, the triple denoting the proposition is asserted).
-    <p>The following exemplifies that, by entailing a certain kind of proposition to be the object of an <code>rdf:type</code> relationship to its subject, and further that such a proposition restricts its subject such that it has the object of the proposition as the value of the predicate of the proposition.
-    <p>The class of events is further defined to reify propositions of this particular kind; specifically those being objects of an <code>rdf:reifies</code> relationship of event instances. This can be thought of as events being <a href="https://plato.stanford.edu/entries/truthmakers/">truthmakers</a> of these (truthbearing) propositions.
+    <p>The possibility of referring to the constituent properties of a proposition also makes it possible to define OWL-based axioms through which a proposition is entailed to hold. (Meaning that, if entailments are materialized, a triple denoting such a proposition is asserted.)
+    <p>The following exemplifies that, by entailing a certain kind of proposition to be the object of an <code>rdf:type</code> relationship to its subject, and further that this kind of proposition is a restriction class on its subject, such that this subject has the object of the proposition as the value of the predicate of the proposition.
+    <p>The class of events is further defined to reify propositions of this particular kind; specifically those being objects of an <code>rdf:reifies</code> relationship from event instances. This can be thought of as events being <a href="https://plato.stanford.edu/entries/truthmakers/">truthmakers</a> of these (truthbearing) propositions.
     <p>An event reifying a proposition:
     <pre class="example turtle" title="simple PROV-O relationships"
          data-include="data/event-truth-event.ttl" data-include-format="text"></pre>
