@@ -1,0 +1,1627 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta name="generator" content="ReSpec 37.1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<style>
+span.example-title{text-transform:none}
+:is(aside,div).example,div.illegal-example{padding:.5em;margin:1em 0;position:relative;clear:both}
+div.illegal-example{color:red}
+div.illegal-example p{color:#000}
+aside.example div.example{border-left-width:.1em;border-color:#999;background:#fff}
+</style>
+<style>
+.issue-label{text-transform:initial}
+.warning>p:first-child{margin-top:0}
+.warning{padding:.5em;border-left-width:.5em;border-left-style:solid}
+span.warning{padding:.1em .5em .15em}
+.issue.closed span.issue-number{text-decoration:line-through}
+.issue.closed span.issue-number::after{content:" (Closed)";font-size:smaller}
+.warning{border-color:#f11;border-color:var(--warning-border,#f11);border-width:.2em;border-style:solid;background:#fbe9e9;background:var(--warning-bg,#fbe9e9);color:#000;color:var(--text,#000)}
+.warning-title:before{content:"⚠";font-size:1.3em;float:left;padding-right:.3em;margin-top:-.3em}
+li.task-list-item{list-style:none}
+input.task-list-item-checkbox{margin:0 .35em .25em -1.6em;vertical-align:middle}
+.issue a.respec-gh-label{padding:5px;margin:0 2px 0 2px;font-size:10px;text-transform:none;text-decoration:none;font-weight:700;border-radius:4px;position:relative;bottom:2px;border:none;display:inline-block}
+</style>
+<style>
+dfn{cursor:pointer}
+.dfn-panel{position:absolute;z-index:35;min-width:300px;max-width:500px;padding:.5em .75em;margin-top:.6em;font-family:"Helvetica Neue",sans-serif;font-size:small;background:#fff;background:var(--indextable-hover-bg,#fff);color:#000;color:var(--text,#000);box-shadow:0 1em 3em -.4em rgba(0,0,0,.3),0 0 1px 1px rgba(0,0,0,.05);box-shadow:0 1em 3em -.4em var(--tocsidebar-shadow,rgba(0,0,0,.3)),0 0 1px 1px var(--tocsidebar-shadow,rgba(0,0,0,.05));border-radius:2px}
+.dfn-panel:not(.docked)>.caret{position:absolute;top:-9px}
+.dfn-panel:not(.docked)>.caret::after,.dfn-panel:not(.docked)>.caret::before{content:"";position:absolute;border:10px solid transparent;border-top:0;border-bottom:10px solid #fff;border-bottom-color:var(--indextable-hover-bg,#fff);top:0}
+.dfn-panel:not(.docked)>.caret::before{border-bottom:9px solid #a2a9b1;border-bottom-color:var(--indextable-hover-bg,#a2a9b1)}
+.dfn-panel *{margin:0}
+.dfn-panel b{display:block;color:#000;color:var(--text,#000);margin-top:.25em}
+.dfn-panel ul a[href]{color:#333;color:var(--text,#333)}
+.dfn-panel>div{display:flex}
+.dfn-panel a.self-link{font-weight:700;margin-right:auto}
+.dfn-panel .marker{padding:.1em;margin-left:.5em;border-radius:.2em;text-align:center;white-space:nowrap;font-size:90%;color:#040b1c}
+.dfn-panel .marker.dfn-exported{background:#d1edfd;box-shadow:0 0 0 .125em #1ca5f940}
+.dfn-panel .marker.idl-block{background:#8ccbf2;box-shadow:0 0 0 .125em #0670b161}
+.dfn-panel .marker.cddl-block{background:#8ccbf2;box-shadow:0 0 0 .125em #0670b161}
+.dfn-panel a:not(:hover){text-decoration:none!important;border-bottom:none!important}
+.dfn-panel a[href]:hover{border-bottom-width:1px}
+.dfn-panel ul{padding:0}
+.dfn-panel li{margin-left:1em}
+.dfn-panel.docked{position:fixed;left:.5em;top:unset;bottom:2em;margin:0 auto;max-width:calc(100vw - .75em * 2 - .5em - .2em * 2);max-height:30vh;overflow:auto}
+</style>
+  
+  
+<meta name="color-scheme" content="light dark">
+  
+<title>RDF 1.2 Properties of Formal Structures</title>
+  
+<style id="respec-mainstyle">
+@keyframes pop{
+0%{transform:scale(1,1)}
+25%{transform:scale(1.25,1.25);opacity:.75}
+100%{transform:scale(1,1)}
+}
+a.internalDFN{color:inherit;border-bottom:1px solid #99c;text-decoration:none}
+a.externalDFN{color:inherit;border-bottom:1px dotted #ccc;text-decoration:none}
+a.bibref{text-decoration:none}
+.respec-offending-element:target{animation:pop .25s ease-in-out 0s 1}
+.respec-offending-element,a[href].respec-offending-element{text-decoration:red wavy underline}
+@supports not (text-decoration:red wavy underline){
+.respec-offending-element:not(pre){display:inline-block}
+.respec-offending-element{background:url(data:image/gif;base64,R0lGODdhBAADAPEAANv///8AAP///wAAACwAAAAABAADAEACBZQjmIAFADs=) bottom repeat-x}
+}
+#references :target{background:#eaf3ff;animation:pop .4s ease-in-out 0s 1}
+@media (prefers-color-scheme:dark){
+#references :target{background:color-mix(in srgb, #eaf3ff 15%, transparent)}
+}
+body:has(input[name=color-scheme][value=dark]:checked) #references :target{background:color-mix(in srgb, #eaf3ff 15%, transparent)}
+cite .bibref{font-style:italic}
+a[href].orcid{padding-left:4px;padding-right:4px}
+a[href].orcid>svg{margin-bottom:-2px}
+ol.tof,ul.tof{list-style:none outside none}
+.caption{margin-top:.5em;font-style:italic}
+#issue-summary>ul{column-count:2}
+#issue-summary li{list-style:none}
+details.respec-tests-details{margin-left:1em;display:inline-block;vertical-align:top}
+details.respec-tests-details>*{padding-right:2em}
+details.respec-tests-details[open]{z-index:999999;position:absolute;border:thin solid #cad3e2;border-radius:.3em;background-color:#fff;padding-bottom:.5em}
+details.respec-tests-details[open]>summary{border-bottom:thin solid #cad3e2;padding-left:1em;margin-bottom:1em;line-height:2em}
+details.respec-tests-details>ul{width:100%;margin-top:-.3em}
+details.respec-tests-details>li{padding-left:1em}
+.self-link:hover{opacity:1;text-decoration:none;background-color:transparent}
+aside.example .marker>a.self-link{color:inherit}
+.header-wrapper{display:flex;align-items:baseline}
+:is(h2,h3,h4,h5,h6):not(#toc>h2,#abstract>h2,#sotd>h2,.head>h2):has(+a.self-link){position:relative;left:-.5em}
+:is(h2,h3,h4,h5,h6):not(#toch2)+a.self-link{color:inherit;order:-1;position:relative;left:-1.1em;font-size:1rem;opacity:.5}
+:is(h2,h3,h4,h5,h6)+a.self-link::before{content:"§";text-decoration:none;color:var(--heading-text)}
+:is(h2,h3)+a.self-link{top:-.2em}
+:is(h4,h5,h6)+a.self-link::before{color:#000}
+@media (max-width:767px){
+dd{margin-left:0}
+}
+@media print{
+.removeOnSave{display:none}
+}
+body:has(input[name=color-scheme][value=light]:checked),head:not(:has(meta[name=color-scheme][content~=dark]))+body{color-scheme:light}
+body:has(input[name=color-scheme][value=dark]:checked){color-scheme:dark}
+</style>
+  
+  
+  
+  
+<style>
+
+    /* from ../../rdf-semantics/spec */
+    table { border-collapse:collapse; }
+    table, td, th { border:1px solid light-dark(black, grey); }
+    caption { font-weight: bold; text-align: left ; }
+    .semantictable {background-color: light-dark(#ffa, #122); padding:0.5em;}
+    .ruletable {background-color: light-dark(#ddf, #112); padding:0.5em;}
+  
+</style>
+
+<meta name="description" content="The purpose of this document is to define semantic extensions for interpreting the formal structures of propositions and literal values, as defined in RDF 1.2 Concepts and Abstract Data Model. In addition, examples of semantic interoperability patterns using OWL in conjunction with these extensions are provided. This assumes knowledge of the basic concepts of RDF, and familiarity with reifiers, as exemplified in the RDF 1.2 Primer. It furthermore relies on the semantic conditions defined in RDF 1.2 Semantics. The section about OWL-based Interoperability patterns assumes an understanding of OWL 2 Web Ontology Language RDF-Based Semantics (Second Edition).">
+<link rel="canonical" href="https://www.w3.org/TR/rdf12-struct-patterns/">
+<style>
+.hljs,body:has(input[name=color-scheme][value=light]:checked) .hljs,head:not(:has(meta[name=color-scheme][content~=dark]))+body .hljs{--base:#fafafa;--mono-1:#383a42;--mono-2:#686b77;--mono-3:#717277;--hue-1:#0b76c5;--hue-2:#336ae3;--hue-3:#a626a4;--hue-4:#42803c;--hue-5:#ca4706;--hue-5-2:#c91243;--hue-6:#986801;--hue-6-2:#9a6a01}
+@media (prefers-color-scheme:dark){
+.hljs{
+  --base: #282c34;
+  --mono-1: #abb2bf;
+  --mono-2: #818896;
+  --mono-3: #5c6370;
+  --hue-1: #56b6c2;
+  --hue-2: #61aeee;
+  --hue-3: #c678dd;
+  --hue-4: #98c379;
+  --hue-5: #e06c75;
+  --hue-5-2: #be5046;
+  --hue-6: #d19a66;
+  --hue-6-2: #e6c07b;
+}
+}
+body:has(input[name=color-scheme][value=dark]:checked) .hljs{
+  --base: #282c34;
+  --mono-1: #abb2bf;
+  --mono-2: #818896;
+  --mono-3: #5c6370;
+  --hue-1: #56b6c2;
+  --hue-2: #61aeee;
+  --hue-3: #c678dd;
+  --hue-4: #98c379;
+  --hue-5: #e06c75;
+  --hue-5-2: #be5046;
+  --hue-6: #d19a66;
+  --hue-6-2: #e6c07b;
+}
+.hljs{display:block;overflow-x:auto;padding:.5em;color:#383a42;color:var(--mono-1,#383a42);background:#fafafa;background:var(--base,#fafafa)}
+.hljs-comment,.hljs-quote{color:#717277;color:var(--mono-3,#717277);font-style:italic}
+.hljs-doctag,.hljs-formula,.hljs-keyword{color:#a626a4;color:var(--hue-3,#a626a4)}
+.hljs-deletion,.hljs-name,.hljs-section,.hljs-selector-tag,.hljs-subst{color:#ca4706;color:var(--hue-5,#ca4706);font-weight:700}
+.hljs-literal{color:#0b76c5;color:var(--hue-1,#0b76c5)}
+.hljs-addition,.hljs-attribute,.hljs-meta-string,.hljs-regexp,.hljs-string{color:#42803c;color:var(--hue-4,#42803c)}
+.hljs-built_in,.hljs-class .hljs-title{color:#9a6a01;color:var(--hue-6-2,#9a6a01)}
+.hljs-attr,.hljs-number,.hljs-selector-attr,.hljs-selector-class,.hljs-selector-pseudo,.hljs-template-variable,.hljs-type,.hljs-variable{color:#986801;color:var(--hue-6,#986801)}
+.hljs-bullet,.hljs-link,.hljs-meta,.hljs-selector-id,.hljs-symbol,.hljs-title{color:#336ae3;color:var(--hue-2,#336ae3)}
+.hljs-emphasis{font-style:italic}
+.hljs-strong{font-weight:700}
+.hljs-link{text-decoration:underline}
+</style>
+<style>
+var:hover{text-decoration:underline;cursor:pointer}
+var.respec-hl{color:var(--color,#000);background-color:var(--bg-color);box-shadow:0 0 0 2px var(--bg-color)}
+@media (prefers-color-scheme:dark){
+var.respec-hl{filter:saturate(.9) brightness(.9)}
+}
+var.respec-hl-c1{--bg-color:#f4d200}
+var.respec-hl-c2{--bg-color:#ff87a2}
+var.respec-hl-c3{--bg-color:#96e885}
+var.respec-hl-c4{--bg-color:#3eeed2}
+var.respec-hl-c5{--bg-color:#eacfb6}
+var.respec-hl-c6{--bg-color:#82ddff}
+var.respec-hl-c7{--bg-color:#ffbcf2}
+@media print{
+var.respec-hl{background:0 0;color:#000;box-shadow:unset}
+}
+</style>
+<style>
+var[data-type]{position:relative}
+var[data-type]::after,var[data-type]::before{position:absolute;left:50%;top:-6px;opacity:0;transition:opacity .4s;pointer-events:none}
+var[data-type]::before{content:"";transform:translateX(-50%);border-width:4px 6px 0 6px;border-style:solid;border-color:transparent;border-top-color:#222}
+var[data-type]::after{content:attr(data-type);transform:translateX(-50%) translateY(-100%);background:#222;text-align:center;font-family:"Dank Mono","Fira Code",monospace;font-style:normal;padding:6px;border-radius:3px;color:#daca88;text-indent:0;font-weight:400}
+var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
+</style>
+<script id="initialUserConfig" type="application/json">{
+  "specStatus": "DNOTE",
+  "group": "wg/rdf-star",
+  "noRecTrack": true,
+  "localBiblio": {
+    "ISO24707": {
+      "id": "ISO24707",
+      "title": "Information technology — Common Logic (CL) — A framework for a family of logic-based languages",
+      "date": "2018-07",
+      "href": "https://www.iso.org/standard/66249.html",
+      "status": "Published",
+      "publisher": "ISO/EIC"
+    },
+    "HORST04": {
+      "id": "HORST04",
+      "title": "Extending the RDFS Entailment Lemma",
+      "authors": [
+        "Herman J. ter Horst"
+      ],
+      "date": "2004",
+      "isbn": "978-3-540-30475-3",
+      "href": "https://doi.org/10.1007/978-3-540-30475-3_7",
+      "status": "Conference Proceeding",
+      "publisher": "Springer, Berlin, Heidelberg"
+    },
+    "HORST05": {
+      "id": "HORST05",
+      "title": "Completeness, Decidability and Complexity of Entailment for RDF Schema and a Semantic Extension Involving the OWL Vocabulary",
+      "authors": [
+        "Herman J. ter Horst"
+      ],
+      "date": "2005",
+      "href": "https://dx.doi.org/10.2139/ssrn.3199251",
+      "status": "Conference Proceeding",
+      "publisher": "Journal of Web Semantics"
+    },
+    "SAFETY": {
+      "title": "Saftety of recursive horn clauses with infinite relations",
+      "href": "http://arxiv.org/abs/cs.LO/9809032",
+      "authors": [
+        "R. Ramakrishnan",
+        "F. Bancilhon",
+        "A. Silberschatz"
+      ],
+      "date": "1987",
+      "publisher": "ACM New York"
+    },
+    "SAX": {
+      "title": "SAX – The Simple API for XML",
+      "href": "https://accu.org/journals/overload/7/34/cornish_515/",
+      "authors": [
+        "Steve Cornish"
+      ],
+      "date": "October 1999"
+    },
+    "STRIPEDRDF": {
+      "id": "STRIPEDRDF",
+      "title": "RDF: Understanding the Striped RDF/XML Syntax",
+      "editors": [
+        "D. Brickley"
+      ],
+      "date": "2001",
+      "href": "http://www.w3.org/2001/10/stripes/",
+      "status": "Team Submission",
+      "publisher": "W3C"
+    },
+    "RDF-STAR-CG": {
+      "title": "RDF-star and SPARQL-star",
+      "href": "https://w3c.github.io/rdf-star/cg-spec/2021-12-17.html",
+      "authors": [
+        "Olaf Hartig",
+        "Pierre-Antoine Champin",
+        "Gregg Kellogg",
+        "Andy Seaborne"
+      ],
+      "rawDate": "2021-12-17",
+      "status": "Final Community Group Report",
+      "publisher": "W3C"
+    },
+    "RDF12-NEW": {
+      "authors": [
+        "The W3C RDF &amp; SPARQL Working Group"
+      ],
+      "href": "https://w3c.github.io/rdf-new/spec/",
+      "title": "What’s New in RDF 1.2",
+      "rawDate": "2022-01-01",
+      "status": "ED",
+      "publisher": "W3C"
+    },
+    "RDF12-INTEROP": {
+      "authors": [
+        "Pierre-Antoine Champin"
+      ],
+      "href": "https://w3c.github.io/rdf-interop/spec/",
+      "title": "RDF 1.2 Interoperability",
+      "rawDate": "2025-06-27",
+      "status": "ED",
+      "publisher": "W3C"
+    },
+    "SPARQL12-NEW": {
+      "authors": [
+        "The W3C RDF &amp; SPARQL Working Group"
+      ],
+      "href": "https://w3c.github.io/sparql-new/spec/",
+      "title": "What’s New in SPARQL 1.2",
+      "rawDate": "2022-01-01",
+      "status": "ED",
+      "publisher": "W3C"
+    },
+    "SPARQL12-CONCEPTS": {
+      "authors": [
+        "The W3C RDF &amp; SPARQL Working Group"
+      ],
+      "href": "https://w3c.github.io/sparql-concepts/spec/",
+      "title": "SPARQL 1.2 Concepts",
+      "rawDate": "2022-01-01",
+      "status": "ED",
+      "publisher": "W3C"
+    }
+  },
+  "shortName": "rdf12-struct-patterns",
+  "copyrightStart": "2025",
+  "editors": [
+    {
+      "name": "Niklas Lindström",
+      "w3cid": "44656"
+    }
+  ],
+  "preProcess": [
+    null,
+    null
+  ],
+  "publishISODate": "2026-05-28T00:00:00.000Z",
+  "generatedSubtitle": "W3C Group Note Draft 28 May 2026"
+}</script>
+<link rel="stylesheet" href="https://www.w3.org/StyleSheets/TR/2021/W3C-DNOTE">
+<link rel="stylesheet" media="" href="https://www.w3.org/StyleSheets/TR/2021/dark.css"></head>
+
+<body class="h-entry informative darkmode"><div class="head">
+    <p class="logos"><a class="logo" href="https://www.w3.org/"><img crossorigin="" alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72">
+  </a></p>
+    <h1 id="title" class="title">RDF 1.2 Properties of Formal Structures</h1> 
+    <p id="w3c-state"><a href="https://www.w3.org/standards/types#DNOTE">W3C Group Note Draft</a> <time class="dt-published" datetime="2026-05-28">28 May 2026</time></p>
+    <details open="">
+      <summary>More details about this document</summary>
+      <dl>
+        <dt>This version:</dt><dd>
+                <a class="u-url" href="https://www.w3.org/TR/2026/DNOTE-rdf12-struct-patterns-20260528/">https://www.w3.org/TR/2026/DNOTE-rdf12-struct-patterns-20260528/</a>
+              </dd>
+        <dt>Latest published version:</dt><dd>
+                <a href="https://www.w3.org/TR/rdf12-struct-patterns/">https://www.w3.org/TR/rdf12-struct-patterns/</a>
+              </dd>
+        
+        <dt>History:</dt><dd>
+                    <a href="https://www.w3.org/standards/history/rdf12-struct-patterns/">https://www.w3.org/standards/history/rdf12-struct-patterns/</a>
+                  </dd>
+        
+        
+        
+        
+        
+        <dt>
+                Editor:
+              </dt><dd class="editor p-author h-card vcard" data-editor-id="44656">
+    <span class="p-name fn">Niklas Lindström</span>
+  </dd>
+        
+        
+        
+        
+        
+      </dl>
+    </details>
+    
+    
+    <p class="copyright">
+    <a href="https://www.w3.org/policies/#copyright">Copyright</a>
+    ©
+    2025-2026
+    
+    <a href="https://www.w3.org/">World Wide Web Consortium</a>.
+    <abbr title="World Wide Web Consortium">W3C</abbr><sup>®</sup>
+    <a href="https://www.w3.org/policies/#Legal_Disclaimer">liability</a>,
+    <a href="https://www.w3.org/policies/#W3C_Trademarks">trademark</a> and
+    <a rel="license" href="https://www.w3.org/copyright/software-license-2023/" title="W3C Software and Document Notice and License">permissive document license</a> rules apply.
+  </p>
+    <hr title="Separator for header">
+  </div>
+
+<section id="abstract" class="introductory"><h2>Abstract</h2>
+  <p>The purpose of this document is to define semantic extensions for interpreting the formal structures of propositions and literal values, as defined in <cite><a data-matched-text="[[[RDF12-CONCEPTS]]]" href="https://www.w3.org/TR/rdf12-concepts/">RDF 1.2 Concepts and Abstract Data Model</a></cite>. In addition, examples of semantic interoperability patterns using OWL in conjunction with these extensions are provided. This assumes knowledge of the basic concepts of RDF, and familiarity with <a href="https://www.w3.org/TR/rdf12-concepts/#dfn-reifier">reifiers</a>, as exemplified in the <cite><a data-matched-text="[[[RDF12-PRIMER]]]" href="https://www.w3.org/TR/rdf12-primer/">RDF 1.2 Primer</a></cite>. It furthermore relies on the semantic conditions defined in <cite><a data-matched-text="[[[RDF12-SEMANTICS]]]" href="https://www.w3.org/TR/rdf12-semantics/">RDF 1.2 Semantics</a></cite>. The section about OWL-based Interoperability patterns assumes an understanding of <cite><a data-matched-text="[[[OWL2-RDF-BASED-SEMANTICS]]]" href="https://www.w3.org/TR/owl2-rdf-based-semantics/">OWL 2 Web Ontology Language RDF-Based Semantics (Second Edition)</a></cite>.
+  </p>
+</section>
+
+<section id="sotd" class="introductory"><h2>Status of This Document</h2><p><em>This section describes the status of this
+      document at the time of its publication. A list of current <abbr title="World Wide Web Consortium">W3C</abbr>
+      publications and the latest revision of this technical report can be found
+      in the
+      <a href="https://www.w3.org/TR/"><abbr title="World Wide Web Consortium">W3C</abbr> standards and drafts index</a>.</em></p>
+<p>
+    This document was published by the <a href="https://www.w3.org/groups/wg/rdf-star">RDF &amp; SPARQL Working Group</a> as
+    a Group Note Draft using the
+        <a href="https://www.w3.org/policies/process/20250818/#recs-and-notes">Note
+          track</a>. 
+  </p><p>Group Note Drafts are not endorsed by
+        <abbr title="World Wide Web Consortium">W3C</abbr> nor its Members. </p><p>
+    This is a draft document and may be updated, replaced, or obsoleted by other
+    documents at any time. It is inappropriate to cite this document as other
+    than a work in progress.
+    
+  </p><p data-deliverer="139681">
+    
+        The
+        <a href="https://www.w3.org/policies/patent-policy/"><abbr title="World Wide Web Consortium">W3C</abbr> Patent
+          Policy</a>
+        does not carry any licensing requirements or commitments on this
+        document.
+      
+    
+  </p><p>
+                      This document is governed by the
+                      <a id="w3c_process_revision" href="https://www.w3.org/policies/process/20250818/">18 August 2025 <abbr title="World Wide Web Consortium">W3C</abbr> Process Document</a>.
+                    </p></section><nav id="toc"><h2 class="introductory" id="table-of-contents">Table of Contents</h2><ol class="toc"><li class="tocline"><a class="tocxref" href="#abstract">Abstract</a></li><li class="tocline"><a class="tocxref" href="#sotd">Status of This Document</a></li><li class="tocline"><a class="tocxref" href="#section-intro"><bdi class="secno">1. </bdi>Introduction</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#ns"><bdi class="secno">1.1 </bdi>Namespaces</a></li></ol></li><li class="tocline"><a class="tocxref" href="#notation"><bdi class="secno">2. </bdi>Notation and Terminology</a></li><li class="tocline"><a class="tocxref" href="#properties-of-formal-structures"><bdi class="secno">3. </bdi>Properties of Formal Structures</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#section-struct-propos"><bdi class="secno">3.1 </bdi>Formal Structure of Propositions</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#section-interp-proposition"><bdi class="secno">3.1.1 </bdi>Extended Proposition Interpretation</a></li></ol></li><li class="tocline"><a class="tocxref" href="#section-structliterals"><bdi class="secno">3.2 </bdi>Formal Structures of Literal Values</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#section-dirlangstrings"><bdi class="secno">3.2.1 </bdi>Directional Language Strings</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#section-interp-dirlangstring"><bdi class="secno">3.2.1.1 </bdi>Extended Directional Language String Interpretation</a></li></ol></li><li class="tocline"><a class="tocxref" href="#section-langstrings"><bdi class="secno">3.2.2 </bdi>Language Strings</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#section-interp-dirlangstring"><bdi class="secno">3.2.2.1 </bdi>Extended Language String Interpretation</a></li></ol></li><li class="tocline"><a class="tocxref" href="#section-otherliterals"><bdi class="secno">3.2.3 </bdi>Other Datatypes</a></li></ol></li></ol></li><li class="tocline"><a class="tocxref" href="#section-interop-owl"><bdi class="secno">4. </bdi>OWL-based Interoperability Patterns</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#section-interop-propositions"><bdi class="secno">4.1 </bdi>Interoperability Patterns Using Reified Propositions</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#section-interop-reif"><bdi class="secno">4.1.1 </bdi>Classic RDF Reification as Reifiers</a></li><li class="tocline"><a class="tocxref" href="#section-interop-prov-o"><bdi class="secno">4.1.2 </bdi>PROV-O Qualifications as Reifiers</a></li><li class="tocline"><a class="tocxref" href="#section-interop-event-truth"><bdi class="secno">4.1.3 </bdi>Events as Proposition-reifying Truthmakers</a></li></ol></li></ol></li><li class="tocline"><a class="tocxref" href="#appendices"><bdi class="secno">5. </bdi>Appendices</a></li><li class="tocline"><a class="tocxref" href="#section-form-expansion-sparql"><bdi class="secno">A. </bdi>Structural Expansions using SPARQL</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#sparql-expansion-triple-term"><bdi class="secno">A.1 </bdi>Proposition Form Expansion</a></li><li class="tocline"><a class="tocxref" href="#sparql-expansion-dirlangstring"><bdi class="secno">A.2 </bdi>Directional Language String Form Expansion</a></li><li class="tocline"><a class="tocxref" href="#sparql-expansion-rlangstring"><bdi class="secno">A.3 </bdi>Language String Form Expansion</a></li><li class="tocline"><a class="tocxref" href="#sparql-expansion-datetime"><bdi class="secno">A.4 </bdi>Date Time Form Expansion</a></li></ol></li><li class="tocline"><a class="tocxref" href="#section-relation-basic-encoding"><bdi class="secno">B. </bdi>Relationship to Basic-encoding</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#conditions-for-basic-encoding"><bdi class="secno">B.1 </bdi>Conditions for Basic-encoding</a></li><li class="tocline"><a class="tocxref" href="#upgrading-to-structural-interpretations"><bdi class="secno">B.2 </bdi>Upgrading to Structural Interpretations</a></li><li class="tocline"><a class="tocxref" href="#section-basicenc-sparql"><bdi class="secno">B.3 </bdi>Basic-encoding using SPARQL</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#basicenc-propositions"><bdi class="secno">B.3.1 </bdi>Basic-encoding of Propositions</a></li><li class="tocline"><a class="tocxref" href="#basicenc-propositions"><bdi class="secno">B.3.2 </bdi>Basic-encoding of Directional Language Strings</a></li></ol></li></ol></li><li class="tocline"><a class="tocxref" href="#references"><bdi class="secno">C. </bdi>References</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#informative-references"><bdi class="secno">C.1 </bdi>Informative references</a></li></ol></li></ol></nav>
+
+<section id="section-intro"><div class="header-wrapper"><h2 id="x1-introduction"><bdi class="secno">1. </bdi>Introduction</h2><a class="self-link" href="#section-intro" aria-label="Permalink for Section 1."></a></div>
+  
+  <p>
+    This document defines semantic conditions for entailing the properties inherent in the formal structures of:
+  </p>
+  <ol>
+    <li>RDF 1.2 propositions, encoded as triple terms;
+    </li><li>RDF 1.2 directional language strings and regular language strings, encoded as <code>rdf:dirLangString</code> and <code>rdf:langString</code> literals, respectively.
+    
+  </li></ol>
+  <p>
+    The structure and meaning of these abstractions enables further processing, by using OWL or other semantic extensions.
+    Based on this, a set of interoperability pattern examples are examined, including a definition of classic reification as RDF 1.2 reifiers.
+  </p>
+  <section id="ns"><div class="header-wrapper"><h3 id="x1-1-namespaces"><bdi class="secno">1.1 </bdi>Namespaces</h3><a class="self-link" href="#ns" aria-label="Permalink for Section 1.1"></a></div>
+    
+    <p>The following prefixes of namespace IRIs are used throughout this document.
+    </p><table class="thinborder" style="margin-left: auto; margin-right: auto;">
+      <caption id="namespace-table"><a href="#namespace-table">Table 1</a>: Prefix and Namespaces used in this specification</caption>
+      <tbody>
+        <tr>
+          <th>prefix</th>
+          <th>namespace IRI</th>
+          <th>definition</th>
+        </tr>
+        <tr>
+          <td>rdf</td>
+          <td>http://www.w3.org/1999/02/22-rdf-syntax-ns#</td>
+          <td>The RDF namespace [<cite><a class="bibref" data-link-type="biblio" href="#bib-rdf12-concepts" title="RDF 1.2 Concepts and Abstract Data Model">RDF12-CONCEPTS</a></cite>]</td>
+        </tr>
+        <tr>
+          <td>rdfs</td>
+          <td>http://www.w3.org/2000/01/rdf-schema#</td>
+          <td>The RDF Schema namespace [<cite><a class="bibref" data-link-type="biblio" href="#bib-rdf-schema" title="RDF Schema 1.1">RDF-SCHEMA</a></cite>]</td>
+        </tr>
+        <tr>
+          <td>xsd</td>
+          <td>http://www.w3.org/2000/10/XMLSchema#</td>
+          <td>XML Schema Namespace [<cite><a class="bibref" data-link-type="biblio" href="#bib-xmlschema11-2" title="W3C XML Schema Definition Language (XSD) 1.1 Part 2: Datatypes">XMLSCHEMA11-2</a></cite>]</td>
+        </tr>
+        <tr>
+          <td>owl</td>
+          <td>http://www.w3.org/2002/07/owl#</td>
+          <td>The OWL namespace [<cite><a class="bibref" data-link-type="biblio" href="#bib-owl2-overview" title="OWL 2 Web Ontology Language Document Overview (Second Edition)">OWL2-OVERVIEW</a></cite>]</td>
+        </tr>
+        <tr>
+          <td>(others)</td>
+          <td>(various)</td>
+          <td>
+            <p>All other namespace prefixes are used in examples only.
+            </p><p>In particular, IRIs starting with "http://example.org"
+              <br>represent some application-dependent IRI [<cite><a class="bibref" data-link-type="biblio" href="#bib-iri" title="Internationalized Resource Identifiers (IRIs)">IRI</a></cite>]</p></td>
+        </tr>
+      </tbody>
+    </table>
+    <p>In Turtle and SPARQL examples throughout this document, the following prefix declarations are assumed:
+    </p><pre aria-busy="false"><code class="hljs turtle"><span class="hljs-keyword">PREFIX</span> <span class="hljs-symbol">rdf:</span> <span class="hljs-literal">&lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;</span>
+<span class="hljs-keyword">PREFIX</span> <span class="hljs-symbol">rdfs:</span> <span class="hljs-literal">&lt;http://www.w3.org/2000/01/rdf-schema#&gt;</span>
+<span class="hljs-keyword">PREFIX</span> <span class="hljs-symbol">xsd:</span> <span class="hljs-literal">&lt;http://www.w3.org/2001/XMLSchema#&gt;</span>
+<span class="hljs-keyword">PREFIX</span> <span class="hljs-symbol">owl:</span> <span class="hljs-literal">&lt;http://www.w3.org/2002/07/owl#&gt;</span></code></pre>
+    <p>Where relative IRIs are used, an example base IRI is assumed:
+    </p><pre aria-busy="false"><code class="hljs turtle"><span class="hljs-keyword">BASE</span> <span class="hljs-literal">&lt;http://example.org/&gt;</span></code></pre>
+  </section>
+</section>
+
+<section id="notation"><div class="header-wrapper"><h2 id="x2-notation-and-terminology"><bdi class="secno">2. </bdi>Notation and Terminology</h2><a class="self-link" href="#notation" aria-label="Permalink for Section 2."></a></div>
+  
+
+  <p>This document uses the following terminology for describing RDF graph syntax, all as defined in the companion RDF Concepts specification [<cite><a class="bibref" data-link-type="biblio" href="#bib-rdf12-concepts" title="RDF 1.2 Concepts and Abstract Data Model">RDF12-CONCEPTS</a></cite>]:
+    <dfn id="dfn-asserted-triple" class="externalDFN" data-no-export="" data-dfn-type="dfn"><a href="https://www.w3.org/TR/rdf12-concepts/#dfn-asserted-triple">asserted triple</a></dfn>,
+    <dfn id="dfn-basic" class="externalDFN" data-no-export="" data-dfn-type="dfn"><a href="https://www.w3.org/TR/rdf12-concepts/#dfn-basic">basic</a></dfn>,
+    <dfn id="dfn-blank-node" class="externalDFN" data-no-export="" data-dfn-type="dfn"><a href="https://www.w3.org/TR/rdf12-concepts/#dfn-blank-node">blank node</a></dfn>,
+    <dfn id="dfn-entailment" class="externalDFN" data-no-export="" data-dfn-type="dfn"><a href="https://www.w3.org/TR/rdf12-semantics/#dfn-entailment">entailment</a></dfn>,
+    <dfn id="dfn-full" class="externalDFN" data-no-export="" data-dfn-type="dfn"><a href="https://www.w3.org/TR/rdf12-concepts/#dfn-full">full</a></dfn>,
+    <dfn id="dfn-iri" class="externalDFN" data-no-export="" data-dfn-type="dfn"><a href="https://www.w3.org/TR/rdf12-concepts/#dfn-iri">IRI</a></dfn>,
+    <dfn id="dfn-literal" class="externalDFN" data-no-export="" data-dfn-type="dfn"><a href="https://www.w3.org/TR/rdf12-concepts/#dfn-literal">literal</a></dfn>,
+    <dfn id="dfn-literal-value" class="externalDFN" data-no-export="" data-dfn-type="dfn"><a href="https://www.w3.org/TR/rdf12-concepts/#dfn-literal-value">literal value</a></dfn>,
+    <dfn id="dfn-object" class="externalDFN" data-no-export="" data-dfn-type="dfn"><a href="https://www.w3.org/TR/rdf12-concepts/#dfn-object">object</a></dfn>,
+    <dfn id="dfn-predicate" class="externalDFN" data-no-export="" data-dfn-type="dfn"><a href="https://www.w3.org/TR/rdf12-concepts/#dfn-predicate">predicate</a></dfn>,
+    <dfn id="dfn-proposition" class="externalDFN" data-no-export="" data-dfn-type="dfn"><a href="https://www.w3.org/TR/rdf12-concepts/#dfn-proposition">proposition</a></dfn>,
+    <dfn id="dfn-rdf-graph" class="externalDFN" data-no-export="" data-dfn-type="dfn"><a href="https://www.w3.org/TR/rdf12-concepts/#dfn-rdf-graph">RDF graph</a></dfn>,
+    <dfn data-plurals="reifiers" id="dfn-reifier" class="externalDFN" data-no-export="" data-dfn-type="dfn"><a href="https://www.w3.org/TR/rdf12-concepts/#dfn-reifier">reifier</a></dfn>,
+    <dfn id="dfn-subject" class="externalDFN" data-no-export="" data-dfn-type="dfn"><a href="https://www.w3.org/TR/rdf12-concepts/#dfn-subject">subject</a></dfn>,
+    <dfn id="dfn-triple" class="externalDFN" data-no-export="" data-dfn-type="dfn"><a href="https://www.w3.org/TR/rdf12-concepts/#dfn-triple">triple</a></dfn>,
+    <dfn id="dfn-triple-term" class="externalDFN" data-no-export="" data-dfn-type="dfn"><a href="https://www.w3.org/TR/rdf12-concepts/#dfn-triple%20term">triple term</a></dfn>.
+  </p><p>It furthermore uses the following terminology as defined in the companion RDF Semantics specification [<cite><a class="bibref" data-link-type="biblio" href="#bib-rdf12-semantics" title="RDF 1.2 Semantics">RDF12-SEMANTICS</a></cite>]:
+    <dfn id="dfn-semantic-extension" class="externalDFN" data-no-export="" data-dfn-type="dfn"><a href="https://www.w3.org/TR/rdf12-semantics/#dfn-semantic-extension">semantic extension</a></dfn>.
+</p></section>
+<section id="properties-of-formal-structures"><div class="header-wrapper"><h2 id="x3-properties-of-formal-structures"><bdi class="secno">3. </bdi>Properties of Formal Structures</h2><a class="self-link" href="#properties-of-formal-structures" aria-label="Permalink for Section 3."></a></div>
+  
+  <p>In RDF, resources are regularly <em>denoted</em> by IRIs, or existentially quantified by blank nodes, and further <em>described</em> through statements about them, rendering their definitions more precise.
+  This is not necessary for propositions and literal values, since their meaning is completely <em>encoded</em> by their corresponding terms—ground triple terms and literals—in the abstract syntax.
+  </p><p>Propositions are fixed, invariant formal abstractions within the class extension denoted by <code>rdfs:Proposition</code>, having three intrinsic constituent components: the subject, predicate and object of the proposition. This structure forms a precise conceptual identity, corresponding to the triple terms, which are 3-tuples of RDF terms, acting as a compound key denoting the proposition through its structure within the class extension.
+  </p><div class="note" role="note" id="issue-container-generatedID"><div class="note-title marker" id="h-note"><span>Note</span></div><p class="">Formally, blank nodes denote <em>some</em> resource, thus a triple term with a blank node denotes <em>some</em> proposition; though functionally dependent on its constituents.
+  </p></div><p>Literal values, while fundamentally different concepts (some defined outside of RDF), share this fixed, invariant characteristic. One difference is that it requires its datatype to be recognized (to be in D), and if it does, it is fixed in <em>all</em> interpretations recognizing it.
+  </p><p>Therefore, while these kinds of resources are conceptually just resources in the domain of discourse, they have a particular standing due to their formally fixed definitions.
+  The RDF abstract syntax reflects this by only allowing literals and triple terms as objects of other triples.
+  </p><p>Still, these invariant resources logically have properties. They are simply intrinsically defined, as an interpretation of the structural constituents of the resource within the space of their type.
+  </p><p>In the following sections we will see how these facts can be formally entailed, and encoded using basic statements. The semantic extensions defined are based on the semantic conditions of <a href="https://www.w3.org/TR/rdf12-semantics/#rdfs_interpretations">RDFS interpretations</a>, defined in <cite><a data-matched-text="[[[RDF12-SEMANTICS]]]" href="https://www.w3.org/TR/rdf12-semantics/">RDF 1.2 Semantics</a></cite>.
+
+  </p><div class="note" role="note" id="issue-container-generatedID-0"><div class="note-title marker" id="h-note-0"><span>Note</span></div><p class="">The <cite><a data-matched-text="[[[SPARQL12-QUERY]]]" href="https://www.w3.org/TR/sparql12-query/">SPARQL 1.2 Query Language</a></cite> defines a number of <a href="https://www.w3.org/TR/sparql12-query/#func-rdfTerms">functions on RDF terms</a>. In principle (and noting that functions—including those on IRIs—operate on lexical forms), the unary functions defined there can correspond to predicates of the formal structures which these terms denote (in the logical sense, and expressed in RDF as statements). More precisely, if <code>F</code> is a SPARQL function and <code>P</code> is its associated predicate, for all RDF terms <code>S</code> on which <code>F</code> is defined, the statement <code>S P F(S)</code> must be true.
+
+</p></div><section id="section-struct-propos"><div class="header-wrapper"><h3 id="x3-1-formal-structure-of-propositions"><bdi class="secno">3.1 </bdi>Formal Structure of Propositions</h3><a class="self-link" href="#section-struct-propos" aria-label="Permalink for Section 3.1"></a></div>
+  
+  <p>An <code>rdfs:Proposition</code> instance is a resource having exactly one subject resource, one predicate property and one object resource.
+  </p><p>The proposition pattern:
+  </p><pre aria-busy="false"><code class="hljs turtle">XXX YYY <span class="hljs-type">&lt;&lt;( AAA BBB CCC )&gt;&gt;</span> .</code></pre>
+  <p>can thus be described as:
+  </p><pre aria-busy="false"><code class="hljs turtle">XXX YYY <span class="hljs-template-variable">_:pp</span> .
+<span class="hljs-template-variable">_:pp</span> <span class="hljs-symbol">rdf:propositionFormSubject</span> AAA .
+<span class="hljs-template-variable">_:pp</span> <span class="hljs-symbol">rdf:propositionFormPredicate</span> BBB .
+<span class="hljs-template-variable">_:pp</span> <span class="hljs-symbol">rdf:propositionFormObject</span> CCC .</code></pre>
+  <p>Note that the following is already entailed through RDFS semantics:
+  </p><pre aria-busy="false"><code class="hljs turtle"><span class="hljs-template-variable">_:pp</span> <span class="hljs-built_in">a</span> <span class="hljs-symbol">rdfs:Proposition</span> .</code></pre>
+  <p>And this, provided the axioms below:
+  </p><pre aria-busy="false"><code class="hljs turtle"><span class="hljs-template-variable">_:pp</span> <span class="hljs-built_in">a</span> <span class="hljs-symbol">rdf:PropositionForm</span> .</code></pre>
+  <section id="section-interp-proposition"><div class="header-wrapper"><h4 id="x3-1-1-extended-proposition-interpretation"><bdi class="secno">3.1.1 </bdi>Extended Proposition Interpretation</h4><a class="self-link" href="#section-interp-proposition" aria-label="Permalink for Section 3.1.1"></a></div>
+    
+    <p>An extended proposition interpretation is an RDFS interpretation I which also satisfies the following semantic condition, and all the triples in the subsequent table of axiomatic triples.
+    </p><table id="proposition_semantic_condition">
+    <caption>Proposition semantic condition.</caption>
+      <tbody><tr>
+        <td class="semantictable">
+          <p>
+            If I(E) is in ICEXT(I(<code>rdfs:Proposition</code>)), and I(E) = IT(I(s) ,I(p), I(o)) where<br>
+            s is the subject, p is the predicate and o is the object component of E,<br>
+            then:
+          </p>
+          <ul>
+            <li>&lt;I(E), I(s)&gt; is in IEXT(I(<code>rdf:propositionFormSubject</code>)),</li>
+            <li>&lt;I(E), I(p)&gt; is in IEXT(I(<code>rdf:propositionFormPredicate</code>)), and</li>
+            <li>&lt;I(E), I(o)&gt; is in IEXT(I(<code>rdf:propositionFormObject</code>)).</li>
+          </ul>
+        </td>
+      </tr>
+    </tbody></table>
+    <table id="proposition_axioms">
+      <caption>Axiomatic triples of proposition forms.</caption>
+      <tbody><tr>
+        <td class="ruletable">
+          <pre aria-busy="false"><code class="hljs">rdf:PropositionForm rdf:type rdfs:Class .
+
+rdf:propositionFormSubject rdf:type rdf:Property .
+rdf:propositionFormSubject rdfs:domain rdf:PropositionForm .
+rdf:propositionFormSubject rdfs:range rdfs:Resource .
+
+rdf:propositionFormPredicate rdf:type rdf:Property .
+rdf:propositionFormPredicate rdfs:domain rdf:PropositionForm .
+rdf:propositionFormPredicate rdfs:range rdf:Property .
+
+rdf:propositionFormObject rdf:type rdf:Property .
+rdf:propositionFormObject rdfs:domain rdf:PropositionForm .
+rdf:propositionFormObject rdfs:range rdfs:Resource .</code></pre>
+        </td>
+      </tr>
+    </tbody></table>
+  </section>
+</section>
+
+<section id="section-structliterals"><div class="header-wrapper"><h3 id="x3-2-formal-structures-of-literal-values"><bdi class="secno">3.2 </bdi>Formal Structures of Literal Values</h3><a class="self-link" href="#section-structliterals" aria-label="Permalink for Section 3.2"></a></div>
+  
+  <p>Literals are also denoted by tuple structures, specifically of an IRI denoting their datatype, and a string representing a lexical form. They are fundamentally different from propositions in that their lexical form may encode values of any kind of complexity, depending on its datatype. The structure so encoded is defined by the formal meaning of this datatype, which defines its value space. The result of decoding the lexical form according to this datatype is the <em>literal value</em>, having the datatype as its <code>rdf:type</code>, and other properties according to the formal meaning of its lexical encoding.
+  </p><p>Some value spaces are formally specified in <a href="https://www.w3.org/TR/rdf11-mt/#D_interpretations">D-interpretations</a> of [<cite><a class="bibref" data-link-type="biblio" href="#bib-rdf-semantics" title="RDF 1.1 Semantics">RDF-SEMANTICS</a></cite>], and in <cite><a data-matched-text="[[[RDF-PLAIN-LITERAL]]]" href="https://www.w3.org/TR/rdf-plain-literal/">rdf:PlainLiteral: A Datatype for RDF Plain Literals (Second Edition)</a></cite>. The following subsections extend these definitions by entailing statements about the literal values.
+
+  </p><section id="section-dirlangstrings"><div class="header-wrapper"><h4 id="x3-2-1-directional-language-strings"><bdi class="secno">3.2.1 </bdi>Directional Language Strings</h4><a class="self-link" href="#section-dirlangstrings" aria-label="Permalink for Section 3.2.1"></a></div>
+    
+    <p>A directional language string is a typed resource combining one string value with one <code>rdf:language</code> and one <code>rdf:direction</code>. This form acts as a key, uniquely identifying the literal value.
+    </p><p>The directional language string pattern:
+    </p><pre aria-busy="false"><code class="hljs turtle">SSS PPP <span class="hljs-string">"..."</span><span class="hljs-type">@und--rtl</span> .</code></pre>
+    <p>can thus be described as:
+    </p><pre aria-busy="false"><code class="hljs turtle">SSS PPP <span class="hljs-template-variable">_:dls</span> .
+<span class="hljs-template-variable">_:dls</span> <span class="hljs-symbol">rdf:value</span> <span class="hljs-string">"..."</span> .
+<span class="hljs-template-variable">_:dls</span> <span class="hljs-symbol">rdf:language</span> <span class="hljs-string">"und"</span><span class="hljs-type">^^xsd:language</span> .
+<span class="hljs-template-variable">_:dls</span> <span class="hljs-symbol">rdf:direction</span> <span class="hljs-string">"rtl"</span><span class="hljs-type">^^rdf:langDir</span> .</code></pre>
+    
+    <p>Note that the following is entailed by <a href="https://www.w3.org/TR/rdf12-semantics/#dfn-rdfd1">rdfD1</a>:
+  </p><pre aria-busy="false"><code class="hljs turtle"><span class="hljs-template-variable">_:dls</span> <span class="hljs-built_in">a</span> <span class="hljs-symbol">rdf:dirLangString</span> .</code></pre>
+    <div class="issue" id="issue-container-number-1"><div class="issue-title marker" id="h-issue"><span>Issue 1</span></div><p class="">Harmonize this pattern with <code>rdf:CompoundLiteral</code> (possibly used for extended basic-encoding)?
+    </p></div><div class="issue" id="issue-container-number-2"><div class="issue-title marker" id="h-issue-0"><span>Issue 2</span></div><p class="">Is <code>rdf:value</code> enough (or too associated with idiomatic structured value tokens)? Define <code>rdf:lexicalForm</code>?
+    </p></div><div class="issue" id="issue-container-number-3"><div class="issue-title marker" id="h-issue-1"><span>Issue 3</span></div><p class="">Define <code>rdf:langDir</code>, based on <code>xsd:token</code>; or rather define <code>rdf:rtl</code> and <code>rdf:ltr</code>?
+    </p></div><section id="section-interp-dirlangstring"><div class="header-wrapper"><h5 id="x3-2-1-1-extended-directional-language-string-interpretation"><bdi class="secno">3.2.1.1 </bdi>Extended Directional Language String Interpretation</h5><a class="self-link" href="#section-interp-dirlangstring" aria-label="Permalink for Section 3.2.1.1"></a></div>
+      
+      <p>An extended directional language string interpretation is an RDFS interpretation I which also satisfies the following semantic condition, and all the triples in the subsequent table of axiomatic triples.
+      </p><table id="dirlangstring_semantic_condition">
+        <caption>Directional language string semantic condition.</caption>
+        <tbody><tr>
+          <td class="semantictable">
+            <p>
+              If IL(E) is in ICEXT(I(<code>rdf:dirLangString</code>)) and IL(E) = &lt;v, l, d&gt; where<br>
+              v is the lexical form, l is the language tag in lower-case, and d is the direction of E,<br>
+              then:
+            </p>
+            <ul>
+              <li>&lt;IL(E), IL(v)&gt; is in IEXT(I(<code>rdf:value</code>)),</li>
+              <li>&lt;IL(E), IL(l)&gt; is in IEXT(I(<code>rdf:language</code>)), and</li>
+              <li>&lt;IL(E), IL(d)&gt; is in IEXT(I(<code>rdf:direction</code>)).</li>
+            </ul>
+            <p>and:</p>
+            <ul>
+              <li>IL(v) is in ICEXT(I(<code>xsd:string</code>)),</li>
+              <li>IL(l) is in ICEXT(I(<code>xsd:language</code>)), and</li>
+              <li>IL(d) is in ICEXT(I(<code>rdf:langDir</code>)).</li>
+            </ul>
+          </td>
+        </tr>
+      </tbody></table>
+      <table id="dirlangstring_axioms">
+        <caption>Axiomatic triples of directional language string forms.</caption>
+        <tbody><tr>
+          <td class="ruletable">
+            <pre aria-busy="false"><code class="hljs css">rdf<span class="hljs-selector-pseudo">:lang</span>Dir rdf:type rdfs:Datatype .
+
+rdf:language rdf:type rdf:Property .
+rdf:language rdfs:domain [owl:unionOf (rdf:langString rdf:dirLangString)] .
+rdf:language rdfs:range xsd:language .
+
+rdf:direction rdf:type rdf:Property .
+rdf:direction rdfs:domain rdf:dirLangString .
+rdf:direction rdfs:range rdf:langDir .</code></pre>
+          </td>
+        </tr>
+      </tbody></table>
+    </section>
+  </section>
+
+  <section id="section-langstrings"><div class="header-wrapper"><h4 id="x3-2-2-language-strings"><bdi class="secno">3.2.2 </bdi>Language Strings</h4><a class="self-link" href="#section-langstrings" aria-label="Permalink for Section 3.2.2"></a></div>
+    
+    <p>The language string pattern:
+    </p><pre aria-busy="false"><code class="hljs turtle">SSS PPP <span class="hljs-string">"..."</span><span class="hljs-type">@und</span> .</code></pre>
+    <p>can be described as:
+    </p><pre aria-busy="false"><code class="hljs turtle">SSS PPP <span class="hljs-template-variable">_:dls</span> .
+<span class="hljs-template-variable">_:dls</span> <span class="hljs-built_in">a</span> <span class="hljs-symbol">rdf:langString</span> .
+<span class="hljs-template-variable">_:dls</span> <span class="hljs-symbol">rdf:value</span> <span class="hljs-string">"..."</span> .  <span class="hljs-comment"># Use rdf:lexicalForm?</span>
+<span class="hljs-template-variable">_:dls</span> <span class="hljs-symbol">rdf:language</span> <span class="hljs-string">"und"</span><span class="hljs-type">^^xsd:language</span> .</code></pre>
+    <section id="section-interp-dirlangstring"><div class="header-wrapper"><h5 id="x3-2-2-1-extended-language-string-interpretation"><bdi class="secno">3.2.2.1 </bdi>Extended Language String Interpretation</h5><a class="self-link" href="#section-interp-dirlangstring" aria-label="Permalink for Section 3.2.2.1"></a></div>
+      
+      <p>The definition of a semantic condition for <code>rdf:langString</code> is similar to the semantic condition of <code>rdf:dirLangString</code>, but without the <code>rdf:direction</code> part:
+      </p><table id="langstring_semantic_condition">
+        <caption>Language string semantic condition.</caption>
+        <tbody><tr>
+          <td class="semantictable">
+            <p>
+              If IL(E) is in ICEXT(I(<code>rdf:langString</code>)) and IL(E) = &lt;v, l&gt; where<br>
+              v is the lexical form, and l is the language tag in lower-case of E,<br>
+              then:
+            </p>
+            <ul>
+              <li>&lt;IL(E), IL(v)&gt; is in IEXT(I(<code>rdf:value</code>)), and</li>
+              <li>&lt;IL(E), IL(l)&gt; is in IEXT(I(<code>rdf:language</code>)).</li>
+            </ul>
+            <p>and:</p>
+            <ul>
+              <li>IL(v) is in ICEXT(I(<code>xsd:string</code>)), and</li>
+              <li>IL(l) is in ICEXT(I(<code>xsd:language</code>)).</li>
+            </ul>
+          </td>
+        </tr>
+      </tbody></table>
+    </section>
+  </section>
+
+  <section id="section-otherliterals"><div class="header-wrapper"><h4 id="x3-2-3-other-datatypes"><bdi class="secno">3.2.3 </bdi>Other Datatypes</h4><a class="self-link" href="#section-otherliterals" aria-label="Permalink for Section 3.2.3"></a></div>
+    
+    <p>In principle, any datatyped literals encode resources with intrinsic meaning, and that this meaning can be formally specified.
+    </p><p>It is therefore generally possible to define semantic extensions for values of any formally defined datatype, entailing relationships between literal values and their constituent parts.
+    </p><p>For example, a literal <code>xsd:date</code> value:
+    </p><pre aria-busy="false"><code class="hljs turtle">SSS PPP <span class="hljs-string">"YYYY-MM-DD"</span><span class="hljs-type">^^xsd:date</span> .</code></pre>
+    <p>implies a resource with one year, one month and one day (here expressed using the <cite><a data-matched-text="[[[OWL-TIME]]]" href="https://www.w3.org/TR/owl-time/">Time Ontology in OWL</a></cite>):
+    </p><pre aria-busy="false"><code class="hljs turtle">SSS PPP <span class="hljs-template-variable">_:dt</span> <span class="hljs-built_in">a</span> <span class="hljs-symbol">xsd:date</span> .
+<span class="hljs-template-variable">_:dt</span> <span class="hljs-symbol">time:year</span> <span class="hljs-string">"YYYY"</span><span class="hljs-type">^^xsd:gYear</span> .
+<span class="hljs-template-variable">_:dt</span> <span class="hljs-symbol">time:month</span> <span class="hljs-string">"--MM"</span><span class="hljs-type">^^xsd:gMonth</span> .
+<span class="hljs-template-variable">_:dt</span> <span class="hljs-symbol">time:day</span> <span class="hljs-string">"---DD"</span><span class="hljs-type">^^xsd:gDay</span> .</code></pre>
+    <p>Defining semantic conditions for such structures, and the formal properties thereof, is beyond the scope of this document (and outside the purview of RDF for any datatype defined by other specifications). A possible SPARQL-based expansion form is proposed in Appendix <a href="#sparql-expansion-datetime" data-matched-text="[[[#sparql-expansion-datetime]]]" class="sec-ref"><bdi class="secno">A.4 </bdi>Date Time Form Expansion</a>.
+    </p><div class="issue" id="issue-container-number-4"><div class="issue-title marker" id="h-issue-2"><span>Issue 4</span></div><p class="">Define a general semantic condition for <code>rdfs:Literal</code>s entailing a <code>rdf:lexicalForm</code> relation to its lexical value? Cf. L2V(d)(v).</p></div>
+  </section>
+
+</section>
+
+</section>
+
+<section id="section-interop-owl"><div class="header-wrapper"><h2 id="x4-owl-based-interoperability-patterns"><bdi class="secno">4. </bdi>OWL-based Interoperability Patterns</h2><a class="self-link" href="#section-interop-owl" aria-label="Permalink for Section 4."></a></div>
+  
+  <p>Using the extended interpretations defined above results in a graph which can be further reasoned over through the semantic extension of OWL. Axioms can be defined to describe restriction subclasses of <code>rdfs:Proposition</code> based on, for example, a particular predicate, and to define sub-property chain axioms of relationships that hold between entities in more complex relationships. This allows for annotations of direct, more abstract statements to entail underlying, more granular forms of association classes.
+
+  </p><div class="note" role="note" id="issue-container-generatedID-1"><div class="note-title marker" id="h-note-1"><span>Note</span></div><p class="">The patterns below utilize <code>owl:hasSelf</code> to define a <em>rolification</em> of a class, meaning a restriction pattern for the relationship from an individual to itself, which is equivalent to a specified class. This restriction implies that an instance of such a class has this rolified relationship to itself (and vice versa). That enables the use of the rolification property in sub-property chain axioms, functioning as a self-relation chain component matching the type of the resource.
+
+</p></div><section id="section-interop-propositions"><div class="header-wrapper"><h3 id="x4-1-interoperability-patterns-using-reified-propositions"><bdi class="secno">4.1 </bdi>Interoperability Patterns Using Reified Propositions</h3><a class="self-link" href="#section-interop-propositions" aria-label="Permalink for Section 4.1"></a></div>
+  
+  <p>The following patterns rely on OWL 2 and <a href="#section-interp-proposition">extended interpretation of propositions</a> to ensure that simplified descriptions leveraging <a href="https://www.w3.org/TR/rdf12-concepts/#dfn-reifying-triple">reifying triples</a> and/or <a href="https://www.w3.org/TR/rdf12-turtle/#dfn-annotation-syntax">triple annotations</a> can be interoperably interpreted as classical, more complex forms of descriptions.
+
+  </p><section id="section-interop-reif"><div class="header-wrapper"><h4 id="x4-1-1-classic-rdf-reification-as-reifiers"><bdi class="secno">4.1.1 </bdi>Classic RDF Reification as Reifiers</h4><a class="self-link" href="#section-interop-reif" aria-label="Permalink for Section 4.1.1"></a></div>
+    
+    <p>Given these axioms:
+    </p><div class="example" id="example-classic-statement-model-based-on-the-propositions-form">
+        <div class="marker">
+    <a class="self-link" href="#example-classic-statement-model-based-on-the-propositions-form">Example<bdi> 1</bdi></a><span class="example-title">: classic statement model based on the propositions form</span>
+  </div> <pre aria-busy="false"><code class="hljs turtle"><span class="hljs-symbol">rdf:subject</span>
+    <span class="hljs-symbol">owl:propertyChainAxiom</span> (<span class="hljs-template-variable">_:a_Statement</span> <span class="hljs-symbol">rdf:reifies</span> <span class="hljs-symbol">rdf:propositionFormSubject</span>) .
+<span class="hljs-symbol">rdf:predicate</span>
+    <span class="hljs-symbol">owl:propertyChainAxiom</span> (<span class="hljs-template-variable">_:a_Statement</span> <span class="hljs-symbol">rdf:reifies</span> <span class="hljs-symbol">rdf:propositionFormPredicate</span>) .
+<span class="hljs-symbol">rdf:object</span>
+    <span class="hljs-symbol">owl:propertyChainAxiom</span> (<span class="hljs-template-variable">_:a_Statement</span> <span class="hljs-symbol">rdf:reifies</span> <span class="hljs-symbol">rdf:propositionFormObject</span>) .
+
+[ <span class="hljs-symbol">owl:onProperty</span> <span class="hljs-template-variable">_:a_Statement</span> ; <span class="hljs-symbol">owl:hasSelf</span> <span class="hljs-literal">true</span> ]
+    <span class="hljs-symbol">owl:equivalentClass</span> <span class="hljs-symbol">rdf:Statement</span> .</code></pre>
+      </div>
+    <p>this graph:
+    </p><div class="example" id="example-a-reified-statement">
+        <div class="marker">
+    <a class="self-link" href="#example-a-reified-statement">Example<bdi> 2</bdi></a><span class="example-title">: a reified statement</span>
+  </div> <pre aria-busy="false"><code class="hljs turtle"><span class="hljs-keyword">PREFIX</span> <span class="hljs-symbol">dct:</span> <span class="hljs-literal">&lt;http://purl.org/dc/terms/&gt;</span>
+
+<span class="hljs-type">&lt;&lt; <span class="hljs-literal">&lt;Alice&gt;</span> <span class="hljs-symbol">dct:creator</span> <span class="hljs-literal">&lt;SomeComputer&gt;</span> &gt;&gt;</span> <span class="hljs-built_in">a</span> <span class="hljs-symbol">rdf:Statement</span> ;
+    <span class="hljs-symbol">dct:date</span> <span class="hljs-string">"2014-12-15"</span><span class="hljs-type">^^xsd:date</span> ;
+    <span class="hljs-symbol">dct:source</span> <span class="hljs-literal">&lt;SomeDatabase&gt;</span> .</code></pre>
+      </div>
+    <p>entails this graph:
+    </p><div class="example" id="example-a-classic-reified-statement">
+        <div class="marker">
+    <a class="self-link" href="#example-a-classic-reified-statement">Example<bdi> 3</bdi></a><span class="example-title">: a classic reified statement</span>
+  </div> <pre aria-busy="false"><code class="hljs turtle"><span class="hljs-keyword">PREFIX</span> <span class="hljs-symbol">dct:</span> <span class="hljs-literal">&lt;http://purl.org/dc/terms/&gt;</span>
+
+<span class="hljs-type">&lt;&lt; <span class="hljs-literal">&lt;Alice&gt;</span> <span class="hljs-symbol">dct:creator</span> <span class="hljs-literal">&lt;SomeComputer&gt;</span> &gt;&gt;</span> <span class="hljs-built_in">a</span> <span class="hljs-symbol">rdf:Statement</span> ;
+    <span class="hljs-symbol">rdf:subject</span> <span class="hljs-literal">&lt;Alice&gt;</span> ;
+    <span class="hljs-symbol">rdf:predicate</span> <span class="hljs-symbol">dct:creator</span> ;
+    <span class="hljs-symbol">rdf:object</span> <span class="hljs-literal">&lt;SomeComputer&gt;</span> .
+    <span class="hljs-symbol">dct:date</span> <span class="hljs-string">"2014-12-15"</span><span class="hljs-type">^^xsd:date</span> ;
+    <span class="hljs-symbol">dct:source</span> <span class="hljs-literal">&lt;SomeDatabase&gt;</span> .</code></pre>
+      </div>
+  </section>
+
+  <section id="section-interop-prov-o"><div class="header-wrapper"><h4 id="x4-1-2-prov-o-qualifications-as-reifiers"><bdi class="secno">4.1.2 </bdi>PROV-O Qualifications as Reifiers</h4><a class="self-link" href="#section-interop-prov-o" aria-label="Permalink for Section 4.1.2"></a></div>
+    
+    <p>In the PROV Ontology ([<cite><a class="bibref" data-link-type="biblio" href="#bib-prov-o" title="PROV-O: The PROV Ontology">PROV-O</a></cite>]) several association classes have been defined as qualified counterparts for a number of simple relationships. In this section, two examples are examined (borrowed from examples 8 and 9 of [<cite><a class="bibref" data-link-type="biblio" href="#bib-prov-o" title="PROV-O: The PROV Ontology">PROV-O</a></cite>]). The following prefix is assumed in the subsequent examples:
+    </p><pre aria-busy="false"><code class="hljs turtle"><span class="hljs-keyword">PREFIX</span> <span class="hljs-symbol">prov:</span> <span class="hljs-literal">&lt;http://www.w3.org/ns/prov#&gt;</span></code></pre>
+    <p>These two simple relationships:
+    </p><div class="example" id="example-simple-prov-o-relationships">
+        <div class="marker">
+    <a class="self-link" href="#example-simple-prov-o-relationships">Example<bdi> 4</bdi></a><span class="example-title">: simple PROV-O relationships</span>
+  </div> <pre aria-busy="false"><code class="hljs turtle"><span class="hljs-literal">&lt;illustration_activity&gt;</span> <span class="hljs-built_in">a</span> <span class="hljs-symbol">prov:Activity;</span>
+  <span class="hljs-symbol">prov:used</span> <span class="hljs-literal">&lt;aggregated_by_regions&gt;</span> ;
+  <span class="hljs-symbol">prov:wasAssociatedWith</span> <span class="hljs-literal">&lt;derek&gt;</span> .</code></pre>
+      </div>
+    <p>have the following companion qualified forms:
+    </p><div class="example" id="example-qualified-prov-o-relationships">
+        <div class="marker">
+    <a class="self-link" href="#example-qualified-prov-o-relationships">Example<bdi> 5</bdi></a><span class="example-title">: qualified PROV-O relationships</span>
+  </div> <pre aria-busy="false"><code class="hljs turtle"><span class="hljs-literal">&lt;illustration_activity&gt;</span> <span class="hljs-built_in">a</span> <span class="hljs-symbol">prov:Activity;</span>
+  <span class="hljs-symbol">prov:qualifiedUsage</span> [ <span class="hljs-built_in">a</span> <span class="hljs-symbol">prov:Usage;</span>
+      <span class="hljs-symbol">prov:entity</span> <span class="hljs-literal">&lt;aggregated_by_regions&gt;</span>;
+      <span class="hljs-symbol">prov:atTime</span> <span class="hljs-string">"2011-07-14T03:03:03Z"</span><span class="hljs-type">^^xsd:dateTime</span> ] ;
+  <span class="hljs-symbol">prov:qualifiedAssociation</span> [ <span class="hljs-built_in">a</span> <span class="hljs-symbol">prov:Association;</span>
+      <span class="hljs-symbol">prov:agent</span>   <span class="hljs-literal">&lt;derek&gt;</span>;
+      <span class="hljs-symbol">prov:hadRole</span> <span class="hljs-literal">&lt;illustrationist&gt;</span>;
+      <span class="hljs-symbol">prov:hadPlan</span> <span class="hljs-literal">&lt;tutorial_blog&gt;</span>
+    ] .</code></pre>
+      </div>
+    <p>Using OWL, there is a way to entail the simple relationships from the qualified forms:
+    </p><div class="example" id="example-owl-axioms-for-entailing-simple-relationships">
+        <div class="marker">
+    <a class="self-link" href="#example-owl-axioms-for-entailing-simple-relationships">Example<bdi> 6</bdi></a><span class="example-title">: OWL axioms for entailing simple relationships</span>
+  </div> <pre aria-busy="false"><code class="hljs turtle"><span class="hljs-symbol">prov:used</span> <span class="hljs-symbol">owl:propertyChainAxiom</span> (<span class="hljs-symbol">prov:qualifiedUsage</span> <span class="hljs-symbol">prov:entity</span>) .
+<span class="hljs-symbol">prov:wasAssociatedWith</span> <span class="hljs-symbol">owl:propertyChainAxiom</span> (<span class="hljs-symbol">prov:qualifiedAssociation</span> <span class="hljs-symbol">prov:agent</span>) .</code></pre>
+      </div>
+    <p>With the extended interpretation of propositions, it is possible to conversely entail the qualified forms from <em>annotated</em> versions of the simple relationships:
+    </p><div class="example" id="example-annotated-simple-prov-o-relationships">
+        <div class="marker">
+    <a class="self-link" href="#example-annotated-simple-prov-o-relationships">Example<bdi> 7</bdi></a><span class="example-title">: annotated simple PROV-O relationships</span>
+  </div> <pre aria-busy="false"><code class="hljs turtle"><span class="hljs-literal">&lt;illustration_activity&gt;</span> <span class="hljs-built_in">a</span> <span class="hljs-symbol">prov:Activity;</span>
+  <span class="hljs-symbol">prov:used</span> <span class="hljs-literal">&lt;aggregated_by_regions&gt;</span> <span class="hljs-type">{| a <span class="hljs-symbol">prov:Usage</span> ;
+      <span class="hljs-symbol">prov:atTime</span> <span class="hljs-string">"2011-07-14T03:03:03Z"</span><span class="hljs-type">^^xsd:dateTime</span> |}</span> ;
+  <span class="hljs-symbol">prov:wasAssociatedWith</span> <span class="hljs-literal">&lt;derek&gt;</span> <span class="hljs-type">{| a <span class="hljs-symbol">prov:Association</span> ;
+      <span class="hljs-symbol">prov:hadRole</span> <span class="hljs-literal">&lt;illustrationist&gt;</span>;
+      <span class="hljs-symbol">prov:hadPlan</span> <span class="hljs-literal">&lt;tutorial_blog&gt;</span> |}</span> .</code></pre>
+      </div>
+    <p>This can be done by extending the ontology itself, by defining property chains between reifiers of type <code>prov:Usage</code> and the corresponding subject and object of a proposition with the <code>prov:used</code> predicate:
+    </p><div class="example" id="example-owl-axioms-for-entailing-qualified-usage-relationship">
+        <div class="marker">
+    <a class="self-link" href="#example-owl-axioms-for-entailing-qualified-usage-relationship">Example<bdi> 8</bdi></a><span class="example-title">: OWL axioms for entailing qualified usage relationship</span>
+  </div> <pre aria-busy="false"><code class="hljs turtle"><span class="hljs-symbol">prov:qualifiedUsage</span>
+    <span class="hljs-symbol">owl:propertyChainAxiom</span> (
+            <span class="hljs-symbol">[owl:inverseOf</span> <span class="hljs-symbol">rdf:propositionFormSubject]</span>
+            <span class="hljs-symbol">[owl:inverseOf</span> <span class="hljs-template-variable">_:reified_used_ppn]</span>
+        ) .
+
+<span class="hljs-symbol">prov:entity</span> <span class="hljs-symbol">owl:propertyChainAxiom</span> (<span class="hljs-template-variable">_:reified_used_ppn</span> <span class="hljs-symbol">rdf:propositionFormObject</span>) .
+
+<span class="hljs-template-variable">_:reified_used_ppn</span> <span class="hljs-symbol">owl:propertyChainAxiom</span> (<span class="hljs-template-variable">_:a_Usage</span> <span class="hljs-symbol">rdf:reifies</span> <span class="hljs-template-variable">_:used_ppn</span>) .
+
+[ <span class="hljs-symbol">owl:onProperty</span> <span class="hljs-template-variable">_:a_Usage</span> ; <span class="hljs-symbol">owl:hasSelf</span> <span class="hljs-literal">true</span> ]
+    <span class="hljs-symbol">owl:equivalentClass</span> <span class="hljs-symbol">prov:Usage</span> .
+
+[ <span class="hljs-symbol">owl:onProperty</span> <span class="hljs-template-variable">_:used_ppn</span> ; <span class="hljs-symbol">owl:hasSelf</span> <span class="hljs-literal">true</span> ]
+    <span class="hljs-symbol">owl:equivalentClass</span>
+        [ <span class="hljs-symbol">owl:onProperty</span> <span class="hljs-symbol">rdf:propositionFormPredicate</span> ;
+          <span class="hljs-symbol">owl:hasValue</span> <span class="hljs-symbol">prov:used</span> ] .</code></pre>
+      </div>
+    <p>and similarly for reifiers of type <code>prov:Association</code> of triples with the <code>prov:wasAssociatedWith</code> predicate:
+    </p><div class="example" id="example-owl-axioms-for-entailing-qualified-association-relationship">
+        <div class="marker">
+    <a class="self-link" href="#example-owl-axioms-for-entailing-qualified-association-relationship">Example<bdi> 9</bdi></a><span class="example-title">: OWL axioms for entailing qualified association relationship</span>
+  </div> <pre aria-busy="false"><code class="hljs turtle"><span class="hljs-symbol">prov:qualifiedAssociation</span>
+    <span class="hljs-symbol">owl:propertyChainAxiom</span> (
+            <span class="hljs-symbol">[owl:inverseOf</span> <span class="hljs-symbol">rdf:propositionFormSubject]</span>
+            <span class="hljs-symbol">[owl:inverseOf</span> <span class="hljs-template-variable">_:reified_assocWith_ppn]</span>
+        ) .
+
+<span class="hljs-symbol">prov:agent</span> <span class="hljs-symbol">owl:propertyChainAxiom</span> (<span class="hljs-template-variable">_:reified_assocWith_ppn</span> <span class="hljs-symbol">rdf:propositionFormObject</span>) .
+
+<span class="hljs-template-variable">_:reified_assocWith_ppn</span>
+    <span class="hljs-symbol">owl:propertyChainAxiom</span> (<span class="hljs-template-variable">_:a_Association</span> <span class="hljs-symbol">rdf:reifies</span> <span class="hljs-template-variable">_:associated_ppn</span>) .
+
+[ <span class="hljs-symbol">owl:onProperty</span> <span class="hljs-template-variable">_:a_Association</span> ; <span class="hljs-symbol">owl:hasSelf</span> <span class="hljs-literal">true</span> ]
+    <span class="hljs-symbol">owl:equivalentClass</span> <span class="hljs-symbol">prov:Association</span> .
+
+[ <span class="hljs-symbol">owl:onProperty</span> <span class="hljs-template-variable">_:associated_ppn</span> ; <span class="hljs-symbol">owl:hasSelf</span> <span class="hljs-literal">true</span> ]
+    <span class="hljs-symbol">owl:equivalentClass</span>
+        [ <span class="hljs-symbol">owl:onProperty</span> <span class="hljs-symbol">rdf:propositionFormPredicate</span> ;
+        <span class="hljs-symbol">owl:hasValue</span> <span class="hljs-symbol">prov:wasAssociatedWith</span> ] .</code></pre>
+      </div>
+  </section>
+
+  <section id="section-interop-event-truth"><div class="header-wrapper"><h4 id="x4-1-3-events-as-proposition-reifying-truthmakers"><bdi class="secno">4.1.3 </bdi>Events as Proposition-reifying Truthmakers</h4><a class="self-link" href="#section-interop-event-truth" aria-label="Permalink for Section 4.1.3"></a></div>
+    
+    <p>The possibility of referring to the constituent properties of a proposition also makes it possible to define OWL-based axioms through which a proposition is entailed to hold. (Meaning that, if entailments are materialized, a triple denoting such a proposition is asserted.)
+    </p><p>The following exemplifies that, by entailing a certain kind of proposition to be the object of an <code>rdf:type</code> relationship to its subject, and further that this kind of proposition is a restriction class on its subject, such that this subject has the object of the proposition as the value of the predicate of the proposition.
+    </p><p>The class of events is further defined to reify propositions of this particular kind; specifically those being objects of an <code>rdf:reifies</code> relationship from event instances. This can be thought of as events being <a href="https://plato.stanford.edu/entries/truthmakers/">truthmakers</a> of these (truthbearing) propositions.
+    </p><p>An event reifying a proposition:
+    </p><div class="example" id="example-simple-prov-o-relationships-0">
+        <div class="marker">
+    <a class="self-link" href="#example-simple-prov-o-relationships-0">Example<bdi> 10</bdi></a><span class="example-title">: simple PROV-O relationships</span>
+  </div> <pre aria-busy="false"><code class="hljs turtle"><span class="hljs-keyword">PREFIX</span> <span class="hljs-symbol">ex:</span> <span class="hljs-literal">&lt;https://example.net/ns/&gt;</span>
+<span class="hljs-keyword">BASE</span> <span class="hljs-literal">&lt;http://example.net/&gt;</span>
+
+<span class="hljs-type">&lt;&lt; <span class="hljs-literal">&lt;Theseus&gt;</span> <span class="hljs-symbol">ex:used</span> <span class="hljs-literal">&lt;Ship1&gt;</span> &gt;&gt;</span> <span class="hljs-symbol">ex:atTime</span> <span class="hljs-number">-101861280000000</span> .</code></pre>
+      </div>
+    <p>makes the reified proposition hold:
+    </p><div class="example" id="example-simple-prov-o-relationships-1">
+        <div class="marker">
+    <a class="self-link" href="#example-simple-prov-o-relationships-1">Example<bdi> 11</bdi></a><span class="example-title">: simple PROV-O relationships</span>
+  </div> <pre aria-busy="false"><code class="hljs turtle"><span class="hljs-keyword">PREFIX</span> <span class="hljs-symbol">ex:</span> <span class="hljs-literal">&lt;https://example.net/ns/&gt;</span>
+<span class="hljs-keyword">BASE</span> <span class="hljs-literal">&lt;http://example.net/&gt;</span>
+
+<span class="hljs-literal">&lt;Theseus&gt;</span> <span class="hljs-symbol">ex:used</span> <span class="hljs-literal">&lt;Ship1&gt;</span> <span class="hljs-type">{| a <span class="hljs-symbol">ex:Event</span> ; <span class="hljs-symbol">ex:atTime</span> <span class="hljs-number">-101861280000000</span> |}</span> .</code></pre>
+      </div>
+    <p>given the following axioms:
+    </p><div class="example" id="example-simple-prov-o-relationships-2">
+        <div class="marker">
+    <a class="self-link" href="#example-simple-prov-o-relationships-2">Example<bdi> 12</bdi></a><span class="example-title">: simple PROV-O relationships</span>
+  </div> <pre aria-busy="false"><code class="hljs turtle"><span class="hljs-keyword">PREFIX</span> <span class="hljs-symbol">rdf:</span> <span class="hljs-literal">&lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;</span>
+<span class="hljs-keyword">PREFIX</span> <span class="hljs-symbol">rdfs:</span> <span class="hljs-literal">&lt;http://www.w3.org/2000/01/rdf-schema#&gt;</span>
+<span class="hljs-keyword">PREFIX</span> <span class="hljs-symbol">owl:</span> <span class="hljs-literal">&lt;http://www.w3.org/2002/07/owl#&gt;</span>
+<span class="hljs-keyword">PREFIX</span> <span class="hljs-symbol">xsd:</span> <span class="hljs-literal">&lt;http://www.w3.org/2001/XMLSchema#&gt;</span>
+<span class="hljs-keyword">PREFIX</span> <span class="hljs-symbol">ex:</span> <span class="hljs-literal">&lt;https://example.net/ns/&gt;</span>
+
+<span class="hljs-comment">##</span>
+<span class="hljs-comment"># Anything with an at time property is an Event:</span>
+<span class="hljs-symbol">ex:atTime</span> <span class="hljs-symbol">rdfs:domain</span> <span class="hljs-symbol">ex:Event</span> .
+
+<span class="hljs-comment">##</span>
+<span class="hljs-comment"># A rolification of the class of propositions which are reified by events:</span>
+[ <span class="hljs-symbol">owl:onProperty</span> <span class="hljs-template-variable">_:a_ppn_reifiedby_a_Event</span> ; <span class="hljs-symbol">owl:hasSelf</span> <span class="hljs-literal">true</span> ]
+  <span class="hljs-symbol">owl:equivalentClass</span>
+    [ <span class="hljs-symbol">owl:onProperty</span> <span class="hljs-symbol">[owl:inverseOf</span> <span class="hljs-symbol">rdf:reifies]</span> ; <span class="hljs-symbol">owl:someValuesFrom</span> <span class="hljs-symbol">ex:Event</span> ] .
+
+<span class="hljs-comment">##</span>
+<span class="hljs-comment"># The restriction class of propositions that reify events.</span>
+
+<span class="hljs-comment"># The subject of an event-reified proposition has the proposition as its type.</span>
+[ <span class="hljs-symbol">owl:inverseOf</span> <span class="hljs-symbol">rdf:type</span> ]
+  <span class="hljs-symbol">owl:propertyChainAxiom</span>
+    ( <span class="hljs-template-variable">_:a_ppn_reifiedby_a_Event</span> <span class="hljs-symbol">rdf:propositionFormSubject</span> ) .
+
+<span class="hljs-comment"># The predicate of an event-reified proposition is the property of the</span>
+<span class="hljs-comment"># restriction class:</span>
+<span class="hljs-symbol">owl:onProperty</span>
+  <span class="hljs-symbol">owl:propertyChainAxiom</span>
+    ( <span class="hljs-template-variable">_:a_ppn_reifiedby_a_Event</span> <span class="hljs-symbol">rdf:propositionFormPredicate</span> ) .
+
+<span class="hljs-comment"># The object of an event-reified proposition is the value of the restriction</span>
+<span class="hljs-comment"># class:</span>
+<span class="hljs-symbol">owl:hasValue</span>
+  <span class="hljs-symbol">owl:propertyChainAxiom</span>
+    ( <span class="hljs-template-variable">_:a_ppn_reifiedby_a_Event</span> <span class="hljs-symbol">rdf:propositionFormObject</span> ) .</code></pre>
+      </div>
+    <p>The above pattern declares propositions that are reified by events as restriction types on their subject, such that they hold in the interpretation.</p>
+  </section>
+
+</section>
+
+</section>
+
+<section id="appendices-0"><div class="header-wrapper"><h2 id="appendices"><bdi class="secno">5. </bdi>Appendices</h2><a class="self-link" href="#appendices" aria-label="Permalink for Section 5."></a></div>
+
+</section><section id="section-form-expansion-sparql" class="appendix"><div class="header-wrapper"><h2 id="a-structural-expansions-using-sparql"><bdi class="secno">A. </bdi>Structural Expansions using SPARQL</h2><a class="self-link" href="#section-form-expansion-sparql" aria-label="Permalink for Appendix A."></a></div>
+  
+  <p>The following subsections define SPARQL queries for constructing descriptions of the expanded formal structures. They have to be repeatedly run against the union of the source graph and each result graph, until the triple count is equal to the triple count of the previous iteration.
+  </p><div class="note" role="note" id="issue-container-generatedID-2"><div class="note-title marker" id="h-note-2"><span>Note</span></div><p class="">The construct patterns below use <code>owl:sameAs</code> to encode equivalence of the denoting terms with the blank nodes used as subjects for the encoded descriptions. Other semantic extensions that do not recognize OWL 2 semantics may require other forms for encoding the entailments, such as <a href="https://www.w3.org/TR/rdf12-concepts/#section-symmetric-rdf">symmetric RDF</a>.
+  </p></div><section id="sparql-expansion-triple-term"><div class="header-wrapper"><h3 id="a-1-proposition-form-expansion"><bdi class="secno">A.1 </bdi>Proposition Form Expansion</h3><a class="self-link" href="#sparql-expansion-triple-term" aria-label="Permalink for Appendix A.1"></a></div>
+    
+    <div>
+      <div class="example" id="example-sparql-based-propositions-form-expansion">
+        <div class="marker">
+    <a class="self-link" href="#example-sparql-based-propositions-form-expansion">Example<bdi> 13</bdi></a><span class="example-title">: SPARQL-based propositions form expansion</span>
+  </div> <pre aria-busy="false"><code class="hljs sparql"><span class="hljs-keyword">PREFIX</span> <span class="hljs-symbol">rdf:</span> <span class="hljs-symbol">&lt;http:</span>//www.w3.org/<span class="hljs-number">1999</span>/<span class="hljs-number">02</span>/<span class="hljs-number">22</span>-rdf-syntax-ns<span class="hljs-comment">#&gt;</span>
+
+<span class="hljs-keyword">CONSTRUCT</span> {
+  <span class="hljs-variable">?s</span> <span class="hljs-variable">?rel</span> <span class="hljs-variable">?ppn</span> .
+  <span class="hljs-variable">?ppn</span> <span class="hljs-built_in">a</span> <span class="hljs-symbol">rdf:PropositionForm</span> ;
+    <span class="hljs-symbol">owl:sameAs</span> &lt;&lt;( <span class="hljs-variable">?ppn_s</span> <span class="hljs-variable">?ppn_p</span> <span class="hljs-variable">?ppn_o</span> )&gt;&gt; ;
+    <span class="hljs-symbol">rdf:propositionFormSubject</span> <span class="hljs-variable">?ppn_s</span> ;
+    <span class="hljs-symbol">rdf:propositionFormPredicate</span> <span class="hljs-variable">?ppn_p</span> ;
+    <span class="hljs-symbol">rdf:propositionFormObject</span> <span class="hljs-variable">?ppn_o</span> .
+} <span class="hljs-keyword">WHERE</span> {
+  <span class="hljs-variable">?s</span> <span class="hljs-variable">?rel</span> &lt;&lt;( <span class="hljs-variable">?ppn_s</span> <span class="hljs-variable">?ppn_p</span> <span class="hljs-variable">?ppn_o</span> )&gt;&gt; .
+  <span class="hljs-keyword">OPTIONAL</span> {
+    <span class="hljs-variable">?existing_ppn</span> <span class="hljs-built_in">a</span> <span class="hljs-symbol">rdf:PropositionForm</span> ;
+      <span class="hljs-symbol">rdf:propositionFormSubject</span> <span class="hljs-variable">?ppn_s</span> ;
+      <span class="hljs-symbol">rdf:propositionFormPredicate</span> <span class="hljs-variable">?ppn_p</span> ;
+      <span class="hljs-symbol">rdf:propositionFormObject</span> <span class="hljs-variable">?ppn_o</span> .
+  }
+  <span class="hljs-keyword">BIND</span>(<span class="hljs-function">COALESCE</span>(<span class="hljs-variable">?existing_ppn</span>, <span class="hljs-function">BNODE</span>()) <span class="hljs-keyword">as</span> <span class="hljs-variable">?ppn</span>)
+}</code></pre>
+      </div>
+    </div>
+  </section>
+  <section id="sparql-expansion-dirlangstring"><div class="header-wrapper"><h3 id="a-2-directional-language-string-form-expansion"><bdi class="secno">A.2 </bdi>Directional Language String Form Expansion</h3><a class="self-link" href="#sparql-expansion-dirlangstring" aria-label="Permalink for Appendix A.2"></a></div>
+    
+    <div>
+      <div class="example" id="example-sparql-based-directional-language-string-expansion">
+        <div class="marker">
+    <a class="self-link" href="#example-sparql-based-directional-language-string-expansion">Example<bdi> 14</bdi></a><span class="example-title">: SPARQL-based directional language string expansion</span>
+  </div> <pre aria-busy="false"><code class="hljs sparql"><span class="hljs-comment"># Standard RDF, relying on owl:sameAs. For Symmetric RDF: ?strlangdir a ...</span>
+<span class="hljs-keyword">CONSTRUCT</span> {
+  <span class="hljs-variable">?s</span> <span class="hljs-variable">?p</span> [ <span class="hljs-built_in">a</span> <span class="hljs-symbol">rdf:dirLangString</span> ;
+          <span class="hljs-symbol">owl:sameAs</span> <span class="hljs-variable">?strlangdir</span> ;
+          <span class="hljs-symbol">rdf:value</span> <span class="hljs-variable">?lexical</span> ;
+          <span class="hljs-symbol">rdf:language</span> <span class="hljs-variable">?lang</span> ;
+          <span class="hljs-symbol">rdf:direction</span> <span class="hljs-variable">?langdir</span> ] .
+} <span class="hljs-keyword">WHERE</span> {
+  <span class="hljs-variable">?s</span> <span class="hljs-variable">?p</span> <span class="hljs-variable">?strlangdir</span> .
+  <span class="hljs-keyword">FILTER</span>(hasLANG(<span class="hljs-variable">?strlangdir</span>) &amp;&amp; hasLANGDIR(<span class="hljs-variable">?strlangdir</span>))
+  <span class="hljs-keyword">BIND</span>(<span class="hljs-function">STR</span>(<span class="hljs-variable">?strlangdir</span>) <span class="hljs-keyword">as</span> <span class="hljs-variable">?lexical</span>)
+  <span class="hljs-keyword">BIND</span>(<span class="hljs-function">LANG</span>(<span class="hljs-variable">?strlangdir</span>) <span class="hljs-keyword">as</span> <span class="hljs-variable">?lang</span>)
+  <span class="hljs-keyword">BIND</span>(LANGDIR(<span class="hljs-variable">?strlangdir</span>) <span class="hljs-keyword">as</span> <span class="hljs-variable">?langdir</span>)
+}</code></pre>
+      </div>
+    </div>
+  </section>
+  <section id="sparql-expansion-rlangstring"><div class="header-wrapper"><h3 id="a-3-language-string-form-expansion"><bdi class="secno">A.3 </bdi>Language String Form Expansion</h3><a class="self-link" href="#sparql-expansion-rlangstring" aria-label="Permalink for Appendix A.3"></a></div>
+    
+    <div>
+      <div class="example" id="example-sparql-based-language-string-expansion">
+        <div class="marker">
+    <a class="self-link" href="#example-sparql-based-language-string-expansion">Example<bdi> 15</bdi></a><span class="example-title">: SPARQL-based language string expansion</span>
+  </div> <pre aria-busy="false"><code class="hljs sparql"><span class="hljs-keyword">CONSTRUCT</span> {
+  <span class="hljs-variable">?s</span> <span class="hljs-variable">?p</span> [ <span class="hljs-built_in">a</span> <span class="hljs-symbol">rdf:langString</span> ;
+          <span class="hljs-symbol">owl:sameAs</span> <span class="hljs-variable">?strlang</span> ;
+          <span class="hljs-symbol">rdf:value</span> <span class="hljs-variable">?lexical</span> ;
+          <span class="hljs-symbol">rdf:language</span> <span class="hljs-variable">?lang</span> ] .
+} <span class="hljs-keyword">WHERE</span> {
+  <span class="hljs-variable">?s</span> <span class="hljs-variable">?p</span> <span class="hljs-variable">?strlang</span> .
+  <span class="hljs-keyword">FILTER</span> hasLANG(<span class="hljs-variable">?strlang</span>)
+  <span class="hljs-keyword">BIND</span>(<span class="hljs-function">STR</span>(<span class="hljs-variable">?strlang</span>) <span class="hljs-keyword">as</span> <span class="hljs-variable">?lexical</span>)
+  <span class="hljs-keyword">BIND</span>(<span class="hljs-function">LANG</span>(<span class="hljs-variable">?strlang</span>) <span class="hljs-keyword">as</span> <span class="hljs-variable">?lang</span>)
+}</code></pre>
+      </div>
+    </div>
+  </section>
+  <section id="sparql-expansion-datetime"><div class="header-wrapper"><h3 id="a-4-date-time-form-expansion"><bdi class="secno">A.4 </bdi>Date Time Form Expansion</h3><a class="self-link" href="#sparql-expansion-datetime" aria-label="Permalink for Appendix A.4"></a></div>
+    
+    <p>This is only a suggested expansion form; based on properties defined by [<cite><a class="bibref" data-link-type="biblio" href="#bib-owl-time" title="Time Ontology in OWL">OWL-TIME</a></cite>], beyond the purview of RDF.
+    </p><div>
+      <div class="example" id="example-sparql-based-datetime-expansion">
+        <div class="marker">
+    <a class="self-link" href="#example-sparql-based-datetime-expansion">Example<bdi> 16</bdi></a><span class="example-title">: SPARQL-based datetime expansion</span>
+  </div> <pre aria-busy="false"><code class="hljs sparql"><span class="hljs-keyword">PREFIX</span> <span class="hljs-symbol">time:</span> <span class="hljs-symbol">&lt;http:</span>//www.w3.org/<span class="hljs-number">2006</span>/time<span class="hljs-comment">#&gt;</span>
+
+<span class="hljs-keyword">CONSTRUCT</span> {
+
+  <span class="hljs-variable">?s</span> <span class="hljs-variable">?p</span> <span class="hljs-variable">?matchedform</span> .
+
+  <span class="hljs-variable">?timeurn</span> <span class="hljs-built_in">a</span> <span class="hljs-variable">?type</span> ;
+    <span class="hljs-symbol">owl:sameAs</span> <span class="hljs-variable">?time</span> ;
+    <span class="hljs-symbol">time:inXSDDate</span> <span class="hljs-variable">?datevalue</span> ;
+    <span class="hljs-symbol">time:hour</span> <span class="hljs-variable">?hours</span> ;
+    <span class="hljs-symbol">time:minute</span> <span class="hljs-variable">?minutes</span> ;
+    <span class="hljs-symbol">time:second</span> <span class="hljs-variable">?seconds</span> ;
+    <span class="hljs-symbol">time:timeZone</span> <span class="hljs-variable">?tzNode</span> .
+
+  <span class="hljs-variable">?dateurn</span> <span class="hljs-built_in">a</span> <span class="hljs-symbol">xsd:date</span> ;
+    <span class="hljs-symbol">owl:sameAs</span> <span class="hljs-variable">?datevalue</span> ;
+    <span class="hljs-symbol">time:year</span> <span class="hljs-variable">?year</span> ;
+    <span class="hljs-symbol">time:month</span> <span class="hljs-variable">?month</span> ;
+    <span class="hljs-symbol">time:day</span> <span class="hljs-variable">?day</span> .
+
+  <span class="hljs-variable">?tzNode</span> <span class="hljs-built_in">a</span> <span class="hljs-symbol">time:TimeZone</span> ;
+    <span class="hljs-symbol">rdf:value</span> <span class="hljs-variable">?tz</span>, <span class="hljs-variable">?timezone</span> .
+
+} <span class="hljs-keyword">WHERE</span> {
+
+  {
+    <span class="hljs-variable">?s</span> <span class="hljs-variable">?p</span> <span class="hljs-variable">?time</span> .
+    <span class="hljs-keyword">BIND</span>(<span class="hljs-function">DATATYPE</span>(<span class="hljs-variable">?time</span>) <span class="hljs-keyword">AS</span> <span class="hljs-variable">?type</span>)
+    <span class="hljs-keyword">FILTER</span>(<span class="hljs-variable">?type</span> <span class="hljs-keyword">IN</span> (<span class="hljs-symbol">xsd:dateTimeStamp</span>, <span class="hljs-symbol">xsd:dateTime</span>))
+    <span class="hljs-keyword">BIND</span>(<span class="hljs-variable">?time</span> <span class="hljs-keyword">AS</span> <span class="hljs-variable">?hasdate</span>)
+    <span class="hljs-keyword">BIND</span>(<span class="hljs-function">IRI</span>(<span class="hljs-function">CONCAT</span>(<span class="hljs-string">'urn:tdb:2025:urn:sha:'</span>,
+                    <span class="hljs-function">SHA256</span>(<span class="hljs-function">CONCAT</span>(<span class="hljs-function">STR</span>(<span class="hljs-variable">?time</span>),
+                    <span class="hljs-string">'^^'</span>, <span class="hljs-function">STR</span>(<span class="hljs-variable">?type</span>))))) <span class="hljs-keyword">AS</span> <span class="hljs-variable">?timeurn</span>)
+  } <span class="hljs-keyword">UNION</span> {
+    <span class="hljs-variable">?s</span> <span class="hljs-variable">?p</span> <span class="hljs-variable">?date</span> .
+    <span class="hljs-keyword">BIND</span>(<span class="hljs-function">DATATYPE</span>(<span class="hljs-variable">?date</span>) <span class="hljs-keyword">AS</span> <span class="hljs-variable">?type</span>)
+    <span class="hljs-keyword">FILTER</span>(<span class="hljs-variable">?type</span> = <span class="hljs-symbol">xsd:date</span>)
+    <span class="hljs-keyword">BIND</span>(<span class="hljs-variable">?date</span> <span class="hljs-keyword">AS</span> <span class="hljs-variable">?hasdate</span>)
+  }
+
+  <span class="hljs-keyword">BIND</span>(<span class="hljs-function">STR</span>(<span class="hljs-function">YEAR</span>(<span class="hljs-variable">?hasdate</span>)) <span class="hljs-keyword">AS</span> <span class="hljs-variable">?ystr</span>)
+  <span class="hljs-keyword">BIND</span>(<span class="hljs-function">STRDT</span>(<span class="hljs-variable">?ystr</span>, <span class="hljs-symbol">xsd:gYear</span>) <span class="hljs-keyword">AS</span> <span class="hljs-variable">?year</span>)
+
+  <span class="hljs-keyword">BIND</span>(<span class="hljs-function">CONCAT</span>(<span class="hljs-function">IF</span>(<span class="hljs-function">MONTH</span>(<span class="hljs-variable">?hasdate</span>) &lt; <span class="hljs-number">10</span>, <span class="hljs-string">"0"</span>, <span class="hljs-string">""</span>), <span class="hljs-function">STR</span>(<span class="hljs-function">MONTH</span>(<span class="hljs-variable">?hasdate</span>))) <span class="hljs-keyword">AS</span> <span class="hljs-variable">?mstr</span>)
+  <span class="hljs-keyword">BIND</span>(<span class="hljs-function">STRDT</span>(<span class="hljs-function">CONCAT</span>(<span class="hljs-string">"--"</span>, <span class="hljs-variable">?mstr</span>), <span class="hljs-symbol">xsd:gMonth</span>) <span class="hljs-keyword">AS</span> <span class="hljs-variable">?month</span>)
+
+  <span class="hljs-keyword">BIND</span>(<span class="hljs-function">CONCAT</span>(<span class="hljs-function">IF</span>(<span class="hljs-function">DAY</span>(<span class="hljs-variable">?hasdate</span>) &lt; <span class="hljs-number">10</span>, <span class="hljs-string">"0"</span>, <span class="hljs-string">""</span>), <span class="hljs-function">STR</span>(<span class="hljs-function">DAY</span>(<span class="hljs-variable">?hasdate</span>))) <span class="hljs-keyword">AS</span> <span class="hljs-variable">?dstr</span>)
+  <span class="hljs-keyword">BIND</span>(<span class="hljs-function">STRDT</span>(<span class="hljs-function">CONCAT</span>(<span class="hljs-string">"---"</span>, <span class="hljs-variable">?dstr</span>), <span class="hljs-symbol">xsd:gDay</span>) <span class="hljs-keyword">AS</span> <span class="hljs-variable">?day</span>)
+
+  <span class="hljs-keyword">BIND</span>(<span class="hljs-function">COALESCE</span>(<span class="hljs-variable">?date</span>, <span class="hljs-function">STRDT</span>(<span class="hljs-function">CONCAT</span>(<span class="hljs-variable">?ystr</span>, <span class="hljs-string">'-'</span>, <span class="hljs-variable">?mstr</span>, <span class="hljs-string">'-'</span>, <span class="hljs-variable">?dstr</span>),
+                                    <span class="hljs-symbol">xsd:date</span>)) <span class="hljs-keyword">AS</span> <span class="hljs-variable">?datevalue</span>)
+
+  <span class="hljs-keyword">BIND</span>(<span class="hljs-function">IRI</span>(<span class="hljs-function">CONCAT</span>(<span class="hljs-string">'urn:tdb:2025:urn:sha:'</span>,
+                  <span class="hljs-function">SHA256</span>(<span class="hljs-function">CONCAT</span>(<span class="hljs-variable">?ystr</span>, <span class="hljs-string">'-'</span>, <span class="hljs-variable">?mstr</span>, <span class="hljs-string">'-'</span>, <span class="hljs-variable">?dstr</span>,
+                  <span class="hljs-string">'^^'</span>, <span class="hljs-function">STR</span>(<span class="hljs-symbol">xsd:date</span>))))) <span class="hljs-keyword">AS</span> <span class="hljs-variable">?dateurn</span>)
+
+  <span class="hljs-keyword">BIND</span>(<span class="hljs-function">STRDT</span>(<span class="hljs-function">STR</span>(<span class="hljs-function">HOURS</span>(<span class="hljs-variable">?time</span>)), <span class="hljs-symbol">xsd:nonNegativeInteger</span>) <span class="hljs-keyword">AS</span> <span class="hljs-variable">?hours</span>)
+  <span class="hljs-keyword">BIND</span>(<span class="hljs-function">STRDT</span>(<span class="hljs-function">STR</span>(<span class="hljs-function">MINUTES</span>(<span class="hljs-variable">?time</span>)), <span class="hljs-symbol">xsd:nonNegativeInteger</span>) <span class="hljs-keyword">AS</span> <span class="hljs-variable">?minutes</span>)
+  <span class="hljs-keyword">BIND</span>(<span class="hljs-function">SECONDS</span>(<span class="hljs-variable">?time</span>) <span class="hljs-keyword">AS</span> <span class="hljs-variable">?seconds</span>)
+
+  <span class="hljs-keyword">BIND</span>(<span class="hljs-function">TZ</span>(<span class="hljs-variable">?time</span>) <span class="hljs-keyword">AS</span> <span class="hljs-variable">?tz</span>)
+  <span class="hljs-keyword">BIND</span>(<span class="hljs-function">TIMEZONE</span>(<span class="hljs-variable">?time</span>) <span class="hljs-keyword">AS</span> <span class="hljs-variable">?timezone</span>)
+
+  <span class="hljs-keyword">BIND</span>(<span class="hljs-function">IRI</span>(<span class="hljs-function">CONCAT</span>(<span class="hljs-string">'urn:tdb:2025:urn:sha:'</span>,
+                  <span class="hljs-function">SHA256</span>(<span class="hljs-function">CONCAT</span>(<span class="hljs-function">STR</span>(<span class="hljs-variable">?timezone</span>),
+                  <span class="hljs-string">'^^'</span>, <span class="hljs-function">STR</span>(<span class="hljs-symbol">time:TimeZone</span>))))) <span class="hljs-keyword">AS</span> <span class="hljs-variable">?tzNode</span>)
+
+  <span class="hljs-keyword">BIND</span>(<span class="hljs-function">IF</span>(<span class="hljs-function">BOUND</span>(<span class="hljs-variable">?time</span>), <span class="hljs-variable">?timeurn</span>, <span class="hljs-variable">?dateurn</span>) <span class="hljs-keyword">AS</span> <span class="hljs-variable">?matchedform</span>)
+
+}</code></pre>
+      </div>
+    </div>
+  </section>
+</section>
+
+<section id="section-relation-basic-encoding" class="appendix"><div class="header-wrapper"><h2 id="b-relationship-to-basic-encoding"><bdi class="secno">B. </bdi>Relationship to Basic-encoding</h2><a class="self-link" href="#section-relation-basic-encoding" aria-label="Permalink for Appendix B."></a></div>
+  
+  <p>
+    The semantic conditions specified here entail structures that are structurally based on, but formally different from—or complementary to—the interoperability patterns between RDF 1.2 Full, RDF 1.2 Basic, and RDF 1.1 defined by the algorithms of <em>basic encoding</em> and <em>decoding</em>.
+  </p>
+  <p>
+    The inherent structures of propositions and datatype properties are possible to <em>query over</em>, either using SPARQL 1.2, or using SPARQL 1.1 along with basic encoding under simple entailment. But it is not possible to <em>reason over</em> them using RDF semantics alone. This prevents the definition of OWL-based axioms relating to this inherent structure.
+    By defining a set of semantic extensions, this document bridges that gap.
+  </p>
+  <p>
+    These two methods are <em>complementary</em> ways of working with RDF 1.2 data. Basic-encoding is for RDF 1.1 or 1.2 Basic systems that lack support for triple terms. Extended interpretations of formal structures is for systems leveraging semantic extensions based on RDF 1.2, such as OWL 2, in order to be able to reason over the intrinsic properties of propositions and literal values.
+  </p>
+  <div class="issue" id="issue-container-number-5"><div class="issue-title marker" id="h-issue-3"><span>Issue 5</span></div><p class="">
+    
+    Refer to the specification of basic-encoding. In this document, Appendix <a href="#section-basicenc-sparql" data-matched-text="[[[#section-basicenc-sparql]]]" class="sec-ref"><bdi class="secno">B.3 </bdi>Basic-encoding using SPARQL</a> defines SPARQL-based versions of basic encoding and decoding for propositions and directional language strings.
+  </p></div>
+
+  <section id="conditions-for-basic-encoding"><div class="header-wrapper"><h3 id="b-1-conditions-for-basic-encoding"><bdi class="secno">B.1 </bdi>Conditions for Basic-encoding</h3><a class="self-link" href="#conditions-for-basic-encoding" aria-label="Permalink for Appendix B.1"></a></div>
+    
+    <p>Basic-encoding and subsequent decoding is only <em>safe</em> under <em>simple entailment</em>.
+    </p><p>Since literal values and propositions are resources, RDF entailment implies they have an <code>rdf:type</code> (of <code>rdfs:Literal</code> and <code>rdfs:Proposition</code>, respectively). Any encoding and decoding must take place on a graph where no entailments have been manifested.
+    </p><p>While the RDF abstract syntax prevents this by disallowing the special encoding terms denoting these kinds of resources as subjects, the same is not possible if facts about them are encoded as triples with IRIs or blank nodes as subject identifiers. To avoid the direct logical description of these resources, basic encoding uses underlying base types for describing propositions and directional language strings, simply encoding their <em>forms</em>.
+
+    </p><div class="note" role="note" id="issue-container-generatedID-3"><div class="note-title marker" id="h-note-3"><span>Note</span></div><p class="">Note that due to the rules of basic-encoding, it is impossible to basic-decode a graph representing the formal entailments about propositions (since their type is <em>rdfs:Proposition</em>). This is by design, to avoid basic-encoding data using anything beyond simple entailment. Entailed facts should not be put back into an RDF Source. They are simply true, following from the known axioms and conditions of a given entailment regime.
+  </p></div></section>
+
+  <section id="upgrading-to-structural-interpretations"><div class="header-wrapper"><h3 id="b-2-upgrading-to-structural-interpretations"><bdi class="secno">B.2 </bdi>Upgrading to Structural Interpretations</h3><a class="self-link" href="#upgrading-to-structural-interpretations" aria-label="Permalink for Appendix B.2"></a></div>
+    
+    <p>Since applications may start with a dependency on deployed structures, and rely on <em>basic-encoding</em>, having a formal way of instead entailing these facts ensures a seamless upgrade path to RDF 1.2 Full, without requiring redefined domain logic or queries rewritten for new structures.
+    </p><div class="note" role="note" id="issue-container-generatedID-4"><div class="note-title marker" id="h-note-4"><span>Note</span></div><p class="">Similarly, a basic-encoded graph will work <em>mostly</em> the same when reasoned over using OWL. One crucial difference is that there will be no triple terms in a basic-encoded graph, meaning that there is no <code>owl:sameAs</code> relationship to such terms from the encoded propositions. This is not significant for the <em>meaning</em>, but for implementations also relying on the graph structure itself.
+  </p></div></section>
+
+<section id="section-basicenc-sparql" class="appendix"><div class="header-wrapper"><h3 id="b-3-basic-encoding-using-sparql"><bdi class="secno">B.3 </bdi>Basic-encoding using SPARQL</h3><a class="self-link" href="#section-basicenc-sparql" aria-label="Permalink for Appendix B.3"></a></div>
+  
+  <p>The following subsections define SPARQL updates for basic-encoding and -decoding. They have to be repeated until the triple count is stable (i.e. iterate while the triple count increases (for encoding) or decreases (for decoding); and halting when the triple count is equal to the one of the previous iteration).
+  </p><div class="note" role="note" id="issue-container-generatedID-5"><div class="note-title marker" id="h-note-5"><span>Note</span></div><p class="">Since datatyped literals and language-tagged strings have been part of RDF since version 1.0, there is no need for basic encoding such structures.
+  </p></div><section id="basicenc-propositions"><div class="header-wrapper"><h4 id="b-3-1-basic-encoding-of-propositions"><bdi class="secno">B.3.1 </bdi>Basic-encoding of Propositions</h4><a class="self-link" href="#basicenc-propositions" aria-label="Permalink for Appendix B.3.1"></a></div>
+    
+    <div>
+      <div class="example" id="example-sparql-based-basic-encoding-of-propositions">
+        <div class="marker">
+    <a class="self-link" href="#example-sparql-based-basic-encoding-of-propositions">Example<bdi> 17</bdi></a><span class="example-title">: SPARQL-based basic-encoding of propositions</span>
+  </div> <pre aria-busy="false"><code class="hljs sparql"><span class="hljs-keyword">PREFIX</span> <span class="hljs-symbol">rdf:</span> <span class="hljs-symbol">&lt;http:</span>//www.w3.org/<span class="hljs-number">1999</span>/<span class="hljs-number">02</span>/<span class="hljs-number">22</span>-rdf-syntax-ns<span class="hljs-comment">#&gt;</span>
+
+<span class="hljs-keyword">DELETE</span> {
+  <span class="hljs-variable">?s</span> <span class="hljs-variable">?rel</span> &lt;&lt;( <span class="hljs-variable">?ppn_s</span> <span class="hljs-variable">?ppn_p</span> <span class="hljs-variable">?ppn_o</span> )&gt;&gt; .
+}
+<span class="hljs-keyword">INSERT</span> {
+  <span class="hljs-variable">?s</span> <span class="hljs-variable">?rel</span> <span class="hljs-variable">?ppn</span> .
+  <span class="hljs-variable">?ppn</span> <span class="hljs-built_in">a</span> <span class="hljs-symbol">rdf:PropositionForm</span> ;
+    <span class="hljs-symbol">rdf:propositionFormSubject</span> <span class="hljs-variable">?ppn_s</span> ;
+    <span class="hljs-symbol">rdf:propositionFormPredicate</span> <span class="hljs-variable">?ppn_p</span> ;
+    <span class="hljs-symbol">rdf:propositionFormObject</span> <span class="hljs-variable">?ppn_o</span> .
+}
+<span class="hljs-keyword">WHERE</span> {
+  <span class="hljs-variable">?s</span> <span class="hljs-variable">?rel</span> &lt;&lt;( <span class="hljs-variable">?ppn_s</span> <span class="hljs-variable">?ppn_p</span> <span class="hljs-variable">?ppn_o</span> )&gt;&gt; .
+  <span class="hljs-keyword">OPTIONAL</span> {
+    <span class="hljs-variable">?existing_ppn</span> <span class="hljs-built_in">a</span> <span class="hljs-symbol">rdf:PropositionForm</span> ;
+      <span class="hljs-symbol">rdf:propositionFormSubject</span> <span class="hljs-variable">?ppn_s</span> ;
+      <span class="hljs-symbol">rdf:propositionFormPredicate</span> <span class="hljs-variable">?ppn_p</span> ;
+      <span class="hljs-symbol">rdf:propositionFormObject</span> <span class="hljs-variable">?ppn_o</span> .
+  }
+  <span class="hljs-keyword">BIND</span>(<span class="hljs-function">COALESCE</span>(<span class="hljs-variable">?existing_ppn</span>, <span class="hljs-function">BNODE</span>()) <span class="hljs-keyword">as</span> <span class="hljs-variable">?ppn</span>)
+}</code></pre>
+      </div>
+    </div>
+    <div>
+      <div class="example" id="example-sparql-based-basic-decoding-of-propositions">
+        <div class="marker">
+    <a class="self-link" href="#example-sparql-based-basic-decoding-of-propositions">Example<bdi> 18</bdi></a><span class="example-title">: SPARQL-based basic-decoding of propositions</span>
+  </div> <pre aria-busy="false"><code class="hljs sparql"><span class="hljs-keyword">PREFIX</span> <span class="hljs-symbol">rdf:</span> <span class="hljs-symbol">&lt;http:</span>//www.w3.org/<span class="hljs-number">1999</span>/<span class="hljs-number">02</span>/<span class="hljs-number">22</span>-rdf-syntax-ns<span class="hljs-comment">#&gt;</span>
+
+<span class="hljs-keyword">DELETE</span> {
+  <span class="hljs-variable">?s</span> <span class="hljs-variable">?rel</span> <span class="hljs-variable">?ppn</span> .
+  <span class="hljs-variable">?ppn</span> <span class="hljs-built_in">a</span> <span class="hljs-symbol">rdf:PropositionForm</span> ;
+    <span class="hljs-symbol">rdf:propositionFormSubject</span> <span class="hljs-variable">?ppn_s</span> ;
+    <span class="hljs-symbol">rdf:propositionFormPredicate</span> <span class="hljs-variable">?ppn_p</span> ;
+    <span class="hljs-symbol">rdf:propositionFormObject</span> <span class="hljs-variable">?ppn_o</span> .
+}
+<span class="hljs-keyword">INSERT</span> {
+  <span class="hljs-variable">?s</span> <span class="hljs-variable">?rel</span> &lt;&lt;( <span class="hljs-variable">?ppn_s</span> <span class="hljs-variable">?ppn_p</span> <span class="hljs-variable">?ppn_o</span> )&gt;&gt; .
+}
+<span class="hljs-keyword">WHERE</span> {
+  <span class="hljs-variable">?s</span> <span class="hljs-variable">?rel</span> <span class="hljs-variable">?ppn</span> .
+  <span class="hljs-variable">?ppn</span> <span class="hljs-built_in">a</span> <span class="hljs-symbol">rdf:PropositionForm</span> ;
+    <span class="hljs-symbol">rdf:propositionFormSubject</span> <span class="hljs-variable">?ppn_s</span> ;
+    <span class="hljs-symbol">rdf:propositionFormPredicate</span> <span class="hljs-variable">?ppn_p</span> ;
+    <span class="hljs-symbol">rdf:propositionFormObject</span> <span class="hljs-variable">?ppn_o</span> .
+};
+<span class="hljs-comment"># The above nests triple in triple but doesn't remove its basic-encoded form; this does:</span>
+<span class="hljs-keyword">DELETE</span> {
+  <span class="hljs-variable">?s</span> <span class="hljs-variable">?p</span> &lt;&lt;( <span class="hljs-variable">?ppn_s</span> <span class="hljs-variable">?ppn_p</span> <span class="hljs-variable">?ppn_ppn</span> )&gt;&gt; .
+  <span class="hljs-variable">?ppn_ppn</span> <span class="hljs-built_in">a</span> <span class="hljs-symbol">rdf:PropositionForm</span> ;
+    <span class="hljs-symbol">rdf:propositionFormSubject</span> <span class="hljs-variable">?ppn_ppn_s</span> ;
+    <span class="hljs-symbol">rdf:propositionFormPredicate</span> <span class="hljs-variable">?ppn_ppn_p</span> ;
+    <span class="hljs-symbol">rdf:propositionFormObject</span> <span class="hljs-variable">?ppn_ppn_o</span> .
+}
+<span class="hljs-comment"># Not needed (taken care of above):</span>
+<span class="hljs-comment">#INSERT {</span>
+<span class="hljs-comment">#  ?s ?p &lt;&lt;( ?ppn_s ?ppn_p &lt;&lt;( ?ppn_ppn_s ?ppn_ppn_p ?ppn_ppn_o )&gt;&gt; )&gt;&gt; .</span>
+<span class="hljs-comment">#}</span>
+<span class="hljs-keyword">WHERE</span> {
+  <span class="hljs-variable">?s</span> <span class="hljs-variable">?p</span> &lt;&lt;( <span class="hljs-variable">?ppn_s</span> <span class="hljs-variable">?ppn_p</span> <span class="hljs-variable">?ppn_ppn</span> )&gt;&gt; .
+  <span class="hljs-variable">?ppn_ppn</span> <span class="hljs-built_in">a</span> <span class="hljs-symbol">rdf:PropositionForm</span> ;
+    <span class="hljs-symbol">rdf:propositionFormSubject</span> <span class="hljs-variable">?ppn_ppn_s</span> ;
+    <span class="hljs-symbol">rdf:propositionFormPredicate</span> <span class="hljs-variable">?ppn_ppn_p</span> ;
+    <span class="hljs-symbol">rdf:propositionFormObject</span> <span class="hljs-variable">?ppn_ppn_o</span> .
+}</code></pre>
+      </div>
+    </div>
+  </section>
+  <section id="basicenc-propositions"><div class="header-wrapper"><h4 id="b-3-2-basic-encoding-of-directional-language-strings"><bdi class="secno">B.3.2 </bdi>Basic-encoding of Directional Language Strings</h4><a class="self-link" href="#basicenc-propositions" aria-label="Permalink for Appendix B.3.2"></a></div>
+    
+    <div>
+      <div class="example" id="example-sparql-based-basic-encoding-of-dir-lang-strings">
+        <div class="marker">
+    <a class="self-link" href="#example-sparql-based-basic-encoding-of-dir-lang-strings">Example<bdi> 19</bdi></a><span class="example-title">: SPARQL-based basic-encoding of dir-lang-strings</span>
+  </div> <pre aria-busy="false"><code class="hljs sparql"><span class="hljs-keyword">DELETE</span> {
+  <span class="hljs-variable">?s</span> <span class="hljs-variable">?p</span> <span class="hljs-variable">?strlangdir</span> .
+}
+<span class="hljs-keyword">INSERT</span> {
+  <span class="hljs-variable">?s</span> <span class="hljs-variable">?p</span> <span class="hljs-variable">?litnode</span> .
+  <span class="hljs-variable">?litnode</span> <span class="hljs-built_in">a</span> <span class="hljs-symbol">rdf:CompoundLiteral</span> ;
+    <span class="hljs-symbol">rdf:value</span> <span class="hljs-variable">?lexical</span> ;
+    <span class="hljs-symbol">rdf:language</span> <span class="hljs-variable">?lang</span> ;
+    <span class="hljs-symbol">rdf:direction</span> <span class="hljs-variable">?langdir</span> .
+}
+<span class="hljs-keyword">WHERE</span> {
+  <span class="hljs-variable">?s</span> <span class="hljs-variable">?p</span> <span class="hljs-variable">?strlangdir</span> .
+  <span class="hljs-keyword">FILTER</span>(hasLANG(<span class="hljs-variable">?strlangdir</span>) &amp;&amp; hasLANGDIR(<span class="hljs-variable">?strlangdir</span>))
+  <span class="hljs-keyword">BIND</span>(<span class="hljs-function">STR</span>(<span class="hljs-variable">?strlangdir</span>) <span class="hljs-keyword">as</span> <span class="hljs-variable">?lexical</span>)
+  <span class="hljs-keyword">BIND</span>(<span class="hljs-function">LANG</span>(<span class="hljs-variable">?strlangdir</span>) <span class="hljs-keyword">as</span> <span class="hljs-variable">?lang</span>)
+  <span class="hljs-keyword">BIND</span>(LANGDIR(<span class="hljs-variable">?strlangdir</span>) <span class="hljs-keyword">as</span> <span class="hljs-variable">?langdir</span>)
+  <span class="hljs-keyword">OPTIONAL</span> {
+    <span class="hljs-variable">?existing_litnode</span> <span class="hljs-built_in">a</span> <span class="hljs-symbol">rdf:CompoundLiteral</span> ;
+      <span class="hljs-symbol">rdf:value</span> <span class="hljs-variable">?lexical</span> ;
+      <span class="hljs-symbol">rdf:language</span> <span class="hljs-variable">?lang</span> ;
+      <span class="hljs-symbol">rdf:direction</span> <span class="hljs-variable">?langdir</span> .
+  }
+  <span class="hljs-keyword">BIND</span>(<span class="hljs-function">COALESCE</span>(<span class="hljs-variable">?existing_litnode</span>, <span class="hljs-function">BNODE</span>()) <span class="hljs-keyword">as</span> <span class="hljs-variable">?litnode</span>)
+}</code></pre>
+      </div>
+    </div>
+    <div>
+      <div class="example" id="example-sparql-based-basic-decoding-of-dir-lang-strings">
+        <div class="marker">
+    <a class="self-link" href="#example-sparql-based-basic-decoding-of-dir-lang-strings">Example<bdi> 20</bdi></a><span class="example-title">: SPARQL-based basic-decoding of dir-lang-strings</span>
+  </div> <pre aria-busy="false"><code class="hljs sparql"><span class="hljs-keyword">DELETE</span> {
+  <span class="hljs-variable">?s</span> <span class="hljs-variable">?p</span> <span class="hljs-variable">?litnode</span> .
+  <span class="hljs-variable">?litnode</span> <span class="hljs-built_in">a</span> <span class="hljs-symbol">rdf:CompoundLiteral</span> ;
+    <span class="hljs-symbol">rdf:language</span> <span class="hljs-variable">?lang</span> ;
+    <span class="hljs-symbol">rdf:direction</span> <span class="hljs-variable">?langdir</span> .
+}
+<span class="hljs-keyword">INSERT</span> {
+  <span class="hljs-variable">?s</span> <span class="hljs-variable">?p</span> <span class="hljs-variable">?strlangdir</span> .
+}
+<span class="hljs-keyword">WHERE</span> {
+  <span class="hljs-variable">?s</span> <span class="hljs-variable">?p</span> <span class="hljs-variable">?litnode</span> .
+  <span class="hljs-variable">?litnode</span> <span class="hljs-built_in">a</span> <span class="hljs-symbol">rdf:CompoundLiteral</span> ;
+    <span class="hljs-symbol">rdf:language</span> <span class="hljs-variable">?lang</span> ;
+    <span class="hljs-symbol">rdf:direction</span> <span class="hljs-variable">?langdir</span> .
+
+  <span class="hljs-keyword">BIND</span>(STRLANGDIR(<span class="hljs-function">STR</span>(<span class="hljs-variable">?lexical</span>), <span class="hljs-variable">?lang</span>, <span class="hljs-variable">?langdir</span>) <span class="hljs-keyword">as</span> <span class="hljs-variable">?strlangdir</span>)
+}</code></pre>
+      </div>
+    </div>
+  </section>
+</section>
+
+</section>
+
+
+
+
+
+<section id="references" class="appendix"><div class="header-wrapper"><h2 id="c-references"><bdi class="secno">C. </bdi>References</h2><a class="self-link" href="#references" aria-label="Permalink for Appendix C."></a></div><section id="informative-references"><div class="header-wrapper"><h3 id="c-1-informative-references"><bdi class="secno">C.1 </bdi>Informative references</h3><a class="self-link" href="#informative-references" aria-label="Permalink for Appendix C.1"></a></div>
+    
+    <dl class="bibliography"><dt id="bib-iri">[IRI]</dt><dd>
+      <a href="https://www.rfc-editor.org/rfc/rfc3987"><cite>Internationalized Resource Identifiers (IRIs)</cite></a>. M. Duerst; M. Suignard.  IETF. January 2005. Proposed Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc3987">https://www.rfc-editor.org/rfc/rfc3987</a>
+    </dd><dt id="bib-owl-time">[OWL-TIME]</dt><dd>
+      <a href="https://www.w3.org/TR/owl-time/"><cite>Time Ontology in OWL</cite></a>. Simon Cox; Chris Little.  W3C. 15 November 2022. CRD. URL: <a href="https://www.w3.org/TR/owl-time/">https://www.w3.org/TR/owl-time/</a>
+    </dd><dt id="bib-owl2-overview">[OWL2-OVERVIEW]</dt><dd>
+      <a href="https://www.w3.org/TR/owl2-overview/"><cite>OWL 2 Web Ontology Language Document Overview (Second Edition)</cite></a>. W3C OWL Working Group.  W3C. 11 December 2012. W3C Recommendation. URL: <a href="https://www.w3.org/TR/owl2-overview/">https://www.w3.org/TR/owl2-overview/</a>
+    </dd><dt id="bib-owl2-rdf-based-semantics">[OWL2-RDF-BASED-SEMANTICS]</dt><dd>
+      <a href="https://www.w3.org/TR/owl2-rdf-based-semantics/"><cite>OWL 2 Web Ontology Language RDF-Based Semantics (Second Edition)</cite></a>. Michael Schneider.  W3C. 11 December 2012. W3C Recommendation. URL: <a href="https://www.w3.org/TR/owl2-rdf-based-semantics/">https://www.w3.org/TR/owl2-rdf-based-semantics/</a>
+    </dd><dt id="bib-prov-o">[PROV-O]</dt><dd>
+      <a href="https://www.w3.org/TR/prov-o/"><cite>PROV-O: The PROV Ontology</cite></a>. Timothy Lebo; Satya Sahoo; Deborah McGuinness.  W3C. 30 April 2013. W3C Recommendation. URL: <a href="https://www.w3.org/TR/prov-o/">https://www.w3.org/TR/prov-o/</a>
+    </dd><dt id="bib-rdf-plain-literal">[RDF-PLAIN-LITERAL]</dt><dd>
+      <a href="https://www.w3.org/TR/rdf-plain-literal/"><cite>rdf:PlainLiteral: A Datatype for RDF Plain Literals (Second Edition)</cite></a>. Jie Bao; Sandro Hawke; Boris Motik; Peter Patel-Schneider; Axel Polleres.  W3C. 11 December 2012. W3C Recommendation. URL: <a href="https://www.w3.org/TR/rdf-plain-literal/">https://www.w3.org/TR/rdf-plain-literal/</a>
+    </dd><dt id="bib-rdf-schema">[RDF-SCHEMA]</dt><dd>
+      <a href="https://www.w3.org/TR/rdf-schema/"><cite>RDF Schema 1.1</cite></a>. Dan Brickley; Ramanathan Guha.  W3C. 25 February 2014. W3C Recommendation. URL: <a href="https://www.w3.org/TR/rdf-schema/">https://www.w3.org/TR/rdf-schema/</a>
+    </dd><dt id="bib-rdf-semantics">[RDF-SEMANTICS]</dt><dd>
+      <a href="https://www.w3.org/TR/rdf11-mt/"><cite>RDF 1.1 Semantics</cite></a>. Patrick Hayes; Peter Patel-Schneider.  W3C. 25 February 2014. W3C Recommendation. URL: <a href="https://www.w3.org/TR/rdf11-mt/">https://www.w3.org/TR/rdf11-mt/</a>
+    </dd><dt id="bib-rdf12-concepts">[RDF12-CONCEPTS]</dt><dd>
+      <a href="https://www.w3.org/TR/rdf12-concepts/"><cite>RDF 1.2 Concepts and Abstract Data Model</cite></a>. Andy Seaborne; Gregg Kellogg; Olaf Hartig; Pierre-Antoine Champin.  W3C. 7 April 2026. W3C Candidate Recommendation. URL: <a href="https://www.w3.org/TR/rdf12-concepts/">https://www.w3.org/TR/rdf12-concepts/</a>
+    </dd><dt id="bib-rdf12-primer">[RDF12-PRIMER]</dt><dd>
+      <a href="https://www.w3.org/TR/rdf12-primer/"><cite>RDF 1.2 Primer</cite></a>. Pierre-Antoine Champin; Niklas Lindström.  W3C. 16 April 2026. DNOTE. URL: <a href="https://www.w3.org/TR/rdf12-primer/">https://www.w3.org/TR/rdf12-primer/</a>
+    </dd><dt id="bib-rdf12-semantics">[RDF12-SEMANTICS]</dt><dd>
+      <a href="https://www.w3.org/TR/rdf12-semantics/"><cite>RDF 1.2 Semantics</cite></a>. Peter Patel-Schneider; Enrico Franconi; Dörthe Arndt.  W3C. 7 April 2026. W3C Candidate Recommendation. URL: <a href="https://www.w3.org/TR/rdf12-semantics/">https://www.w3.org/TR/rdf12-semantics/</a>
+    </dd><dt id="bib-rdf12-turtle">[RDF12-TURTLE]</dt><dd>
+      <a href="https://www.w3.org/TR/rdf12-turtle/"><cite>RDF 1.2 Turtle</cite></a>. Gregg Kellogg; Andy Seaborne; Dominik Tomaszuk.  W3C. 28 May 2026. W3C Working Draft. URL: <a href="https://www.w3.org/TR/rdf12-turtle/">https://www.w3.org/TR/rdf12-turtle/</a>
+    </dd><dt id="bib-sparql12-query">[SPARQL12-QUERY]</dt><dd>
+      <a href="https://www.w3.org/TR/sparql12-query/"><cite>SPARQL 1.2 Query Language</cite></a>. Olaf Hartig; Andy Seaborne; Ruben Taelman; Gregory Williams; Thomas Pellissier Tanon.  W3C. 28 May 2026. W3C Working Draft. URL: <a href="https://www.w3.org/TR/sparql12-query/">https://www.w3.org/TR/sparql12-query/</a>
+    </dd><dt id="bib-xmlschema11-2">[XMLSCHEMA11-2]</dt><dd>
+      <a href="https://www.w3.org/TR/xmlschema11-2/"><cite>W3C XML Schema Definition Language (XSD) 1.1 Part 2: Datatypes</cite></a>. David Peterson; Sandy Gao; Ashok Malhotra; Michael Sperberg-McQueen; Henry Thompson; Paul V. Biron et al.  W3C. 5 April 2012. W3C Recommendation. URL: <a href="https://www.w3.org/TR/xmlschema11-2/">https://www.w3.org/TR/xmlschema11-2/</a>
+    </dd></dl>
+  </section></section><p role="navigation" id="back-to-top">
+    <a href="#title"><abbr title="Back to Top">↑</abbr></a>
+  </p><script id="respec-highlight-vars">(() => {
+// @ts-check
+
+if (document.respec) {
+  document.respec.ready.then(setupVarHighlighter);
+} else {
+  setupVarHighlighter();
+}
+
+function setupVarHighlighter() {
+  document
+    .querySelectorAll("var")
+    .forEach(varElem => varElem.addEventListener("click", highlightListener));
+}
+
+/**
+ * @param {MouseEvent} ev
+ */
+function highlightListener(ev) {
+  ev.stopPropagation();
+  const varElem = /** @type {HTMLElement} */ (ev.target);
+  const hightligtedElems = highlightVars(varElem);
+  const resetListener = () => {
+    const hlColor = getHighlightColor(varElem);
+    hightligtedElems.forEach(el => removeHighlight(el, hlColor));
+    [...HL_COLORS.keys()].forEach(key => HL_COLORS.set(key, true));
+  };
+  if (hightligtedElems.length) {
+    document.body.addEventListener("click", resetListener, { once: true });
+  }
+}
+
+// availability of highlight colors. colors from var.css
+const HL_COLORS = new Map([
+  ["respec-hl-c1", true],
+  ["respec-hl-c2", true],
+  ["respec-hl-c3", true],
+  ["respec-hl-c4", true],
+  ["respec-hl-c5", true],
+  ["respec-hl-c6", true],
+  ["respec-hl-c7", true],
+]);
+
+/**
+ * @param {HTMLElement} target
+ */
+function getHighlightColor(target) {
+  // return current colors if applicable
+  const { value } = target.classList;
+  const re = /respec-hl-\w+/;
+  const activeClass = re.test(value) && value.match(re);
+  if (activeClass) return activeClass[0];
+
+  // first color preference
+  if (HL_COLORS.get("respec-hl-c1") === true) return "respec-hl-c1";
+
+  // otherwise get some other available color
+  return [...HL_COLORS.keys()].find(c => HL_COLORS.get(c)) || "respec-hl-c1";
+}
+
+/**
+ * @param {HTMLElement} varElem
+ */
+function highlightVars(varElem) {
+  const textContent = norm(varElem.textContent);
+  const parent = /** @type {HTMLElement} */ (
+    varElem.closest(".algorithm, section")
+  );
+  if (!parent) return [];
+  const highlightColor = getHighlightColor(varElem);
+
+  const varsToHighlight = [...parent.querySelectorAll("var")].filter(
+    el =>
+      norm(el.textContent) === textContent &&
+      el.closest(".algorithm, section") === parent
+  );
+
+  // update availability of highlight color
+  const colorStatus = varsToHighlight[0].classList.contains("respec-hl");
+  HL_COLORS.set(highlightColor, colorStatus);
+
+  // highlight vars
+  if (colorStatus) {
+    varsToHighlight.forEach(el => removeHighlight(el, highlightColor));
+    return [];
+  } else {
+    varsToHighlight.forEach(el => addHighlight(el, highlightColor));
+  }
+  return varsToHighlight;
+}
+
+/**
+ * @param {HTMLElement} el
+ * @param {string} highlightColor
+ */
+function removeHighlight(el, highlightColor) {
+  el.classList.remove("respec-hl", highlightColor);
+  // clean up empty class attributes so they don't come in export
+  if (!el.classList.length) el.removeAttribute("class");
+}
+
+/**
+ * @param {HTMLElement} elem
+ * @param {string} highlightColor
+ */
+function addHighlight(elem, highlightColor) {
+  elem.classList.add("respec-hl", highlightColor);
+}
+
+/**
+ * Same as `norm` from src/core/utils, but our build process doesn't allow
+ * imports in runtime scripts, so duplicated here.
+ * @param {string} str
+ */
+function norm(str) {
+  return str.trim().replace(/\s+/g, " ");
+}
+})()</script><script id="respec-dfn-panel">(() => {
+// @ts-check
+if (document.respec) {
+  document.respec.ready.then(setupPanel);
+} else {
+  setupPanel();
+}
+
+function setupPanel() {
+  const listener = panelListener();
+  document.body.addEventListener("keydown", listener);
+  document.body.addEventListener("click", listener);
+}
+
+function panelListener() {
+  /** @type {HTMLElement | null} */
+  let panel = null;
+  /**
+   * @param {KeyboardEvent|MouseEvent} event
+   */
+  return event => {
+    const { target, type } = event;
+
+    if (!(target instanceof HTMLElement)) return;
+
+    // For keys, we only care about Enter key to activate the panel
+    // otherwise it's activated via a click.
+    if (
+      type === "keydown" &&
+      /** @type {KeyboardEvent} */ (event).key !== "Enter"
+    )
+      return;
+
+    const action = deriveAction(event);
+
+    switch (action) {
+      case "show": {
+        hidePanel(panel);
+        /** @type {HTMLElement | null} */
+        const dfn = target.closest("dfn, .index-term");
+        if (!dfn?.id) break;
+        panel = document.getElementById(`dfn-panel-for-${dfn.id}`);
+        if (!panel) break;
+        const coords = deriveCoordinates(
+          /** @type {MouseEvent|KeyboardEvent} */ (event)
+        );
+        displayPanel(dfn, panel, coords);
+        break;
+      }
+      case "dock": {
+        if (panel) {
+          panel.style.left = "";
+          panel.style.top = "";
+          panel.classList.add("docked");
+        }
+        break;
+      }
+      case "hide": {
+        hidePanel(panel);
+        panel = null;
+        break;
+      }
+    }
+  };
+}
+
+/**
+ * @param {MouseEvent|KeyboardEvent} event
+ */
+function deriveCoordinates(event) {
+  const target = /** @type HTMLElement */ (event.target);
+
+  // We prevent synthetic AT clicks from putting
+  // the dialog in a weird place. The AT events sometimes
+  // lack coordinates, so they have clientX/Y = 0
+  const rect = target.getBoundingClientRect();
+  if (
+    event instanceof MouseEvent &&
+    event.clientX >= rect.left &&
+    event.clientY >= rect.top
+  ) {
+    // The event probably happened inside the bounding rect...
+    return { x: event.clientX, y: event.clientY };
+  }
+
+  // Offset to the middle of the element
+  const x = rect.x + rect.width / 2;
+  // Placed at the bottom of the element
+  const y = rect.y + rect.height;
+  return { x, y };
+}
+
+/**
+ * @param {Event} event
+ */
+function deriveAction(event) {
+  const target = /** @type {HTMLElement} */ (event.target);
+  const hitALink = !!target.closest("a");
+  if (target.closest("dfn:not([data-cite]), .index-term")) {
+    return hitALink ? "none" : "show";
+  }
+  if (target.closest(".dfn-panel")) {
+    if (hitALink) {
+      return target.classList.contains("self-link") ? "hide" : "dock";
+    }
+
+    const panel = /** @type {HTMLElement} */ (target.closest(".dfn-panel"));
+    return panel.classList.contains("docked") ? "hide" : "none";
+  }
+  if (document.querySelector(".dfn-panel:not([hidden])")) {
+    return "hide";
+  }
+  return "none";
+}
+
+/**
+ * @param {HTMLElement} dfn
+ * @param {HTMLElement} panel
+ * @param {{ x: number, y: number }} clickPosition
+ */
+function displayPanel(dfn, panel, { x, y }) {
+  panel.hidden = false;
+  // distance (px) between edge of panel and the pointing triangle (caret)
+  const MARGIN = 20;
+
+  const dfnRects = dfn.getClientRects();
+  // Find the `top` offset when the `dfn` can be spread across multiple lines
+  let closestTop = 0;
+  let minDiff = Infinity;
+  for (const rect of dfnRects) {
+    const { top, bottom } = rect;
+    const diffFromClickY = Math.abs((top + bottom) / 2 - y);
+    if (diffFromClickY < minDiff) {
+      minDiff = diffFromClickY;
+      closestTop = top;
+    }
+  }
+
+  const top = window.scrollY + closestTop + dfnRects[0].height;
+  const left = x - MARGIN;
+  panel.style.left = `${left}px`;
+  panel.style.top = `${top}px`;
+
+  // Find if the panel is flowing out of the window
+  const panelRect = panel.getBoundingClientRect();
+  const SCREEN_WIDTH = Math.min(window.innerWidth, window.screen.width);
+  if (panelRect.right > SCREEN_WIDTH) {
+    const newLeft = Math.max(MARGIN, x + MARGIN - panelRect.width);
+    const newCaretOffset = left - newLeft;
+    panel.style.left = `${newLeft}px`;
+    /** @type {HTMLElement | null} */
+    const caret = panel.querySelector(".caret");
+    if (caret) caret.style.left = `${newCaretOffset}px`;
+  }
+
+  // As it's a dialog, we trap focus.
+  // TODO: when <dialog> becomes a implemented, we should really
+  // use that.
+  trapFocus(panel, dfn);
+}
+
+/**
+ * @param {HTMLElement} panel
+ * @param {HTMLElement} dfn
+ * @returns
+ */
+function trapFocus(panel, dfn) {
+  /** @type NodeListOf<HTMLAnchorElement> elements */
+  const anchors = panel.querySelectorAll("a[href]");
+  // No need to trap focus
+  if (!anchors.length) return;
+
+  // Move focus to first anchor element
+  const first = anchors.item(0);
+  first.focus();
+
+  const trapListener = createTrapListener(anchors, panel, dfn);
+  panel.addEventListener("keydown", trapListener);
+
+  // Hiding the panel releases the trap
+  const mo = new MutationObserver(records => {
+    const [record] = records;
+    const target = /** @type HTMLElement */ (record.target);
+    if (target.hidden) {
+      panel.removeEventListener("keydown", trapListener);
+      mo.disconnect();
+    }
+  });
+  mo.observe(panel, { attributes: true, attributeFilter: ["hidden"] });
+}
+
+/**
+ *
+ * @param {NodeListOf<HTMLAnchorElement>} anchors
+ * @param {HTMLElement} panel
+ * @param {HTMLElement} dfn
+ * @returns
+ */
+function createTrapListener(anchors, panel, dfn) {
+  const lastIndex = anchors.length - 1;
+  let currentIndex = 0;
+  /**
+   * @param {KeyboardEvent} event
+   */
+  return event => {
+    switch (event.key) {
+      // Hitting "Tab" traps us in a nice loop around elements.
+      case "Tab": {
+        event.preventDefault();
+        currentIndex += event.shiftKey ? -1 : +1;
+        if (currentIndex < 0) {
+          currentIndex = lastIndex;
+        } else if (currentIndex > lastIndex) {
+          currentIndex = 0;
+        }
+        anchors.item(currentIndex).focus();
+        break;
+      }
+
+      // Hitting "Enter" on an anchor releases the trap.
+      case "Enter":
+        hidePanel(panel);
+        break;
+
+      // Hitting "Escape" returns focus to dfn.
+      case "Escape":
+        hidePanel(panel);
+        dfn.focus();
+        return;
+    }
+  };
+}
+
+/** @param {HTMLElement | null} panel */
+function hidePanel(panel) {
+  if (!panel) return;
+  panel.hidden = true;
+  panel.classList.remove("docked");
+}
+})()</script><script src="https://www.w3.org/scripts/TR/2021/fixup.js"></script></body></html>
