@@ -410,13 +410,13 @@ PREFIX prov: &lt;http://www.w3.org/ns/prov#>
     <p>The following exemplifies that, by entailing a certain kind of proposition to be the object of an <code>rdf:type</code> relationship to its subject, and further that this kind of proposition is a restriction class on its subject, such that this subject has the object of the proposition as the value of the predicate of the proposition.
     <p>The class of events is further defined to reify propositions of this particular kind; specifically those being objects of an <code>rdf:reifies</code> relationship from event instances. This can be thought of as events being <a href="https://plato.stanford.edu/entries/truthmakers/">truthmakers</a> of these (truthbearing) propositions.
     <p>An event reifying a proposition:
-    <pre class="example turtle" title="simple PROV-O relationships"
+    <pre class="example turtle" title="An event reifying a proposition"
          data-include="data/event-truth-event.ttl" data-include-format="text"></pre>
     <p>makes the reified proposition hold:
-    <pre class="example turtle" title="simple PROV-O relationships"
+    <pre class="example turtle" title="An event described as an annotation of the proposition it reifies"
          data-include="data/event-truth-entailed.ttl" data-include-format="text"></pre>
     <p>given the following axioms:
-    <pre class="example turtle" title="simple PROV-O relationships"
+    <pre class="example turtle" title="OWL-based axioms for events as truthmakers"
          data-include="data/event-truth-axioms.ttl" data-include-format="text"></pre>
     <p>The above pattern declares propositions that are reified by events as restriction types on their subject, such that they hold in the interpretation.</p>
   </section>
