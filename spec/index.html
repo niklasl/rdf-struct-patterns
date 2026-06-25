@@ -506,6 +506,7 @@ PREFIX prov: &lt;http://www.w3.org/ns/prov#>
   <h2>Structural Expansions using SPARQL</h2>
   <p>The following subsections define SPARQL queries for constructing descriptions of the expanded formal structures. They have to be repeatedly run against the union of the source graph and each result graph, until the triple count is equal to the triple count of the previous iteration.
   <p class="note">The construct patterns below use <code>owl:sameAs</code> to encode equivalence of the denoting terms with the blank nodes used as subjects for the encoded descriptions. Other semantic extensions that do not recognize OWL 2 semantics may require other forms for encoding the entailments, such as <a data-cite="RDF12-CONCEPTS#section-symmetric-rdf">symmetric RDF</a>.
+  <p class="note">Expanding triples like this can only materialize partial entailments. In fact, it is necessary to ensure this, since a complete materialization of all entailed triples of an interpretation relying on the above semantics (or any RDFS interpretation for that matter), would be infinite. (In part due to the fact that each triple in the entailed graph formally also entails its propositional form, per [[[RDF12-SEMANTICS#dfn-rdfs-interpretation]]]; a fact that any structural expansion ought to leave implicit.)
   <section id="sparql-expansion-triple-term">
     <h3>Proposition Form Expansion</h3>
     <div>
@@ -550,8 +551,7 @@ PREFIX prov: &lt;http://www.w3.org/ns/prov#>
     These two methods are <em>complementary</em> ways of working with RDF 1.2 data. Basic-encoding is for RDF 1.1 or 1.2 Basic systems that lack support for triple terms. Extended interpretations of formal structures is for systems leveraging semantic extensions based on RDF 1.2, such as OWL 2, in order to be able to reason over the intrinsic properties of propositions and literal values.
   </p>
   <p class="issue">
-    <!-- TODO: specified in [[[RDF12-INTEROP]]]-->
-    Refer to the specification of basic-encoding. In this document, Appendix [[[#section-basicenc-sparql]]] defines SPARQL-based versions of basic encoding and decoding for propositions and directional language strings.
+    Refer to the specification of basic-encoding in [[[RDF12-INTEROP]]]. In this document, Appendix [[[#section-basicenc-sparql]]] defines SPARQL-based versions of basic encoding and decoding for propositions; and furthermore extends it with corresponding encoding and decoding of directional language strings.
   </p>
 
   <section>
