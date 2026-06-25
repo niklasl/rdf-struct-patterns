@@ -148,13 +148,14 @@ BASE &lt;http://example.org/>
   <p class="note">The [[[SPARQL12-QUERY]]] defines a number of <a href="https://www.w3.org/TR/sparql12-query/#func-rdfTerms">functions on RDF terms</a>. In principle (and noting that functions&mdash;including those on IRIs&mdash;operate on lexical forms), the unary functions defined there can correspond to predicates of the formal structures which these terms denote (in the logical sense, and expressed in RDF as statements). More precisely, if <code>F</code> is a SPARQL function and <code>P</code> is its associated predicate, for all RDF terms <code>S</code> on which <code>F</code> is defined, the statement <code>S P F(S)</code> must be true.
 
 <section id="section-struct-propos">
-  <h2>Formal Structure of Propositions</h2>
+  <h3>Formal Structure of Propositions</h3>
   <p>An <code>rdfs:Proposition</code> instance is a resource having exactly one subject resource, one predicate property and one object resource.
+  <h4>Basic RDF pattern</h4>
   <p>The proposition pattern:
   <pre class="turtle">
 XXX YYY &lt;&lt;( AAA BBB CCC )>> .
   </pre>
-  <p>can thus be described as:
+  <p>can therefore be expressed, in basic RDF, as:
   <pre class="turtle">
 XXX YYY _:pp .
 _:pp rdf:propositionFormSubject AAA .
@@ -170,7 +171,7 @@ _:pp a rdfs:Proposition .
 _:pp a rdf:PropositionForm .
   </pre>
   <section id="section-interp-proposition">
-    <h3>Extended Proposition Interpretation</h3>
+    <h4>Extended Proposition Interpretation</h4>
     <p>An extended proposition interpretation is an RDFS interpretation I which also satisfies the following semantic condition, and all the triples in the subsequent table of axiomatic triples.
     <table id="proposition_semantic_condition">
     <caption>Proposition semantic condition.</caption>
@@ -215,13 +216,14 @@ rdf:propositionFormObject rdfs:range rdfs:Resource .
 </section>
 
 <section id="section-structliterals">
-  <h2>Formal Structures of Literal Values</h2>
+  <h3>Formal Structures of Literal Values</h3>
   <p>Literals are also denoted by tuple structures, specifically of an IRI denoting their datatype, and a string representing a lexical form. They are fundamentally different from propositions in that their lexical form may encode values of any kind of complexity, depending on its datatype. The structure so encoded is defined by the formal meaning of this datatype, which defines its value space. The result of decoding the lexical form according to this datatype is the <em>literal value</em>, having the datatype as its <code>rdf:type</code>, and other properties according to the formal meaning of its lexical encoding.
   <p>Some value spaces are formally specified in <a data-cite="RDF-SEMANTICS#D_interpretations">D-interpretations</a> of [[RDF-SEMANTICS]], and in [[[RDF-PLAIN-LITERAL]]]. The following subsections extend these definitions by entailing statements about the literal values.
 
   <section id="section-dirlangstrings">
-    <h3>Directional Language Strings</h3>
+    <h4>Directional Language Strings</h4>
     <p>A directional language string is a typed resource combining one string value with one <code>rdf:language</code> and one <code>rdf:direction</code>. This form acts as a key, uniquely identifying the literal value.
+    <h5>Basic RDF pattern</h5>
     <p>The directional language string pattern:
     <pre class="turtle">
 SSS PPP "..."@und--rtl .
@@ -246,7 +248,7 @@ _:dls a rdf:dirLangString .
     <p class="issue">Is <code>rdf:value</code> enough (or too associated with idiomatic structured value tokens)? Define <code>rdf:lexicalForm</code>?
     <p class="issue">Define <code>rdf:langDir</code>, based on <code>xsd:token</code>; or rather define <code>rdf:rtl</code> and <code>rdf:ltr</code>?
     <section id="section-interp-dirlangstring">
-      <h3>Extended Directional Language String Interpretation</h3>
+      <h4>Extended Directional Language String Interpretation</h4>
       <p>An extended directional language string interpretation is an RDFS interpretation I which also satisfies the following semantic condition, and all the triples in the subsequent table of axiomatic triples.
       <table id="dirlangstring_semantic_condition">
         <caption>Directional language string semantic condition.</caption>
@@ -293,7 +295,8 @@ _:dls a rdf:dirLangString .
   </section>
 
   <section id="section-langstrings">
-    <h3>Language Strings</h3>
+    <h4>Language Strings</h4>
+    <h5>Basic RDF pattern</h5>
     <p>The language string pattern:
     <pre class="turtle">
 SSS PPP "..."@und .
@@ -306,7 +309,7 @@ _:dls rdf:value "..." .  # Use rdf:lexicalForm?
 _:dls rdf:language "und"^^xsd:language .
     </pre>
     <section id="section-interp-dirlangstring">
-      <h3>Extended Language String Interpretation</h3>
+      <h4>Extended Language String Interpretation</h4>
       <p>The definition of a semantic condition for <code>rdf:langString</code> is similar to the semantic condition of <code>rdf:dirLangString</code>, but without the <code>rdf:direction</code> part:
       <table id="langstring_semantic_condition">
         <caption>Language string semantic condition.</caption>
@@ -362,50 +365,50 @@ _:dt time:day "---DD"^^xsd:gDay .
   <p class="note">The patterns below utilize <code>owl:hasSelf</code> to define a <em>rolification</em> of a class, meaning a restriction pattern for the relationship from an individual to itself, which is equivalent to a specified class. This restriction implies that an instance of such a class has this rolified relationship to itself (and vice versa). That enables the use of the rolification property in sub-property chain axioms, functioning as a self-relation chain component matching the type of the resource.
 
 <section id="section-interop-propositions">
-  <h2>Interoperability Patterns Using Reified Propositions</h2>
+  <h3>Interoperability Patterns Using Reified Propositions</h3>
   <p>The following patterns rely on OWL 2 and <a href="#section-interp-proposition">extended interpretation of propositions</a> to ensure that simplified descriptions leveraging <a data-cite="RDF12-CONCEPTS#dfn-reifying-triple">reifying triples</a> and/or <a data-cite="RDF12-TURTLE#dfn-annotation-syntax">triple annotations</a> can be interoperably interpreted as classical, more complex forms of descriptions.
 
   <section id="section-interop-reif">
-    <h3>Classic RDF Reification as Reifiers</h3>
+    <h4>Classic RDF Reification as Reifiers</h4>
     <p>Given these axioms:
-    <pre class="example turtle" title="classic statement model based on the propositions form"
+    <pre class="example turtle" title="Classic statement model based on the proposition form"
          data-include="data/classic-statement-owl.ttl" data-include-format="text"></pre>
     <p>this graph:
-    <pre class="example turtle" title="a reified statement"
+    <pre class="example turtle" title="A reified statement"
          data-include="data/reified-statement.ttl" data-include-format="text"></pre>
     <p>entails this graph:
-    <pre class="example turtle" title="a classic reified statement"
+    <pre class="example turtle" title="A classic reified statement"
          data-include="data/classic-reified-statement.ttl" data-include-format="text"></pre>
   </section>
 
   <section id="section-interop-prov-o">
-    <h3>PROV-O Qualifications as Reifiers</h3>
+    <h4>PROV-O Qualifications as Reifiers</h4>
     <p>In the PROV Ontology ([[PROV-O]]) several association classes have been defined as qualified counterparts for a number of simple relationships. In this section, two examples are examined (borrowed from examples 8 and 9 of [[PROV-O]]). The following prefix is assumed in the subsequent examples:
     <pre class="turtle">
 PREFIX prov: &lt;http://www.w3.org/ns/prov#>
     </pre>
     <p>These two simple relationships:
-    <pre class="example turtle" title="simple PROV-O relationships"
+    <pre class="example turtle" title="Simple PROV-O relationships"
          data-include="data/prov-simple.ttl" data-include-format="text"></pre>
     <p>have the following companion qualified forms:
-    <pre class="example turtle" title="qualified PROV-O relationships"
+    <pre class="example turtle" title="Qualified PROV-O relationships"
          data-include="data/prov-qualified.ttl" data-include-format="text"></pre>
     <p>Using OWL, there is a way to entail the simple relationships from the qualified forms:
-    <pre class="example turtle" title="OWL axioms for entailing simple relationships"
+    <pre class="example turtle" title="OWL-based axioms for entailing simple relationships"
          data-include="data/prov-simple-owl.ttl" data-include-format="text"></pre>
     <p>With the extended interpretation of propositions, it is possible to conversely entail the qualified forms from <em>annotated</em> versions of the simple relationships:
-    <pre class="example turtle" title="annotated simple PROV-O relationships"
+    <pre class="example turtle" title="Annotated simple PROV-O relationships"
          data-include="data/prov-simple-annot.ttl" data-include-format="text"></pre>
     <p>This can be done by extending the ontology itself, by defining property chains between reifiers of type <code>prov:Usage</code> and the corresponding subject and object of a proposition with the <code>prov:used</code> predicate:
-    <pre class="example turtle" title="OWL axioms for entailing qualified usage relationship"
+    <pre class="example turtle" title="OWL-based axioms for entailing qualified usage relationship"
          data-include="data/prov-owl-1.ttl" data-include-format="text"></pre>
     <p>and similarly for reifiers of type <code>prov:Association</code> of triples with the <code>prov:wasAssociatedWith</code> predicate:
-    <pre class="example turtle" title="OWL axioms for entailing qualified association relationship"
+    <pre class="example turtle" title="OWL-based axioms for entailing qualified association relationship"
          data-include="data/prov-owl-2.ttl" data-include-format="text"></pre>
   </section>
 
   <section id="section-interop-event-truth">
-    <h3>Events as Proposition-reifying Truthmakers</h3>
+    <h4>Events as Proposition-reifying Truthmakers</h4>
     <p>The possibility of referring to the constituent properties of a proposition also makes it possible to define OWL-based axioms through which a proposition is entailed to hold. (Meaning that, if entailments are materialized, a triple denoting such a proposition is asserted.)
     <p>The following exemplifies that, by entailing a certain kind of proposition to be the object of an <code>rdf:type</code> relationship to its subject, and further that this kind of proposition is a restriction class on its subject, such that this subject has the object of the proposition as the value of the predicate of the proposition.
     <p>The class of events is further defined to reify propositions of this particular kind; specifically those being objects of an <code>rdf:reifies</code> relationship from event instances. This can be thought of as events being <a href="https://plato.stanford.edu/entries/truthmakers/">truthmakers</a> of these (truthbearing) propositions.
@@ -413,7 +416,7 @@ PREFIX prov: &lt;http://www.w3.org/ns/prov#>
     <pre class="example turtle" title="An event reifying a proposition"
          data-include="data/event-truth-event.ttl" data-include-format="text"></pre>
     <p>makes the reified proposition hold:
-    <pre class="example turtle" title="An event described as an annotation of the proposition it reifies"
+    <pre class="example turtle" title="An event and the fact it reifies described with an annotation"
          data-include="data/event-truth-entailed.ttl" data-include-format="text"></pre>
     <p>given the following axioms:
     <pre class="example turtle" title="OWL-based axioms for events as truthmakers"
@@ -434,7 +437,7 @@ PREFIX prov: &lt;http://www.w3.org/ns/prov#>
   <section id="sparql-expansion-triple-term">
     <h3>Proposition Form Expansion</h3>
     <div>
-      <pre class="example sparql" title="SPARQL-based propositions form expansion"
+      <pre class="example sparql" title="SPARQL-based proposition form expansion"
           data-include="data/triple-form-expansion.rq" data-include-format="text"></pre>
     </div>
   </section>
