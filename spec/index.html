@@ -151,6 +151,13 @@ BASE &lt;http://example.org/>
     <p>However, it is also important to recognize that SPARQL functions operate on the abstract syntax (particularly functions on IRIs and triple terms), and not generally within the interpretation; other than by adhering to the semantics of value spaces of recognized datatypes, such as date and time values. (In particular, application of the <code>STR</code> function on an IRI does not correspond to the string encoding of the resource denoted by the given IRI, but to the <code>xsd:string</code> representation of the IRI <em>itself</em>, which denotes the resource.)
   </div>
 
+<section id="section-interop-owl-ext">
+  <h3>OWL-based Patterns</h3>
+  <p>
+    Note that the <a data-cite="RDF12-CONCEPTS#dfn-abstract-syntax">abstract syntax of RDF</a> does not allow literals nor triple terms as subjects, and (apart from <a data-cite="RDF12-SEMANTICS#D_entailment">D-entailment</a>) RDF and RDFS semantics is too weak to express identity between resources denoted by different RDF terms. Therefore, the basic RDF patterns below will be complemented with patterns based on OWL2 RDF-based semantics, particularly <code>owl:sameAs</code>, which is sufficiently strong to allow for exact encoding of the extended interpretations of propositions and literal values, respectively.
+  </p>
+</section>
+
 <section id="section-struct-propos">
   <h3>Formal Structure of Propositions</h3>
   <p>An <code>rdfs:Proposition</code> instance is a resource having exactly one subject resource, one predicate property and one object resource.
@@ -161,19 +168,33 @@ XXX YYY &lt;&lt;( AAA BBB CCC )>> .
   </pre>
   <p>can therefore be expressed, in basic RDF, as:
   <pre class="turtle">
-XXX YYY _:pp .
-_:pp rdf:propositionFormSubject AAA .
-_:pp rdf:propositionFormPredicate BBB .
-_:pp rdf:propositionFormObject CCC .
+XXX YYY _:ppn .
+_:ppn rdf:propositionFormSubject AAA .
+_:ppn rdf:propositionFormPredicate BBB .
+_:ppn rdf:propositionFormObject CCC .
   </pre>
-  <p>Note that the following is already entailed through RDFS semantics:
+    <p>This is RDFS-entailed from the <a href="#proposition_axioms">axiomatic triples of proposition forms</a> (below):
   <pre class="turtle">
-_:pp a rdfs:Proposition .
+_:ppn rdf:type rdf:PropositionForm .
   </pre>
-  <p>And this, provided the axioms below:
+  <p>And this is RDFS-entailed through <a href="https://www.w3.org/TR/rdf12-semantics/#dfn-rdfs14">rdfs14</a>:
   <pre class="turtle">
-_:pp a rdf:PropositionForm .
+_:ppn rdf:type rdfs:Proposition .
   </pre>
+  <p class="note">The terms used to describe proposition basic forms are defined in [[[RDF12-INTEROP]]]. See also [[[#section-relation-basic-encoding]]] for further details.</p>
+  <h4>OWL extension</h4>
+  <p>The following, relying on OWL, completes the pattern to encode the identity relation between the blank node used to denote the proposition above and a triple term that denotes the same proposition:
+  <pre class="turtle">
+_:ppn owl:sameAs &lt;&lt;( AAA BBB CCC )>> .
+  </pre>
+  <p>Additionally, this expresses the fact that the constituent properties also uniquely identify the proposition:
+  <pre class="turtle">
+rdfs:Proposition
+  owl:hasKey (
+      rdf:propositionFormSubject rdf:propositionFormPredicate rdf:propositionFormObject
+    ) .
+  </pre>
+
   <section id="section-interp-proposition">
     <h4>Extended Proposition Interpretation</h4>
     <p>An extended proposition interpretation is an RDFS interpretation I which also satisfies the following semantic condition, and all the triples in the subsequent table of axiomatic triples.
@@ -224,6 +245,23 @@ rdf:propositionFormObject rdfs:range rdfs:Resource .
   <p>Literals are also denoted by tuple structures, specifically of an IRI denoting their datatype, and a string representing a lexical form. They are fundamentally different from propositions in that their lexical form may encode values of any kind of complexity, depending on its datatype. The structure so encoded is defined by the formal meaning of this datatype, which defines its value space. The result of decoding the lexical form according to this datatype is the <em>literal value</em>, having the datatype as its <code>rdf:type</code>, and other properties according to the formal meaning of its lexical encoding.
   <p>Some value spaces are formally specified in <a data-cite="RDF-SEMANTICS#D_interpretations">D-interpretations</a> of [[RDF-SEMANTICS]], and in [[[RDF-PLAIN-LITERAL]]]. The following subsections extend these definitions by entailing statements about the literal values.
 
+  <section id="section-basicliterals-owl"> 
+    <h4>OWL Identity of Literal Values</h4>
+  <p>From <a href="https://www.w3.org/TR/rdf12-semantics/#dfn-rdfd1">rdfd1</a>, this basic pattern:
+    <pre class="turtle">
+SSS PPP "123"^^xsd:integer .
+    </pre>
+which RDF entails recognizing {<code>xsd:integer</code>}:
+    <pre class="turtle">
+SSS PPP _:x .
+_:x rdf:type xsd:integer .
+    </pre>
+    may be completed in an OWL interpretation with:
+    <pre class="turtle">
+_:x owl:sameAs "123"^^xsd:integer .
+    </pre>
+  </section>
+
   <section id="section-dirlangstrings">
     <h4>Directional Language Strings</h4>
     <p>A directional language string is a typed resource combining one string value with one <code>rdf:language</code> and one <code>rdf:direction</code>. This form acts as a key, uniquely identifying the literal value.
@@ -245,11 +283,24 @@ _:dls rdf:direction "rtl"^^rdf:langDir .
         <https://www.w3.org/TR/2012/REC-xmlschema11-2-20120405/datatypes.html#language>
     -->
     <p>Note that the following is entailed by <a href="https://www.w3.org/TR/rdf12-semantics/#dfn-rdfd1">rdfD1</a>:
-  <pre class="turtle">
-_:dls a rdf:dirLangString .
-  </pre>
+    <pre class="turtle">
+  _:dls rdf:type rdf:dirLangString .
+    </pre>
+
+    <h5>OWL extension</h5>
+    <p>The following, relying on OWL, completes the pattern to encode the identity relation between the blank node used for the directional language string above and the literal that denotes it:
+    <pre class="turtle">
+  SSS PPP _:dls .
+  _:dls owl:sameAs "..."@und--rtl .
+    </pre>
+    <p>The following expresses the fact that directional language strings are identified by their component lexical form, language and direction:
+    <pre class="turtle">
+  rdf:dirLangString
+    owl:hasKey ( rdf:value rdf:language rdf:direction ) .
+    </pre>
+
     <p class="issue">Harmonize this pattern with <code>rdf:CompoundLiteral</code> (possibly used for extended basic-encoding)?
-    <p class="issue">Is <code>rdf:value</code> enough (or too associated with idiomatic structured value tokens)? Define <code>rdf:lexicalForm</code>?
+    <p class="issue">Is <code>rdf:value</code> strict enough here (or too associated with idiomatic structured value tokens)? Define <code>rdf:lexicalForm</code>?
     <p class="issue">Define <code>rdf:langDir</code>, based on <code>xsd:token</code>; or rather define <code>rdf:rtl</code> and <code>rdf:ltr</code>?
 
     <section id="section-interp-dirlangstring">
@@ -308,10 +359,21 @@ SSS PPP "..."@und .
     </pre>
     <p>can be described as:
     <pre class="turtle">
-SSS PPP _:dls .
-_:dls a rdf:langString .
-_:dls rdf:value "..." .  # Use rdf:lexicalForm?
-_:dls rdf:language "und"^^xsd:language .
+SSS PPP _:ls .
+_:ls rdf:type rdf:langString .
+_:ls rdf:value "..." .
+_:ls rdf:language "und"^^xsd:language .
+    </pre>
+    <h5>OWL extension</h5>
+    <p>The following, relying on OWL, completes the pattern to encode the identity relation between the blank node used for the language string above and the literal that denotes it:
+    <pre class="turtle">
+  SSS PPP _:ls .
+  _:ls owl:sameAs "..."@und .
+    </pre>
+    <p>The following expresses the fact that language strings are identified by their component lexical form and language:
+    <pre class="turtle">
+  rdf:langString
+    owl:hasKey ( rdf:value rdf:language ) .
     </pre>
     <section id="section-interp-dirlangstring">
       <h4>Extended Language String Interpretation</h4>
@@ -346,14 +408,19 @@ _:dls rdf:language "und"^^xsd:language .
     <p>It is therefore generally possible to define semantic extensions for values of any formally defined datatype, entailing relationships between literal values and their constituent parts.
     <p>For example, a literal <code>xsd:date</code> value:
     <pre class="turtle">
-SSS PPP "YYYY-MM-DD"^^xsd:date .
+SSS PPP "1970-01-01"^^xsd:date .
     </pre>
     <p>implies a resource with one year, one month and one day (here expressed using the [[[OWL-TIME]]]):
     <pre class="turtle">
-SSS PPP _:dt a xsd:date .
-_:dt time:year "YYYY"^^xsd:gYear .
-_:dt time:month "--MM"^^xsd:gMonth .
-_:dt time:day "---DD"^^xsd:gDay .
+SSS PPP _:dt .
+_:dt a xsd:date .
+_:dt time:year "1970"^^xsd:gYear .
+_:dt time:month "--01"^^xsd:gMonth .
+_:dt time:day "---01"^^xsd:gDay .
+    </pre>
+    Completed in an OWL interpretation with:
+    <pre class="turtle">
+_:dt owl:sameAs "1970-01-01"^^xsd:date .
     </pre>
     <p>Defining semantic conditions for such structures, and the formal properties thereof, is beyond the scope of this document (and outside the purview of RDF for any datatype defined by other specifications). A possible SPARQL-based expansion form is proposed in Appendix [[[#sparql-expansion-datetime]]].
     <p class="issue">Define a general semantic condition for <code>rdfs:Literal</code>s entailing a <code>rdf:lexicalForm</code> relation to its lexical value? Cf. L2V(d)(v).</p>
